@@ -18,6 +18,8 @@ Please browse to the relevant product (for example, SXP) and locate Installation
 
 Support for this repository is provided through Sitecore Support Portal. Please find more information about how to use the portal here: https://kb.sitecore.net/articles/654910
 
+There is no official support available for /experimental and /demo areas of this repository.
+
 Any inquiries or issues reported directly to this repository have no SLA.
 
 ## Contribute
