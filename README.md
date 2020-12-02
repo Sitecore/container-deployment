@@ -10,7 +10,9 @@ Repository for official Sitecore, community and demo deployment files. This will
 
 ## Documentation
 
-Official documentation on Sitecore container deployment files can be found here: TBD
+Official documentation on Sitecore container deployment files can be found here: https://dev.sitecore.net/
+
+Please browse to the relevant product (for example, SXP) and locate Installation Guides in the "Download options for Sitecore Container deployments" section.
 
 ## Support
 
