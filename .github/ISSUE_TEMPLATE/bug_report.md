@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Support**
+**!! IMPORTANT !!**
 Support for this repository is provided through Sitecore Support Portal. Please find more information about how to use the portal here: https://kb.sitecore.net/articles/654910
 
 Any inquiries or issues reported directly to this repository have no SLA.
