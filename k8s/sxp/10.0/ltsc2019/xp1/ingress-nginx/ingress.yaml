@@ -39,3 +39,4 @@ spec:
   - secretName: global-id-tls
     hosts:
     - id.globalhost
+
