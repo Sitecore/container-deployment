@@ -18,3 +18,4 @@ spec:
               key: sitecore-solr-connection-string.txt
       restartPolicy: Never
   backoffLimit: 5
+

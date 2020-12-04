@@ -178,3 +178,4 @@ spec:
               key: sitecore-collection-shardmapmanager-database-password.txt
       restartPolicy: Never
   backoffLimit: 5
+

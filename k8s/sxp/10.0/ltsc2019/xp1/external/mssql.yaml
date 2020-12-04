@@ -42,3 +42,4 @@ spec:
           value: "Y"
       imagePullSecrets:
       - name: sitecore-docker-registry
+
