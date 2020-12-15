@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: sitecore-redis
-        image: scr.sitecore.com/sxp/sitecore-redis:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-redis:10.0-ltsc2019
         ports:
         - containerPort: 6379
       imagePullSecrets:

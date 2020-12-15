@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: mssql
-        image: scr.sitecore.com/sxp/nonproduction/mssql-developer:2017-10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/nonproduction/mssql-developer:2017-10.0-ltsc2019
         ports:
         - containerPort: 1433
         env:

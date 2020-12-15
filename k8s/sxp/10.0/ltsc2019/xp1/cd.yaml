@@ -42,7 +42,7 @@ spec:
           command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://xdbrefdata/healthz/ready).StatusCode -eq 200} catch { $false }));"]
       containers:
       - name: sitecore-xp1-cd
-        image: scr.sitecore.com/sxp/sitecore-xp1-cd:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-xp1-cd:10.0-ltsc2019
         ports:
         - containerPort: 80
         env:
@@ -135,6 +135,11 @@ spec:
           value: http://xdbrefdata
         - name: Sitecore_ConnectionStrings_Redis.Sessions
           value: redis:6379,ssl=False,abortConnect=False
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
         livenessProbe:
           httpGet:
             path: /healthz/live

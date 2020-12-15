@@ -39,7 +39,7 @@ spec:
           command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://xdbsearch/healthz/ready).StatusCode -eq 200} catch { $false }));"]
       containers:
       - name: sitecore-xp1-cortexprocessingworker
-        image: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessingworker:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessingworker:10.0-ltsc2019
         env:
         - name: Database_Server
           valueFrom:

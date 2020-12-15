@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: sitecore-xm1-id
-        image: scr.sitecore.com/sxp/sitecore-id:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-id:10.0-ltsc2019
         ports:
         - containerPort: 80
         env:
