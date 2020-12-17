@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: sitecore-xm1-cd
-        image: scr.sitecore.com/sxp/sitecore-xm1-cd:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-xm1-cd:10.0-ltsc2019
         ports:
         - containerPort: 80
         env:
@@ -90,6 +90,11 @@ spec:
               key: sitecore-solr-connection-string.txt
         - name: Sitecore_ConnectionStrings_Redis.Sessions
           value: redis:6379,ssl=False,abortConnect=False
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
         livenessProbe:
           httpGet:
             path: /healthz/live

@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: solr
-        image: scr.sitecore.com/sxp/nonproduction/solr:8.4.0-10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/nonproduction/solr:8.4.0-10.0-ltsc2019
         ports:
         - containerPort: 8983
         env:

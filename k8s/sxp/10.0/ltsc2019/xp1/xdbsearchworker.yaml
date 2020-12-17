@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: sitecore-xp1-xdbsearchworker
-        image: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker:10.0-ltsc2019
         env:
         - name: Database_Server
           valueFrom:

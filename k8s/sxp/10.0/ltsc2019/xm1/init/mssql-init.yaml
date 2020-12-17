@@ -9,7 +9,7 @@ spec:
         - name: sitecore-docker-registry
       containers:
       - name: mssql-init
-        image: scr.sitecore.com/sxp/sitecore-xm1-mssql-init:10.0.0-ltsc2019
+        image: scr.sitecore.com/sxp/sitecore-xm1-mssql-init:10.0-ltsc2019
         env:
         - name: sitecore_admin_password
           valueFrom:
