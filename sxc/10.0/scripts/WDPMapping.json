@@ -1,0 +1,174 @@
+[
+    {
+        "WDPs": [
+            "Sitecore Commerce Experience Accelerator Storefront Themes",
+            "Sitecore Commerce Experience Accelerator Storefront",
+            "Sitecore Commerce Experience Accelerator"
+        ],
+        "DestinationFolder": "xc1-cxa/cd/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Experience Accelerator Storefront Themes",
+            "Sitecore Commerce Experience Accelerator Storefront",
+            "Sitecore Commerce Experience Accelerator"
+        ],
+        "DestinationFolder": "xc1-cxa/cm/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Experience Accelerator Habitat Catalog",
+            "Sitecore Commerce Experience Accelerator Storefront Themes",
+            "Sitecore Commerce Experience Accelerator Storefront",
+            "Sitecore Commerce Experience Accelerator"
+        ],
+        "DestinationFolder": "xc1-cxa/mssql/dacpacs",
+        "ToCopyFiles": "*.dacpac",
+        "NameMappings":  [
+            {"Name":"master", "NewName":"Sitecore.Master"},
+            {"Name":"core", "NewName":"Sitecore.Core"},
+            {"Name":"web", "NewName":"Sitecore.Web"}
+        ]
+    },
+    {
+        "WDPs": [
+            "Sitecore.Commerce.Engine.OnPrem.Solr"
+        ],
+        "DestinationFolder": "xc-common/engine/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore.BizFx.OnPrem"
+        ],
+        "DestinationFolder": "xc-common/bizfx/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore.Identity.Config.Commerce"
+        ],
+        "DestinationFolder": "xc-common/id/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore.Commerce.Engine.OnPrem.Solr",
+            "Sitecore Commerce Connect Core OnPrem",
+            "Sitecore Commerce Engine Connect OnPrem",
+            "Sitecore Commerce Marketing Automation Core OnPrem",
+            "Sitecore Commerce ExperienceProfile Core OnPrem",
+            "Sitecore Commerce ExperienceAnalytics Core OnPrem",
+            "Adventure Works Images.OnPrem",
+            "Sitecore.Commerce.Habitat.Images.OnPrem"
+        ],
+        "DestinationFolder": "xc-common/mssql/common/dacpacs",
+        "ToCopyFiles": "*.dacpac",
+        "NameMappings":  [
+            {"Name":"master", "NewName":"Sitecore.Master"},
+            {"Name":"core", "NewName":"Sitecore.Core"},
+            {"Name":"web", "NewName":"Sitecore.Web"},
+            {"Name":"Sitecore.Commerce.Engine.Global.DB", "NewName":"SitecoreCommerce_Global"},
+            {"Name":"Sitecore.Commerce.Engine.Shared.DB", "NewName":"SitecoreCommerce_SharedEnvironments"}
+        ]
+    },
+    {
+        "WDPs": [
+            "SolrSchemas.Sitecore.Commerce"
+        ],
+        "DestinationFolder": "xc-common/solr/wdp",
+        "ToCopyFolder": ""
+    },
+    {
+        "WDPs": [
+            "SolrSchemas.Sitecore.Commerce"
+        ],
+        "DestinationFolder": "xc-common/solr-init/wdp",
+        "ToCopyFolder": ""
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Core OnPrem",
+            "Sitecore Commerce Engine Connect OnPrem",
+            "Sitecore Commerce Marketing Automation Core OnPrem"
+        ],
+        "DestinationFolder": "xc1/cd/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Core OnPrem",
+            "Sitecore Commerce Engine Connect OnPrem",
+            "Sitecore Commerce ExperienceAnalytics Core OnPrem",
+            "Sitecore Commerce ExperienceProfile Core OnPrem",
+            "Sitecore Commerce Marketing Automation Core OnPrem"
+        ],
+        "DestinationFolder": "xc1/cm/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce ExperienceAnalytics Core"
+        ],
+        "DestinationFolder": "xc1/prcrep/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Schema Definitions for xConnect"
+        ],
+        "DestinationFolder": "xc1/xdbcollection/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Schema Definitions for IndexWorker"
+        ],
+        "DestinationFolder": "xc1/xdbsearch/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Schema Definitions for IndexWorker"
+        ],
+        "DestinationFolder": "xc-common/xdbworkers/xdbsearchworker/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Marketing Automation for Azure"
+        ],
+        "DestinationFolder": "xc1/xdbautomation/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Marketing Automation for Azure"
+        ],
+        "DestinationFolder": "xc-common/xdbworkers/xdbautomationworker/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Core OnPrem",
+            "Sitecore Commerce Engine Connect OnPrem",
+            "Sitecore Commerce ExperienceAnalytics Core OnPrem",
+            "Sitecore Commerce ExperienceProfile Core OnPrem",
+            "Sitecore Commerce Marketing Automation Core OnPrem",
+            "Sitecore Commerce ExperienceAnalytics Core"
+        ],
+        "DestinationFolder": "xc0/cm/wdp",
+        "ToCopyFolder": "Content/Website"
+    },
+    {
+        "WDPs": [
+            "Sitecore Commerce Connect Schema Definitions for xConnect",
+            "Sitecore Commerce Connect Schema Definitions for IndexWorker",
+            "Sitecore Commerce Marketing Automation for Azure"
+        ],
+        "DestinationFolder": "xc0/xconnect/wdp",
+        "ToCopyFolder": "Content/Website"
+    }
+]

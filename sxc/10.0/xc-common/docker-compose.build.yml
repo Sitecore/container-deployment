@@ -1,0 +1,20 @@
+version: "2.4"
+services:
+  id:
+    build:
+      context: ./id
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-id:${XP_SITECORE_TAG}
+    image: sitecore-xc-id
+  bizfx:
+    build:
+      context: ./bizfx
+      args:
+        BASE_IMAGE: mcr.microsoft.com/windows/servercore/iis:windowsservercore-${OS_IMAGE_TAG}
+    image: sitecore-xc-bizfx
+  engine:
+    build:
+      context: ./engine
+      args:
+        BASE_IMAGE: mcr.microsoft.com/windows/servercore:${OS_IMAGE_TAG}
+    image: sitecore-xc-engine

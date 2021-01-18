@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  mssql:
+    image: sitecore-xc1-mssql
+    build:
+      context: ./mssql
+      dockerfile: ./standalone/Dockerfile
+      args:
+        BASE_IMAGE:  xc1-mssql:latest
+        SPE_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}spe-assets:${SPE_SITECORE_TAG}
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
+  mssql-init:
+    image: sitecore-xc1-mssql-init
+    build:
+      context: ./mssql
+      dockerfile: ./init/Dockerfile
+      args:
+        BASE_IMAGE: xc1-mssql-init:latest
+        SPE_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}spe-assets:${SPE_SITECORE_TAG}
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
+  solr:
+    image: sitecore-xc1-solr
+    build:
+      context: ./solr
+      dockerfile: ./standalone/Dockerfile
+      args:
+        BASE_IMAGE: xc1-solr:latest
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
+  solr-init:
+    image: sitecore-xc1-solr-init
+    build:
+      context: ./solr
+      dockerfile: ./init/Dockerfile
+      args:
+        BASE_IMAGE: xc1-solr-init:latest
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
+  cd:
+    image: sitecore-xc1-cd
+    build:
+      context: ./cd
+      args:
+        BASE_IMAGE: xc1-cd:latest
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
+  cm:
+    image: sitecore-xc1-cm
+    build:
+      context: ./cm
+      args:
+        BASE_IMAGE: xc1-cm:latest
+        SPE_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}spe-assets:${SPE_SITECORE_TAG}
+        SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
