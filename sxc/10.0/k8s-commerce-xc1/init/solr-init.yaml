@@ -1,0 +1,58 @@
+<<<<<<< Updated upstream
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: solr-init
+        image: {registry}/{sxc-project}/sitecore-xc1-solr-init:{commerce-version}
+        env:
+        - name: SITECORE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-string.txt
+        - name: COMMERCE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-connection-string.txt
+      restartPolicy: Never
+  backoffLimit: 5
+=======
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: solr-init
+        image: {registry}/{sxc-project}/sitecore-xc1-solr-init:{commerce-version}
+        env:
+        - name: SITECORE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-string.txt
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+        - name: COMMERCE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-connection-string.txt
+      restartPolicy: Never
+  backoffLimit: 5
+>>>>>>> Stashed changes

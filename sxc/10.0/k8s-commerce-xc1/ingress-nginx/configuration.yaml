@@ -1,0 +1,16 @@
+<<<<<<< Updated upstream
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: nginx-ingress-controller
+data:
+    use-forwarded-headers: "true"
+=======
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: nginx-ingress-controller
+data:
+    use-forwarded-headers: "true"
+>>>>>>> Stashed changes
+    enable-underscores-in-headers: "true"

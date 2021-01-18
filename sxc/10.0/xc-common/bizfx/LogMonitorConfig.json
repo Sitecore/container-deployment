@@ -1,0 +1,48 @@
+<<<<<<< Updated upstream
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "EventLog",
+                "startAtOldestRecord": false,
+                "eventFormatMultiLine": false,
+                "channels": [
+                    {
+                        "name": "system",
+                        "level": "Error"
+                    }
+                ]
+            },
+            {
+                "type": "File",
+                "directory": "c:\\inetpub\\logs",
+                "filter": "*.log",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+=======
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "EventLog",
+                "startAtOldestRecord": false,
+                "eventFormatMultiLine": false,
+                "channels": [
+                    {
+                        "name": "system",
+                        "level": "Error"
+                    }
+                ]
+            },
+            {
+                "type": "File",
+                "directory": "c:\\inetpub\\logs",
+                "filter": "*.log",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+>>>>>>> Stashed changes
+}

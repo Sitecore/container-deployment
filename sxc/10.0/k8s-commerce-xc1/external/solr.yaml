@@ -1,0 +1,80 @@
+<<<<<<< Updated upstream
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr
+spec:
+  selector:
+    app: solr
+  ports:
+  - protocol: TCP
+    port: 8983
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+  labels:
+    app: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  template:
+    metadata:
+      labels:
+        app: solr
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: solr
+        image: {registry}/{nonproduction-project}/solr:8.4.0-{short-version-ltsc}
+        ports:
+        - containerPort: 8983
+        env:
+        - name: SOLR_MODE
+          value: solrcloud
+      imagePullSecrets:
+=======
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr
+spec:
+  selector:
+    app: solr
+  ports:
+  - protocol: TCP
+    port: 8983
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+  labels:
+    app: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  template:
+    metadata:
+      labels:
+        app: solr
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: solr
+        image: {registry}/{nonproduction-project}/solr:8.4.0-{short-version-ltsc}
+        ports:
+        - containerPort: 8983
+        env:
+        - name: SOLR_MODE
+          value: solrcloud
+      imagePullSecrets:
+>>>>>>> Stashed changes
+      - name: sitecore-docker-registry

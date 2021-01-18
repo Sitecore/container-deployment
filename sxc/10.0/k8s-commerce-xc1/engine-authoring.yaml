@@ -1,0 +1,407 @@
+<<<<<<< Updated upstream
+apiVersion: v1
+kind: Service
+metadata:
+  name: engine-authoring
+spec:
+  selector:
+    app: engine-authoring
+  ports:
+  - protocol: TCP
+    port: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engine-authoring
+  labels:
+    app: engine-authoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engine-authoring
+  template:
+    metadata:
+      labels:
+        app: engine-authoring
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xc-engine
+        image: {registry}/{sxc-project}/sitecore-xc-engine:{commerce-version}
+        ports:
+        - containerPort: 5000
+        env:
+        - name: Database_Server
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseservername.txt
+        - name: COMMERCEENGINE_AppSettings__DeploymentId
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: COMMERCEENGINE_CommerceConnector__ClientId
+          valueFrom:
+            secretKeyRef:
+              name: commerce-connect-client
+              key: commerce-connect-clientid.txt
+        - name: COMMERCEENGINE_GlobalDatabaseUserName
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseusername.txt
+        - name: COMMERCEENGINE_GlobalDatabasePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databasepassword.txt
+        - name: COMMERCEENGINE_SharedDatabaseUserName
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseusername.txt
+        - name: COMMERCEENGINE_SharedDatabasePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databasepassword.txt
+        - name: COMMERCEENGINE_SitecorePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-admin
+              key: sitecore-adminpassword.txt
+        - name: COMMERCEENGINE_BraintreeEnvironment
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreeenvironment.txt
+        - name: COMMERCEENGINE_BraintreeMerchantId
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreemerchantid.txt
+        - name: COMMERCEENGINE_BraintreePublicKey
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreepublickey.txt
+        - name: COMMERCEENGINE_BraintreePrivateKey
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreeprivatekey.txt
+        - name: COMMERCEENGINE_SolrUrl
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-connection-string.txt
+        - name: COMMERCEENGINE_AppSettings__EnvironmentName
+          value: HabitatAuthoring
+        - name: COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl
+          value: https://id.globalhost
+        - name: COMMERCEENGINE_AppSettings__InternalSitecoreIdentityServerUrl
+          value: http://id
+        - name: COMMERCEENGINE_AppSettings__AllowedOrigins
+          value: https://bizfx.globalhost|https://cm.globalhost|https://cd.globalhost
+        - name: COMMERCEENGINE_AppSettings__AntiForgeryEnabled
+          value: "false"
+        - name: COMMERCEENGINE_AppSettings__UseHttpsInKestrel
+          value: "false"
+        - name: COMMERCEENGINE_Caching__Redis__Options__Configuration
+          valueFrom:
+            secretKeyRef:
+              name: commerce-redis
+              key: commerce-redis-connection-string.txt
+        - name: COMMERCEENGINE_Caching__Redis__Options__InstanceName
+          value: Redis
+        - name: COMMERCEENGINE_GlobalDatabaseName
+          value: SitecoreCommerce_Global
+        - name: COMMERCEENGINE_GlobalDatabaseServer
+          value: $(Database_Server)
+        - name: COMMERCEENGINE_GlobalTrustedConnection
+          value: "false"
+        - name: COMMERCEENGINE_SharedDatabaseName
+          value: SitecoreCommerce_SharedEnvironments
+        - name: COMMERCEENGINE_SharedDatabaseServer
+          value: $(Database_Server)
+        - name: COMMERCEENGINE_SharedTrustedConnection
+          value: "false"
+        - name: COMMERCEENGINE_SitecoreHost
+          value: $(CM_SERVICE_HOST)
+        - name: COMMERCEENGINE_SitecoreDatabase
+          value: master
+        - name: COMMERCEENGINE_SitecoreUsername
+          value: admin
+        - name: COMMERCEENGINE_SitecoreDomain
+          value: sitecore
+        - name: COMMERCEENGINE_SitecoreProtocol
+          value: http
+        - name: COMMERCEENGINE_SitecoreAllowAnonymousUser
+          value: "true"
+        - name: COMMERCEENGINE_SitecoreExternalProtocol
+          value: https
+        - name: COMMERCEENGINE_SitecoreExternalHost
+          value: cm.globalhost
+        - name: COMMERCEENGINE_IsSolrCloud
+          value: "true"
+        - name: COMMERCEENGINE_StorefrontIndexPrefix_web_index
+          value: sitecore_web_index
+        - name: COMMERCEENGINE_StorefrontIndexPrefix_master_index
+          value: sitecore_master_index
+        - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope
+          value: commerce_OrdersScope
+        - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild
+          value: commerce_OrdersScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixCustomersScope
+          value: commerce_CustomersScope
+        - name: COMMERCEENGINE_SearchIndexPrefixCustomersScope-Rebuild
+          value: commerce_CustomersScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixCatalogItemsScope
+          value: commerce_CatalogItemsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixCatalogItemsScope-Rebuild
+          value: commerce_CatalogItemsScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixPromotionsScope
+          value: commerce_PromotionsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixPromotionsScope-Rebuild
+          value: commerce_PromotionsScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixPriceCardsScope
+          value: commerce_PriceCardsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixPriceCardsScope-Rebuild
+          value: commerce_PriceCardsScope-Rebuild
+        - name: COMMERCEENGINE_EngineAuthoringUrl
+          value: https://authoring.globalhost
+        - name: COMMERCEENGINE_EngineShopsUrl
+          value: https://shops.globalhost
+        - name: COMMERCEENGINE_EngineMinionsUrl
+          value: https://minions.globalhost
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      imagePullSecrets:
+=======
+apiVersion: v1
+kind: Service
+metadata:
+  name: engine-authoring
+spec:
+  selector:
+    app: engine-authoring
+  ports:
+  - protocol: TCP
+    port: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engine-authoring
+  labels:
+    app: engine-authoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engine-authoring
+  template:
+    metadata:
+      labels:
+        app: engine-authoring
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xc-engine
+        image: {registry}/{sxc-project}/sitecore-xc-engine:{commerce-version}
+        ports:
+        - containerPort: 5000
+        env:
+        - name: Database_Server
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseservername.txt
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+        - name: COMMERCEENGINE_AppSettings__DeploymentId
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: COMMERCEENGINE_CommerceConnector__ClientId
+          valueFrom:
+            secretKeyRef:
+              name: commerce-connect-client
+              key: commerce-connect-clientid.txt
+        - name: COMMERCEENGINE_GlobalDatabaseUserName
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseusername.txt
+        - name: COMMERCEENGINE_GlobalDatabasePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databasepassword.txt
+        - name: COMMERCEENGINE_SharedDatabaseUserName
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseusername.txt
+        - name: COMMERCEENGINE_SharedDatabasePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databasepassword.txt
+        - name: COMMERCEENGINE_SitecorePassword
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-admin
+              key: sitecore-adminpassword.txt
+        - name: COMMERCEENGINE_BraintreeEnvironment
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreeenvironment.txt
+        - name: COMMERCEENGINE_BraintreeMerchantId
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreemerchantid.txt
+        - name: COMMERCEENGINE_BraintreePublicKey
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreepublickey.txt
+        - name: COMMERCEENGINE_BraintreePrivateKey
+          valueFrom:
+            secretKeyRef:
+              name: commerce-braintree
+              key: commerce-engine-braintreeprivatekey.txt
+        - name: COMMERCEENGINE_SolrUrl
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-connection-string.txt
+        - name: COMMERCEENGINE_AppSettings__EnvironmentName
+          value: HabitatAuthoring
+        - name: COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl
+          value: https://id.globalhost
+        - name: COMMERCEENGINE_AppSettings__InternalSitecoreIdentityServerUrl
+          value: http://id
+        - name: COMMERCEENGINE_AppSettings__AllowedOrigins
+          value: https://bizfx.globalhost|https://cm.globalhost|https://cd.globalhost
+        - name: COMMERCEENGINE_AppSettings__AntiForgeryEnabled
+          value: "false"
+        - name: COMMERCEENGINE_AppSettings__UseHttpsInKestrel
+          value: "false"
+        - name: COMMERCEENGINE_Caching__Redis__Options__Configuration
+          valueFrom:
+            secretKeyRef:
+              name: commerce-redis
+              key: commerce-redis-connection-string.txt
+        - name: COMMERCEENGINE_Caching__Redis__Options__InstanceName
+          value: Redis
+        - name: COMMERCEENGINE_GlobalDatabaseName
+          value: SitecoreCommerce_Global
+        - name: COMMERCEENGINE_GlobalDatabaseServer
+          value: $(Database_Server)
+        - name: COMMERCEENGINE_GlobalTrustedConnection
+          value: "false"
+        - name: COMMERCEENGINE_SharedDatabaseName
+          value: SitecoreCommerce_SharedEnvironments
+        - name: COMMERCEENGINE_SharedDatabaseServer
+          value: $(Database_Server)
+        - name: COMMERCEENGINE_SharedTrustedConnection
+          value: "false"
+        - name: COMMERCEENGINE_SitecoreHost
+          value: $(CM_SERVICE_HOST)
+        - name: COMMERCEENGINE_SitecoreDatabase
+          value: master
+        - name: COMMERCEENGINE_SitecoreUsername
+          value: admin
+        - name: COMMERCEENGINE_SitecoreDomain
+          value: sitecore
+        - name: COMMERCEENGINE_SitecoreProtocol
+          value: http
+        - name: COMMERCEENGINE_SitecoreAllowAnonymousUser
+          value: "true"
+        - name: COMMERCEENGINE_SitecoreExternalProtocol
+          value: https
+        - name: COMMERCEENGINE_SitecoreExternalHost
+          value: cm.globalhost
+        - name: COMMERCEENGINE_IsSolrCloud
+          value: "true"
+        - name: COMMERCEENGINE_StorefrontIndexPrefix_web_index
+          value: $(SOLR_CORE_PREFIX_NAME)_web_index
+        - name: COMMERCEENGINE_StorefrontIndexPrefix_master_index
+          value: $(SOLR_CORE_PREFIX_NAME)_master_index
+        - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope
+          value: commerce_OrdersScope
+        - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild
+          value: commerce_OrdersScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixCustomersScope
+          value: commerce_CustomersScope
+        - name: COMMERCEENGINE_SearchIndexPrefixCustomersScope-Rebuild
+          value: commerce_CustomersScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixCatalogItemsScope
+          value: commerce_CatalogItemsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixCatalogItemsScope-Rebuild
+          value: commerce_CatalogItemsScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixPromotionsScope
+          value: commerce_PromotionsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixPromotionsScope-Rebuild
+          value: commerce_PromotionsScope-Rebuild
+        - name: COMMERCEENGINE_SearchIndexPrefixPriceCardsScope
+          value: commerce_PriceCardsScope
+        - name: COMMERCEENGINE_SearchIndexPrefixPriceCardsScope-Rebuild
+          value: commerce_PriceCardsScope-Rebuild
+        - name: COMMERCEENGINE_EngineAuthoringUrl
+          value: https://authoring.globalhost
+        - name: COMMERCEENGINE_EngineShopsUrl
+          value: https://shops.globalhost
+        - name: COMMERCEENGINE_EngineMinionsUrl
+          value: https://minions.globalhost
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      imagePullSecrets:
+>>>>>>> Stashed changes
+      - name: sitecore-docker-registry

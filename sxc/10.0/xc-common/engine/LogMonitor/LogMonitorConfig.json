@@ -1,0 +1,26 @@
+<<<<<<< Updated upstream
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "File",
+                "directory": "c:\\Engine\\wwwroot\\logs",
+                "filter": "*.txt",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+=======
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "File",
+                "directory": "c:\\Engine\\wwwroot\\logs",
+                "filter": "*.txt",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+>>>>>>> Stashed changes
+}

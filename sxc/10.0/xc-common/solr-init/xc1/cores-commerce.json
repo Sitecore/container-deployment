@@ -1,0 +1,20 @@
+<<<<<<< Updated upstream
+{
+    "commerce": [
+        "CatalogItems",
+        "Customers",
+        "Orders",
+        "PriceCards",
+        "Promotions"
+    ]
+=======
+{
+    "commerce": [
+        "CatalogItems",
+        "Customers",
+        "Orders",
+        "PriceCards",
+        "Promotions"
+    ]
+>>>>>>> Stashed changes
+}
