@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <configSections>
+    <section name="cachingConfiguration"
+             type="Microsoft.Practices.EnterpriseLibrary.Caching.Configuration.CacheManagerSettings, Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+             requirePermission="true" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+  </configSections>
+
+  <cachingConfiguration configSource="Caching.config" xdt:Transform="InsertIfMissing" />
+  <appSettings xdt:Transform="InsertIfMissing">
+    <add key="webpages:Version" value="2.0.0.0" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="webpages:Enabled" value="false" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="PreserveLoginUrl" value="true" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="ClientValidationEnabled" value="true" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="ValidationSettings:UnobtrusiveValidationMode" value="None" xdt:Transform="InsertIfMissing"
+         xdt:Locator="Match(key)" />
+  </appSettings>
+
+  <system.web xdt:Transform="InsertIfMissing">
+    <compilation defaultLanguage="c#" debug="false" targetFramework="4.6.2" xdt:Transform="InsertIfMissing">
+      <assemblies xdt:Transform="InsertIfMissing">
+        <add assembly="System.Runtime, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+             xdt:Transform="InsertIfMissing" xdt:Locator="Match(assembly)" />
+        <add assembly="System.ComponentModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+             xdt:Transform="InsertIfMissing" xdt:Locator="Match(assembly)" />
+      </assemblies>
+    </compilation>
+
+    <profile defaultProvider="switcher" xdt:Transform="InsertIfMissing" />
+
+    <caching xdt:Transform="InsertIfMissing">
+      <cache disableMemoryCollection="false" disableExpiration="false" percentagePhysicalMemoryUsedLimit="50"
+             xdt:Transform="InsertIfMissing" />
+    </caching>
+
+    <customErrors defaultRedirect="/error" xdt:Transform="InsertIfMissing" />
+    <sessionState timeout="1" xdt:Transform="Replace" />
+  </system.web>
+  <system.webServer xdt:Transform="InsertIfMissing">
+    <validation validateIntegratedModeConfiguration="false" xdt:Transform="InsertIfMissing" />
+  </system.webServer>
+</configuration>

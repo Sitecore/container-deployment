@@ -1,0 +1,12 @@
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "File",
+                "directory": "c:\\Engine\\wwwroot\\logs",
+                "filter": "*.txt",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+}
