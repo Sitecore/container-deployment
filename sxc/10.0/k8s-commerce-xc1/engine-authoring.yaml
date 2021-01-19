@@ -38,6 +38,11 @@ spec:
             secretKeyRef:
               name: sitecore-database
               key: sitecore-databaseservername.txt
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
         - name: COMMERCEENGINE_AppSettings__DeploymentId
           valueFrom:
             fieldRef:
@@ -147,9 +152,9 @@ spec:
         - name: COMMERCEENGINE_IsSolrCloud
           value: "true"
         - name: COMMERCEENGINE_StorefrontIndexPrefix_web_index
-          value: sitecore_web_index
+          value: $(SOLR_CORE_PREFIX_NAME)_web_index
         - name: COMMERCEENGINE_StorefrontIndexPrefix_master_index
-          value: sitecore_master_index
+          value: $(SOLR_CORE_PREFIX_NAME)_master_index
         - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope
           value: commerce_OrdersScope
         - name: COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild
