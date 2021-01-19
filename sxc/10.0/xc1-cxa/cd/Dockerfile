@@ -12,7 +12,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 COPY --from=sxa_resources C:\module\cd\content C:\inetpub\wwwroot
 COPY --from=sxa_resources C:\module\tools C:\module\tools
 
-COPY wdp/ C:/inetpub/wwwroot
+COPY Content/Website/ wdp/ C:/inetpub/wwwroot/
 COPY xdts/ C:/inetpub/wwwroot/App_Data/SxaXdt
 
 RUN C:\module\tools\Initialize-Content.ps1 -TargetPath C:\inetpub\wwwroot; `
