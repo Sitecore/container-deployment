@@ -1,0 +1,16 @@
+tls:
+  certificates:
+    - certFile: C:\etc\traefik\certs\xc0cm.localhost.crt
+      keyFile: C:\etc\traefik\certs\xc0cm.localhost.key
+    - certFile: C:\etc\traefik\certs\xc0id.localhost.crt
+      keyFile: C:\etc\traefik\certs\xc0id.localhost.key
+    - certFile: C:\etc\traefik\certs\bizfx.localhost.crt
+      keyFile: C:\etc\traefik\certs\bizfx.localhost.key
+    - certFile: C:\etc\traefik\certs\authoring.localhost.crt
+      keyFile: C:\etc\traefik\certs\authoring.localhost.key
+    - certFile: C:\etc\traefik\certs\shops.localhost.crt
+      keyFile: C:\etc\traefik\certs\shops.localhost.key
+    - certFile: C:\etc\traefik\certs\minions.localhost.crt
+      keyFile: C:\etc\traefik\certs\minions.localhost.key
+    - certFile: C:\etc\traefik\certs\ops.localhost.crt
+      keyFile: C:\etc\traefik\certs\ops.localhost.key

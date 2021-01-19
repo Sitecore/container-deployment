@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1" xdt:Transform="InsertIfMissing">
+      <dependentAssembly name="IdentityModel" xmlns="urn:schemas-microsoft-com:asm.v1" xdt:Transform="Insert">
+        <assemblyIdentity name="IdentityModel" publicKeyToken="e7877f4675df049f" xmlns="urn:schemas-microsoft-com:asm.v1" />
+        <codeBase version="3.10.3.0" href="ceconnectbin/IdentityModel.dll" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
