@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      initContainers:
+      - name: wait-for-cd
+        image: mcr.microsoft.com/powershell:lts-ubuntu-16.04
+        command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://cd/healthz/ready).StatusCode -eq 200} catch { $false }));"]
+      containers:
+      - name: sitecore-xp0-app
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: REACT_APP_FIREBASE_MESSAGING_PUSH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: firebase-messaging-push-key
+              key: firebase-messagingpushkey.txt
+        - name: REACT_APP_FIREBASE_SENDER_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-sender-id
+              key: firebase-senderid.txt
+        - name: REACT_APP_FIREBASE_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-project-id
+              key: firebase-projectid.txt
+        - name: REACT_APP_FIREBASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: firebase-api-key
+              key: firebase-apikey.txt
+        - name: REACT_APP_FIREBASE_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-app-id
+              key: firebase-appid.txt
+        - name: REACT_APP_GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-api-key
+              key: google-apikey.txt
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: {{ tpl .value $ }}
+        {{- end }}
+      imagePullSecrets:
+      - name: sitecore-docker-registry

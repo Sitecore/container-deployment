@@ -1,0 +1,17 @@
+image: mcr.microsoft.com/powershell:nanoserver-1809
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+
+resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+
+env: {}

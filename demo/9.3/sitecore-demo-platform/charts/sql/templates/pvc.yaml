@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "sql.pvcName" . }}
+spec:
+  accessModes:
+{{ toYaml .Values.volumeClaim.accessModes | indent 4 }}
+{{- if not ( eq .Values.volumeClaim.storageClassName  "" ) }}
+  storageClassName: "{{ .Values.volumeClaim.storageClassName }}"
+{{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.volumeClaim.storageSize }}

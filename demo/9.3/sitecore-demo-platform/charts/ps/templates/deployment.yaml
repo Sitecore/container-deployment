@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ps.fullname" . }}
+  labels:
+    {{- include "ps.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "ps.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ps.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "ps.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}	
+          env:
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: CONN_STRING_CORE
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Core;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: CONN_STRING_MASTER
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Master;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: CONN_STRING_WEB
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Web;User ID=sa;Password=$(SA_PASSWORD)"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{  .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-sql"
+            - name: port
+              value: "1433" 
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

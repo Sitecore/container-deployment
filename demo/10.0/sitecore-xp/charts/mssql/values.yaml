@@ -1,0 +1,7 @@
+image: scr.sitecore.com/sxp/nonproduction/mssql-developer:2017-10.0.0-ltsc2019
+
+volumeClaim:
+  storageClassName: "managed-premium"
+  storageSize: "5Gi"
+  accessModes: 
+    - ReadWriteOnce

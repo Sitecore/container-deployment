@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cd
+spec:
+  selector:
+    app: cd
+  ports:
+  - protocol: TCP
+    port: 80

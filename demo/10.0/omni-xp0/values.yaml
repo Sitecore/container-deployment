@@ -1,0 +1,40 @@
+global:
+  sitecore:
+    appcd:
+      host: ""
+    kioskcd:
+      host: ""
+    app:
+      host: ""
+    kiosk:
+      host: ""
+
+platform-xp0:
+  sitecore-xp0:
+    mssql:
+      boot:
+        overrideScripts: "Demo-Boot-Platform-Linux.ps1;Demo-Boot-Omni-Linux.ps1"
+
+    xdbautomationworker:
+      env:
+        - name: REACT_APP_PUBLIC_HOST_NAME
+          value: |-
+            "//{{ .Values.global.sitecore.app.host }}"
+
+app:
+  env:
+    - name: SITECORE_API_HOST
+      value: |-
+        "https://{{ .Values.global.sitecore.appcd.host }}"
+    - name: PROXY_API_HOST
+      value: |-
+        "https://{{ .Values.global.sitecore.app.host }}"
+
+kiosk:
+  env:
+    - name: SITECORE_API_HOST
+      value: |-
+        "https://{{ .Values.global.sitecore.kioskcd.host }}"
+    - name: PROXY_API_HOST
+      value: |-
+        "https://{{ .Values.global.sitecore.kiosk.host }}"

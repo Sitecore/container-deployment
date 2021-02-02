@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "xconnect.fullname" . }}
+  labels:
+    {{- include "xconnect.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "xconnect.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "xconnect.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "xconnect.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - powershell.exe
+            - -NoLogo
+            - -NoProfile
+            - -File
+            - C:\tools\entrypoints\iis\development.ps1
+          env:
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: SITECORE_SITECORE__XCONNECT__COLLECTIONSEARCH__SERVICES__SOLR.SOLRREADERSETTINGS__OPTIONS__REQUIREHTTPS
+              value: 'false'    
+            - name: SITECORE_SITECORE__XCONNECT__SEARCHINDEXER__SERVICES__SOLR.SOLRWRITERSETTINGS__OPTIONS__REQUIREHTTPS
+              value: 'false'
+            - name: SITECORE_CONNECTIONSTRINGS_MESSAGING
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Messaging;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_PROCESSING.ENGINE.STORAGE
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Processing.Engine.Storage;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_REPORTING
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Reporting;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.MARKETINGAUTOMATION
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Marketingautomation;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.PROCESSING.POOLS
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Processing.pools;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.REFERENCEDATA
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Referencedata;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_COLLECTION
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Xdb.Collection.ShardMapManager;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_SOLRCORE
+              value: "http://{{ include "solr.fullName" . }}:8983/solr/sitecore_xdb"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-sql"
+            - name: port
+              value: "1433"   
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

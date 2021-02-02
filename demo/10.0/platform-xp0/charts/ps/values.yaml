@@ -1,0 +1,60 @@
+replicaCount: 1
+
+image:
+
+pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  
+  create: true
+  
+  annotations: {}
+  
+  name:
+
+podSecurityContext: {}
+
+
+securityContext: {}
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+cmServiceNameOverride: ""
+sqlServiceNameOverride: ""
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts: []
+  tls: []
+ 
+resources: 
+  limits:
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
+
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 20
+  timeoutSeconds: 60
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 60
+
+nodeSelector:
+  beta.kubernetes.io/os: windows
+
+tolerations: []
+
+affinity: {}
