@@ -1,0 +1,9 @@
+apiVersion: v2
+name: automationengine
+description: A Sitecore Helm chart for Kubernetes
+icon: https://mygetwwwsitecoreeu.blob.core.windows.net/feedicons/sc-packages.png?202004140646
+type: application
+
+version: 0.1.0
+
+appVersion: 9.3.0

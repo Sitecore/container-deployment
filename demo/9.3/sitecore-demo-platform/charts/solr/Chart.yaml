@@ -1,0 +1,7 @@
+apiVersion: v2
+name: solr
+description: A Sitecore Helm chart for Kubernetes
+icon: https://mygetwwwsitecoreeu.blob.core.windows.net/feedicons/sc-packages.png?202004140646
+type: application
+version: 1.0.0
+appVersion: 9.3.0

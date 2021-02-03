@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "automationengine.fullname" . }}
+  labels:
+    {{- include "automationengine.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "automationengine.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "automationengine.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "automationengine.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command: 
+            - powershell.exe
+            - -NoLogo
+            - -NoProfile
+            - -File
+            - C:\tools\entrypoints\worker\Development.ps1
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.tag }}"
+          env:
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: SITECORE_CONNECTIONSTRINGS_XCONNECT.COLLECTION
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.MARKETINGAUTOMATION
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.MarketingAutomation;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.REFERENCEDATA
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.ReferenceData;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_MESSAGING
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Messaging;User ID=sa;Password=$(SA_PASSWORD)"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-sql"
+            - name: port
+              value: "1433"
+        - name: wait-for-xconnect
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-xconnect"
+            - name: port
+              value: "80"
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

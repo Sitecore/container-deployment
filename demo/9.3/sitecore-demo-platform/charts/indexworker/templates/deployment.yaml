@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "indexworker.fullname" . }}
+  labels:
+    {{- include "indexworker.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "indexworker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "indexworker.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "indexworker.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.tag }}"
+          # command:
+          #   - powershell.exe
+          #   - -NoLogo
+          #   - -NoProfile
+          #   - -File
+          #   - C:\tools\entrypoints\worker\Development.ps1
+          env:
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt                  
+            - name: SITECORE_CONNECTIONSTRINGS_COLLECTION
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Xdb.Collection.ShardMapManager;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_SOLRCORE
+              value: "http://{{ include "solr.fullName" . }}:8983/solr/sitecore_xdb"
+            - name: SITECORE_SITECORE__XCONNECT__SEARCHINDEXER__SERVICES__SOLR.SOLRREADERSETTINGS__OPTIONS__REQUIREHTTPS
+              value: "false"
+            - name: SITECORE_SITECORE__XCONNECT__SEARCHINDEXER__SERVICES__SOLR.SOLRWRITERSETTINGS__OPTIONS__REQUIREHTTPS
+              value: "false"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-sql"
+            - name: port
+              value: "1433"
+        - name: wait-for-xconnect
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-xconnect"
+            - name: port
+              value: "80"
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

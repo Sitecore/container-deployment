@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+      - name: sitecore-docker-registry
+      containers:
+      - name: solr-init
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        env:
+        - name: SITECORE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-string.txt
+      restartPolicy: Never
+  backoffLimit: 5

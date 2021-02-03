@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sql.fullname" . }}
+  labels:
+    {{- include "sql.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "sql.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "sql.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "sql.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: "{{ .Chart.Name }}-configure-volume-permission"
+        image: busybox
+        command:
+        - sh
+        - -c
+        - chmod -R 777 /var/opt/mssql/data
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: data
+            mountPath: /var/opt/mssql/data
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MSSQL_PID
+              value: "{{ .Values.edition }}"
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: USER_PASSWORD 
+              value: "{{ .Values.user.password }}"
+            - name: ADMIN_PASSWORD 
+              value: "{{ .Values.admin.password }}"
+            - name: ADMIN_USER_NAME 
+              value: "{{ .Values.admin.username }}"
+            - name: DISABLE_DEFAULT_ADMIN 
+              value: "{{ .Values.admin.disable.default }}"
+            - name: DAM_URL
+              value: "{{ .Values.dam.url }}"
+            - name: SQL_HOSTNAME
+              value: "{{ include "sql.fullName" . }}"
+            - name: EXM_BASE_URL
+              value: "{{ .Values.exm.baseUrl }}"
+            - name: EXM_KIOSK_CD_BASE_URL
+              value: "{{ .Values.exm.kioskCdBaseUrl }}"
+            - name: EXM_APP_BASE_URL
+              value: "{{ .Values.exm.appBaseUrl }}"
+            - name: BOOT_OVERRIDE_SCRIPTS
+              value: "{{ .Values.boot.overrideScripts }}"
+          ports:
+            - name: default
+              containerPort: 1433
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 1433
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 1433
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: "/var/opt/mssql/data"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "sql.pvcName" . }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

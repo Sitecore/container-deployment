@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      containers:
+      - name: sitecore-redis
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379
+      imagePullSecrets:
+      - name: sitecore-docker-registry

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+  labels:
+    app: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  template:
+    metadata:
+      labels:
+        app: solr
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      containers:
+      - name: solr
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8983
+        env:
+        - name: SOLR_MODE
+          value: solrcloud
+        volumeMounts:
+          - name: data
+            mountPath: "data"
+      imagePullSecrets:
+      - name: sitecore-docker-registry
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+              claimName: solr

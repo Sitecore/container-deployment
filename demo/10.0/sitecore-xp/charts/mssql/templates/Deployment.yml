@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mssql
+  labels:
+    app: mssql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql
+  template:
+    metadata:
+      labels:
+        app: mssql
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      containers:
+      - name: mssql
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1433
+        env:
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databasepassword.txt
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: USER_PASSWORD 
+          value: "b"
+        - name: ADMIN_USER_NAME
+          value: "sitecore\\superuser"
+        - name: DISABLE_DEFAULT_ADMIN
+          value: "FALSE"
+        - name: EXM_BASE_URL
+          value: "http://localhost"
+        - name: DAM_URL
+          value: "http://localhost"
+        - name: SITECORE_ADMIN_PASSWORD
+          value: "b"
+        - name: SQL_SERVER
+          value: mssql
+        volumeMounts:
+          - name: data
+            mountPath: "data"
+      imagePullSecrets:
+      - name: sitecore-docker-registry
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+              claimName: mssql

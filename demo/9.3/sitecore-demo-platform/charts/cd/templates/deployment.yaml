@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cd.fullname" . }}
+  labels:
+    {{- include "cd.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "cd.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "cd.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "cd.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.tag  }}"
+          command:
+            - powershell.exe
+            - -NoLogo
+            - -NoProfile
+            - -File
+            - C:\tools\entrypoints\iis\development.ps1
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+              value: "ContentDelivery"
+            - name: SITECORE_APPSETTINGS_SXAXM__DEFINE
+              value: "sxaconnect"
+            - name: SITECORE_APPSETTINGS_ENV__DEFINE
+              value: "Docker"
+            - name: SITECORE_APPSETTINGS_UNICORN__DEFINE
+              value: "Disabled"
+            - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
+              value: "Disabled"
+            - name: SITECORE_APPSETTINGS_INTEGRATIONS__DEFINE
+              value: "None"
+
+            - name: ENTRYPOINT_STDOUT_IIS_ACCESS_LOG_ENABLED
+              value: "{{ .Values.entrypoint.iisAccessLogEnabled }}"
+            - name: ENTRYPOINT_STDOUT_IIS_ERROR_LOG_ENABLED
+              value: "{{ .Values.entrypoint.iisErrorLogEnabled }}"
+            - name: ENTRYPOINT_STDOUT_SITECORE_LOG_ENABLED
+              value: "{{ .Values.entrypoint.sitecoreLogEnabled }}"
+            - name: SITECORE_CONNECTIONSTRINGS_CORE
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Core;User=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_SECURITY
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Core;User=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_WEB
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.Web;User=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_EXPERIENCEFORMS
+              value: "Data Source={{ include "sql.fullName" . }};Initial Catalog=Sitecore.ExperienceForms;User=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_SOLR.SEARCH
+              value: "http://{{ include "solr.fullName" . }}:8983/solr"
+            - name: SITECORE_CONNECTIONSTRINGS_MESSAGING
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Messaging;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.MARKETINGAUTOMATION
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.MarketingAutomation;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.PROCESSING.POOLS
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Processing.Pools;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.REFERENCEDATA
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.ReferenceData;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.PROCESSING.TASKS
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Processing.Tasks;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_EXM.MASTER
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.EXM.Master;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_REPORTING
+              value: "Data Source={{ include "sql.fullName" . }};Database=Sitecore.Reporting;User ID=sa;Password=$(SA_PASSWORD)"
+            - name: SITECORE_CONNECTIONSTRINGS_SITECORE.REPORTING.CLIENT
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: SITECORE_CONNECTIONSTRINGS_XCONNECT.COLLECTION
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.MARKETINGAUTOMATION.OPERATIONS.CLIENT
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.MARKETINGAUTOMATION.REPORTING.CLIENT
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: SITECORE_CONNECTIONSTRINGS_XDB.REFERENCEDATA.CLIENT
+              value: "http://{{ include "xconnect.fullName" . }}"
+            - name: Sitecore_AppSettings_Telerik.AsyncUpload.ConfigurationEncryptionKey
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-telerik
+                  key: sitecore-telerikencryptionkey.txt
+            - name: Sitecore_AppSettings_Telerik.Upload.ConfigurationHashKey
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-telerik
+                  key: sitecore-telerikencryptionkey.txt
+            - name: Sitecore_AppSettings_Telerik.Web.UI.DialogParametersEncryptionKey
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-telerik
+                  key: sitecore-telerikencryptionkey.txt
+          ports:
+            - name: default
+              containerPort: 80
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-sql"
+            - name: port
+              value: "1433"
+        - name: wait-for-xconnect
+          image: sitecoredemocontainers.azurecr.io/sitecore-readiness:latest
+          env:
+            - name: host
+              value: "{{ .Release.Name }}-xconnect"
+            - name: port
+              value: "80"
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,66 @@
+image:
+  tag:
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 1433
+
+xconnectServiceNameOverride: ""
+
+edition: Express
+sqlSaPassword:
+
+resources:
+  limits:
+    cpu: 2
+    memory: 4Gi
+  requests:
+    cpu: 700m
+    memory: 2Gi
+
+volumeClaim:
+  storageClassName: ""
+  storageSize: ""
+  accessModes: []
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations: []
+
+affinity: {}
+
+user:
+  password: b
+
+# alias admin
+admin:
+  username: sitecore\\superuser
+  password: b
+  disable:
+    default: 'FALSE'
+
+dam:
+  url: bogus
+
+exm:
+  baseUrl: bogus
+  kioskCdBaseUrl: bogus
+  appBaseUrl: bogus
+
+boot:
+  overrideScripts: "Demo-Boot-Platform.ps1"

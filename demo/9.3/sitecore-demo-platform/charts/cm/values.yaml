@@ -1,0 +1,78 @@
+replicaCount: 1
+
+image:
+  tag:
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+solrServiceNameOverride: ""
+sqlServiceNameOverride: ""
+xconnectServiceNameOverride: ""
+
+sqlSaPassword:
+adminPassword:
+telerikEncryptionKey:
+unicornSharedSecret:
+
+cmp:
+  contenthub:
+  servicebussubscription:
+  servicebusentitypathin:
+  servicebusentitypathout:
+   
+
+sfmc: "client id=;client secret=;auth endpoint=https://example.com;rest endpoint=https://example.com;soap endpoint=https://example.com"
+
+entrypoint:
+  sitecoreLogEnabled: "true"
+  iisAccessLogEnabled: "false"
+  iisErrorLogEnabled: "false"
+
+ingress:
+  enabled: false
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+  hosts: []
+  tls: []
+  
+resources:
+  limits:
+    cpu: 2
+    memory: 4Gi
+  requests:
+    cpu: 1
+    memory: 4Gi
+
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 20
+  timeoutSeconds: 60
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 60
+
+nodeSelector:
+  beta.kubernetes.io/os: windows
+
+tolerations: []
+
+affinity: {}
+

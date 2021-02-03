@@ -1,0 +1,6 @@
+image: scr.sitecore.com/sxp/nonproduction/solr:8.4.0-10.0.0-ltsc2019
+volumeClaim:
+  storageClassName: "managed-premium"
+  storageSize: "1Gi"
+  accessModes:
+    - ReadWriteOnce
