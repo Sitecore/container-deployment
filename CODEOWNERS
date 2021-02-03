@@ -10,4 +10,4 @@
 # The files in the `/demo/` directory are only expected
 # to be updated by demo team. Setting CODEOWNER to
 # demo team members.
-/demo/ @jeanfrancoislarente
+/demo/ @jeanfrancoislarente @adoprog
