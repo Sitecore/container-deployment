@@ -4,4 +4,3 @@ metadata:
     name: nginx-ingress-controller
 data:
     use-forwarded-headers: "true"
-

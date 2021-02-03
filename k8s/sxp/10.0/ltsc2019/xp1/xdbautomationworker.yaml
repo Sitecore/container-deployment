@@ -106,4 +106,3 @@ spec:
           failureThreshold: 10
       imagePullSecrets:
       - name: sitecore-docker-registry
-

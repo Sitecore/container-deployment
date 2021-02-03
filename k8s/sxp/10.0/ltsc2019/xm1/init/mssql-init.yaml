@@ -78,4 +78,3 @@ spec:
               key: sitecore-forms-database-password.txt
       restartPolicy: Never
   backoffLimit: 5
-

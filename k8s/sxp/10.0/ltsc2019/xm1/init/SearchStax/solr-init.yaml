@@ -40,4 +40,3 @@ spec:
               key: sitecore-searchstax-deployment-uid.txt
       restartPolicy: Never
   backoffLimit: 5
-

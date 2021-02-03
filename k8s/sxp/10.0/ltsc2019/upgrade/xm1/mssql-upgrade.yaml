@@ -46,4 +46,3 @@ spec:
           value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Experienceforms;User ID=$(SQL_USER_NAME);Password=$(SQL_PASSWORD);
       restartPolicy: Never
   backoffLimit: 5
-

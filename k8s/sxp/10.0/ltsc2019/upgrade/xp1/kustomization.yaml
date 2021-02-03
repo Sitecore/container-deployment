@@ -18,4 +18,3 @@ images:
 - name: sitecore-xp1-mssql-upgrade
   newName: scr.sitecore.com/sxp/sitecore-xp1-mssql-upgrade
   newTag: 10.0-ltsc2019
-
