@@ -34,4 +34,3 @@ spec:
         - containerPort: 6379
       imagePullSecrets:
       - name: sitecore-docker-registry
-

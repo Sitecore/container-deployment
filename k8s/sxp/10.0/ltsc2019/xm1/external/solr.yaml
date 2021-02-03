@@ -37,4 +37,3 @@ spec:
           value: solrcloud
       imagePullSecrets:
       - name: sitecore-docker-registry
-
