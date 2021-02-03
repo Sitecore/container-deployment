@@ -5,4 +5,9 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
-*       @sc-jonasbangchristensen
+*       @sc-jonasbangchristensen @michaelbaranov
+
+# The files in the `/demo/` directory are only expected
+# to be updated by demo team. Setting CODEOWNER to
+# demo team members.
+/demo/ @jeanfrancoislarente
