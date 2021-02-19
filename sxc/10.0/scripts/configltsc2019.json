@@ -1,7 +1,7 @@
 {    
-    "shorttag":  "10.0-ltsc2019",
-    "sxptag":  "10.0-ltsc2019",
-    "customercommercetag":  "10.0-ltsc2019",
+    "shorttag":  "10.0.0-ltsc2019",
+    "sxptag":  "10.0.0-ltsc2019",
+    "customercommercetag":  "10.0.0-ltsc2019",
     "spetag":  "6.1.1.205-10.0.17763.1339-1809",
     "sxatag":  "10.0.0.3138.205-10.0.17763.1339-1809",
     "scrdockerregistry":  "scr.sitecore.com",
@@ -10,6 +10,6 @@
     "baseproject":  "base",
     "modulesproject":  "modules",
     "nonproductionproject":  "nonproduction",
-    "nonproductiontag":  "10.0-ltsc2019",
+    "nonproductiontag":  "10.0.0-ltsc2019",
     "os_image_tag":  "ltsc2019"
 }

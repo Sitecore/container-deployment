@@ -1,6 +1,7 @@
 version: "2.4"
 services:
   mssql:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/mssql/common
       dockerfile: ../standalone/Dockerfile
@@ -9,6 +10,7 @@ services:
         SITECORE_CORE_DB: ${SITECORE_CORE_DB}
     image: xc1-mssql
   mssql-init:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/mssql/common
       dockerfile: ../init/Dockerfile
@@ -17,6 +19,7 @@ services:
         TOPOLOGY: xc1
     image: xc1-mssql-init
   solr:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/solr
       args:
@@ -24,6 +27,7 @@ services:
         SOLR_COMMERCE_CORE_NAMES: "CatalogItems,Customers,Orders,PriceCards,Promotions"
     image: xc1-solr
   solr-init:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/solr-init
       args:
@@ -32,6 +36,7 @@ services:
         SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
     image: xc1-solr-init
   rep:
+    isolation: ${ISOLATION}
     build:
       context: ./prcrep
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -39,6 +44,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-rep:${XP_SITECORE_TAG}
     image: sitecore-xc1-rep
   xdbcollection:
+    isolation: ${ISOLATION}
     build:
       context: ./xdbcollection
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -46,6 +52,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbcollection:${XP_SITECORE_TAG}
     image: sitecore-xc1-xdbcollection
   prc:
+    isolation: ${ISOLATION}
     build:
       context: ./prcrep
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -53,6 +60,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-prc:${XP_SITECORE_TAG}
     image: sitecore-xc1-prc
   cm:
+    isolation: ${ISOLATION}
     build:
       context: ./cm
       dockerfile: ../../xc-common/cd-cm/Dockerfile
@@ -60,6 +68,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cm:${XP_SITECORE_TAG}
     image: xc1-cm
   cd:
+    isolation: ${ISOLATION}
     build:
       context: ./cd
       dockerfile: ../../xc-common/cd-cm/Dockerfile
@@ -67,6 +76,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cd:${XP_SITECORE_TAG}
     image: xc1-cd
   xdbsearch:
+    isolation: ${ISOLATION}
     build:
       context: ./xdbsearch
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -74,6 +84,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbsearch:${XP_SITECORE_TAG}
     image: sitecore-xc1-xdbsearch
   xdbsearchworker:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/xdbworkers
       args:
@@ -81,6 +92,7 @@ services:
         CONTENT_PATH: xdbsearchworker/wdp/App_Data/jobs/continuous/IndexWorker
     image: sitecore-xc1-xdbsearchworker
   xdbautomation:
+    isolation: ${ISOLATION}
     build:
       context: ./xdbautomation
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -88,6 +100,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbautomation:${XP_SITECORE_TAG}
     image: sitecore-xc1-xdbautomation
   xdbautomationworker:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/xdbworkers
       args:
