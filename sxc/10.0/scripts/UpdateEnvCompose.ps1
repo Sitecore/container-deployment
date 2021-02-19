@@ -24,7 +24,7 @@ param(
     [Parameter(Mandatory)]
     [string]$reportingApiKey,
     [ValidateSet("default", "process", "hyperv")]
-    [string]$isolation = "default"
+    [string]$isolation = "process"
 )
 <#
 .SYNOPSIS

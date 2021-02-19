@@ -1,6 +1,7 @@
 version: "3.7"
 services:
   mssql:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-mssql
     build:
       context: ./mssql
@@ -10,6 +11,7 @@ services:
         SPE_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}spe-assets:${SPE_SITECORE_TAG}
         SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
   mssql-init:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-mssql-init
     build:
       context: ./mssql
@@ -19,6 +21,7 @@ services:
         SPE_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}spe-assets:${SPE_SITECORE_TAG}
         SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
   solr:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-solr
     build:
       context: ./solr
@@ -27,6 +30,7 @@ services:
         BASE_IMAGE: xc1-solr:latest
         SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
   solr-init:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-solr-init
     build:
       context: ./solr
@@ -35,6 +39,7 @@ services:
         BASE_IMAGE: xc1-solr-init:latest
         SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
   cd:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-cd
     build:
       context: ./cd
@@ -42,6 +47,7 @@ services:
         BASE_IMAGE: xc1-cd:latest
         SXA_RESOURCES_IMAGE: ${MODULES_SITECORE_DOCKER_REGISTRY}sxa-xp1-assets:${SXA_SITECORE_TAG}
   cm:
+    isolation: ${ISOLATION}
     image: sitecore-xc1-cm
     build:
       context: ./cm
