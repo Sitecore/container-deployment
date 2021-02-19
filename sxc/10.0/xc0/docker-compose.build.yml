@@ -1,6 +1,7 @@
 version: "2.4"
 services:
   mssql:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/mssql/common
       dockerfile: ../standalone/Dockerfile
@@ -9,6 +10,7 @@ services:
         SITECORE_CORE_DB: ${SITECORE_CORE_DB}
     image: sitecore-xc0-mssql
   solr:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/solr
       args:
@@ -16,6 +18,7 @@ services:
         SOLR_COMMERCE_CORE_NAMES: "CatalogItems,Customers,Orders,PriceCards,Promotions"
     image: sitecore-xc0-solr
   cm:
+    isolation: ${ISOLATION}
     build:
       context: ./cm
       dockerfile: ../../xc-common/cd-cm/Dockerfile
@@ -23,6 +26,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-cm:${XP_SITECORE_TAG}
     image: sitecore-xc0-cm
   xconnect:
+    isolation: ${ISOLATION}
     build:
       context: ./xconnect
       dockerfile: ../../xc-common/prc-rep-xdba-xdbc/Dockerfile
@@ -30,6 +34,7 @@ services:
         BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-xconnect:${XP_SITECORE_TAG}
     image: sitecore-xc0-xconnect
   xdbsearchworker:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/xdbworkers
       args:
@@ -37,6 +42,7 @@ services:
         CONTENT_PATH: xdbsearchworker/wdp/App_Data/jobs/continuous/IndexWorker
     image: sitecore-xc0-xdbsearchworker
   xdbautomationworker:
+    isolation: ${ISOLATION}
     build:
       context: ../xc-common/xdbworkers
       args:
