@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mssql-upgrade
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: mssql-upgrade
+        image: sitecore-xm1-mssql-upgrade
+        env:
+        - name: SQL_DATABASE_PREFIX
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: sql-database-prefix.txt
+        - name: SQL_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: sql-server.txt
+        - name: SQL_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sql-user-name.txt
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sql-password.txt
+        - name: SITECORE_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sitecore-license.txt
+        - name: Sitecore_ConnectionStrings_Core
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Core;User ID=$(SQL_USER_NAME);Password=$(SQL_PASSWORD);
+        - name: Sitecore_ConnectionStrings_Master
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Master;User ID=$(SQL_USER_NAME);Password=$(SQL_PASSWORD);
+        - name: Sitecore_ConnectionStrings_Web
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Web;User ID=$(SQL_USER_NAME);Password=$(SQL_PASSWORD);
+      restartPolicy: Never
+  backoffLimit: 5

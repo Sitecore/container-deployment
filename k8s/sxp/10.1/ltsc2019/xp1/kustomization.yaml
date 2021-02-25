@@ -1,0 +1,60 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: sitecore-xp1-cd
+  newName: scr.sitecore.com/sxp/sitecore-xp1-cd
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-cm
+  newName: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-id
+  newName: scr.sitecore.com/sxp/sitecore-id
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-cortexprocessing
+  newName: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessing
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-cortexprocessingworker
+  newName: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessingworker
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-cortexreporting
+  newName: scr.sitecore.com/sxp/sitecore-xp1-cortexreporting
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-prc
+  newName: scr.sitecore.com/sxp/sitecore-xp1-prc
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbautomation
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbautomation
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbautomationrpt
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbautomationrpt
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbautomationworker
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbautomationworker
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbcollection
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbcollection
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbrefdata
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbrefdata
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbsearch
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbsearch
+  newTag: 10.1-ltsc2019
+- name: sitecore-xp1-xdbsearchworker
+  newName: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker
+  newTag: 10.1-ltsc2019
+resources:
+- cm.yaml
+- cd.yaml
+- id.yaml
+- cortexprocessing.yaml
+- cortexprocessingworker.yaml
+- cortexreporting.yaml
+- prc.yaml
+- xdbautomation.yaml
+- xdbautomationrpt.yaml
+- xdbautomationworker.yaml
+- xdbcollection.yaml
+- xdbrefdata.yaml
+- xdbsearch.yaml
+- xdbsearchworker.yaml

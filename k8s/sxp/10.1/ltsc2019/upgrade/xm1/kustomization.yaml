@@ -1,0 +1,19 @@
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: mssql-upgrade-config
+  files:
+  - configuration/sql-server.txt
+  - configuration/sql-database-prefix.txt
+secretGenerator:
+- name: mssql-upgrade-secret
+  files:
+  - configuration/sql-user-name.txt
+  - configuration/sql-password.txt
+  - configuration/sitecore-license.txt
+resources:
+- mssql-upgrade.yaml
+images:
+- name: sitecore-xm1-mssql-upgrade
+  newName: scr.sitecore.com/sxp/sitecore-xm1-mssql-upgrade
+  newTag: 10.1-ltsc2019
