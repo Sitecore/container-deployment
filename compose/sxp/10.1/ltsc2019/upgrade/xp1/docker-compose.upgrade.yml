@@ -1,0 +1,17 @@
+version: "2.4"
+services:
+  mssql-upgrade:
+    image: ${SITECORE_DOCKER_REGISTRY}sitecore-xp1-mssql-upgrade:${SITECORE_VERSION}
+    environment:
+      IS_ALWAYS_ENCRYPTED: ${IS_ALWAYS_ENCRYPTED}
+      PROCESSING_ENGINE_TASKS_DATABASE_USERNAME: ${PROCESSING_ENGINE_TASKS_DATABASE_USERNAME}
+      Sitecore_ConnectionStrings_Core: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Core;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Master: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Master;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Web: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Web;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Marketingautomation: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Marketingautomation;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Messaging: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Messaging;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Xdb_Collection_Shard0: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Xdb.Collection.Shard0;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Xdb_Collection_Shard1: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Xdb.Collection.Shard1;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Processing_Engine_Tasks: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Processing.Engine.Tasks;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_License: ${SITECORE_LICENSE}
+    isolation: ${ISOLATION}
