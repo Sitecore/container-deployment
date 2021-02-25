@@ -1,0 +1,9 @@
+{
+    "commerce": [
+        "CatalogItems",
+        "Customers",
+        "Orders",
+        "PriceCards",
+        "Promotions"
+    ]
+}

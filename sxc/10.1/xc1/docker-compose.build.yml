@@ -1,0 +1,108 @@
+version: "2.4"
+services:
+  mssql:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/mssql/common
+      dockerfile: ../standalone/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-mssql:${XP_SITECORE_TAG}
+        SITECORE_CORE_DB: ${SITECORE_CORE_DB}
+    image: xc1-mssql
+  mssql-init:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/mssql/common
+      dockerfile: ../init/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-mssql-init:${XP_SITECORE_TAG}
+        TOPOLOGY: xc1
+    image: xc1-mssql-init
+  solr-init:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/solr-init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-solr-init:${XP_SITECORE_TAG}
+        XC_TOPOLOGY: xc1
+        SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
+    image: xc1-solr-init
+  solr-init-searchstax:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/solr-init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-solr-init-searchstax:${XP_SITECORE_TAG}
+        XC_TOPOLOGY: xc1
+        SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
+    image: xc1-solr-init-searchstax
+  xdbcollection:
+    build:
+      isolation: ${ISOLATION}
+      context: ./xdbcollection
+      dockerfile: ../../xc-common/prc-rep/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbcollection:${XP_SITECORE_TAG}
+    image: sitecore-xc1-xdbcollection
+  prc:
+    build:
+      isolation: ${ISOLATION}
+      context: ./prcrep
+      dockerfile: ../../xc-common/prc-rep/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-prc:${XP_SITECORE_TAG}
+    image: sitecore-xc1-prc
+  cm:
+    build:
+      isolation: ${ISOLATION}
+      context: ./cm
+      dockerfile: ../../xc-common/cd-cm/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cm:${XP_SITECORE_TAG}
+        XC_RESOURCES_IMAGE: xc-resources:latest
+        XC_RESOURCES_CONFIGS: cm
+    image: xc1-cm
+  cd:
+    build:
+      isolation: ${ISOLATION}
+      context: ./cd
+      dockerfile: ../../xc-common/cd-cm/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cd:${XP_SITECORE_TAG}
+        XC_RESOURCES_IMAGE: xc-resources:latest
+        XC_RESOURCES_CONFIGS: cd
+    image: xc1-cd
+  xdbsearch:
+    build:
+      isolation: ${ISOLATION}
+      context: ./xdbsearch
+      dockerfile: ../../xc-common/xdbsearch/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbsearch:${XP_SITECORE_TAG}
+        CONTENT_PATH: wdp/App_Data/jobs/continuous/IndexWorker
+    image: sitecore-xc1-xdbsearch
+  xdbsearchworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbsearchworker:${XP_SITECORE_TAG}
+        CONTENT_PATH: xdbsearchworker/wdp/App_Data/jobs/continuous/IndexWorker
+    image: sitecore-xc1-xdbsearchworker
+  xdbautomation:
+    build:
+      isolation: ${ISOLATION}
+      context: ./xdbautomation
+      dockerfile: ../../xc-common/xdbautomation/Dockerfile
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbautomation:${XP_SITECORE_TAG}
+        CONTENT_PATH: wdp/App_data/jobs/continuous/AutomationEngine
+    image: sitecore-xc1-xdbautomation
+  xdbautomationworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbautomationworker:${XP_SITECORE_TAG}
+        CONTENT_PATH: xdbautomationworker/wdp/App_Data/jobs/continuous/AutomationEngine
+    image: sitecore-xc1-xdbautomationworker
