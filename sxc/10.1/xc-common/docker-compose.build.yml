@@ -1,0 +1,27 @@
+version: "2.4"
+services:
+  id:
+    build:
+      isolation: ${ISOLATION}
+      context: ./id
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-id:${XP_SITECORE_TAG}
+    image: sitecore-xc-id
+  bizfx:
+    build:
+      isolation: ${ISOLATION}
+      context: ./bizfx
+      args:
+        BASE_IMAGE: mcr.microsoft.com/windows/servercore/iis:windowsservercore-${OS_IMAGE_TAG_IIS}
+        XC_RESOURCES_IMAGE: xc-resources:latest
+        XC_RESOURCES_CONFIGS: bizfx
+    image: sitecore-xc-bizfx
+  engine:
+    build:
+      isolation: ${ISOLATION}
+      context: ./engine
+      args:
+        BASE_IMAGE: mcr.microsoft.com/windows/servercore:${OS_IMAGE_TAG}
+        XC_RESOURCES_IMAGE: xc-resources:latest
+        XC_RESOURCES_CONFIGS: engine
+    image: sitecore-xc-engine

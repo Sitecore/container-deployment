@@ -1,0 +1,4 @@
+cm\inetpub\wwwroot\App_Config\Include\Y.Commerce.Engine\Y.Sitecore.Commerce.config
+cd\inetpub\wwwroot\App_Config\Include\Domains.Shared.config
+cd\Permissions\AdditionalWriteAllowedFolders.txt
+cd\xdts\Web.config.xdt

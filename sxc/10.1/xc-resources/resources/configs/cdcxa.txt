@@ -1,0 +1,2 @@
+cdcxa\inetpub\wwwroot\App_Config\Include\Sitecore.Commerce.XA.CustomSolrCorePrefixName.config
+cdcxa\xdts\Web.config.xdt

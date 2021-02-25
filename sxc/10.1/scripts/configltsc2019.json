@@ -1,0 +1,14 @@
+{
+    "sxptag":  "10.1-ltsc2019",
+    "customercommercetag":  "10.1-ltsc2019",
+    "spetag":  "6.2-1809",
+    "sxatag":  "10.1.0-1809",
+    "scrdockerregistry":  "scr.sitecore.com",
+    "sxpproject":  "sxp",
+    "sxcproject":  "sxc",
+    "baseproject":  "base",
+    "modulesproject":  "modules",
+    "nonproductionproject":  "nonproduction",
+    "nonproductiontag":  "10.1-ltsc2019",
+    "os_image_tag":  "ltsc2019"
+}

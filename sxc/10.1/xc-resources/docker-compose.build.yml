@@ -1,0 +1,9 @@
+version: "3.7"
+services: 
+  xc-resources:
+    build:
+      context: ./resources
+      args:
+        BASE_IMAGE: mcr.microsoft.com/powershell:lts-nanoserver-1809
+    image: xc-resources
+    isolation: ${ISOLATION}  
