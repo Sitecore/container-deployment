@@ -11,3 +11,8 @@
 # to be updated by demo team. Setting CODEOWNER to
 # demo team members.
 /demo/ @jeanfrancoislarente @adoprog
+
+# The files in the `/sxc/` directory are only expected
+# to be updated by sxc team. Setting CODEOWNER to
+# sxc team members.
+/sxc/ @sc-marklee @sc-marcusheath
