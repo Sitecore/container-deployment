@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: id
+spec:
+  selector:
+    matchLabels:
+      app: id
+  template:
+    metadata:
+      labels:
+        app: id
+    spec:
+      containers:
+      - name: sitecore-xp1-id
+        env:
+        - name: Sitecore_Sitecore__IdentityServer__Clients__DefaultClient__AllowedCorsOrigins__AllowedCorsOriginsGroup2
+          value: https://hrz.globalhost

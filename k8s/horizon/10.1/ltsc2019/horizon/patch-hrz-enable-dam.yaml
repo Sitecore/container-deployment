@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hrz
+spec:
+  selector:
+    matchLabels:
+      app: hrz
+  template:
+    metadata:
+      labels:
+        app: hrz
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-horizon
+        env:
+        - name: Sitecore_Plugins__Filters__ContentHub
+          value: +ContentHub
