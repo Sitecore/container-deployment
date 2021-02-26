@@ -1,0 +1,28 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/rules/0",
+    "value": {
+      "host": "hrz.globalhost",
+      "http": {
+        "paths": [
+          {
+            "path": "/",
+            "backend": {
+              "serviceName": "hrz",
+              "servicePort": 80
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/spec/tls/0",
+    "value": {
+      "secretName": "global-hrz-tls",
+      "hosts": ["hrz.globalhost"]
+    }
+  }
+]
