@@ -1,0 +1,44 @@
+image: sitecoredemocontainers.azurecr.io/lighthouse-mssql:10.0.0-latest-linux
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+volumeClaim:
+  storageClassName: "managed-premium"
+  storageSize: "5Gi"
+  accessModes: 
+    - ReadWriteOnce
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 1433
+
+xconnectServiceNameOverride: ""
+
+edition: Express
+sqlSaPassword:
+
+resources:
+  limits:
+    memory: 4096Mi
+  requests:
+    cpu: 1
+    memory: 4096Mi
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations: []
+
+affinity: {}
+
+env: {}

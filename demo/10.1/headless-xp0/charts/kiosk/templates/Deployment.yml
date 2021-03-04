@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiosk
+  labels:
+    app: kiosk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiosk
+  template:
+    metadata:
+      labels:
+        app: kiosk
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      initContainers:
+      - name: wait-for-cd
+        image: mcr.microsoft.com/powershell:lts-ubuntu-16.04
+        command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://cd/healthz/ready).StatusCode -eq 200} catch { $false }));"]
+      containers:
+      - name: sitecore-xp0-kiosk
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: REACT_APP_GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-api-key
+              key: google-apikey.txt
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: {{ tpl .value $ }}
+        {{- end }}
+      imagePullSecrets:
+      - name: sitecore-docker-registry

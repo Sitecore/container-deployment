@@ -1,0 +1,135 @@
+licenseFileSecretName:
+
+sitecore-xp0:
+  cm:
+    cmp:
+      contenthub: ""
+      servicebusentitypathin: ""
+      servicebussubscription: ""
+      servicebusentitypathout: ""
+    dam:
+      url: ""
+      externalRedirectKey: "Sitecore"
+    sfmc: ""
+    sfdc: ""
+    d365: ""
+
+    env:
+      - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+        value: "Standalone"
+      - name: SITECORE_APPSETTINGS_SXAXM__DEFINE
+        value: "sxaconnect"
+      - name: SITECORE_APPSETTINGS_ENV__DEFINE
+        value: "Production"
+      - name: SITECORE_APPSETTINGS_UNICORN__DEFINE
+        value: "Disabled"
+      - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
+        value: "Enabled"
+      - name: SITECORE_APPSETTINGS_INTEGRATIONS__DEFINE
+        value: "Salesforce,Dynamics"
+      - name: SITECORE_APPSETTINGS_CONTENTHUB__DEFINE
+        value: "Enabled"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ContentHub
+        value: |-
+          "{{ .Values.cmp.contenthub }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathIn
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathin }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusSubscription
+        value: |-
+          "{{ .Values.cmp.servicebussubscription }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathOut
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathout }}"
+      - name: SITECORE_CONNECTIONSTRINGS_SFMC
+        value: |-
+          "{{ .Values.sfmc}}"
+      - name: SITECORE_CONNECTIONSTRINGS_SFDC
+        value: |-
+          "{{ .Values.sfdc}}"
+      - name: SITECORE_CONNECTIONSTRINGS_Dynamics365
+        value: |-
+          "{{ .Values.d365}}"
+      - name: PROXY_API_HOST
+        value: |-
+          "https://{{ .Values.global.sitecore.cm.host }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ContentHub
+        value: |-
+          "{{ .Values.dam.url }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.SearchPage
+        value: |-
+          "{{ .Values.dam.url }}/en-us/sitecore-dam-connect/approved-assets"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
+        value: |-
+          "{{ .Values.dam.externalRedirectKey }}"
+  mssql:
+    user:
+      password: ""
+
+    admin:
+      username: ""
+      password: ""
+      disable:
+        default: 'FALSE'
+    coveo:
+      admin:
+        username: ""
+    exm:
+      baseUrl: ""
+      kioskCdBaseUrl: ""
+      appBaseUrl: ""
+    boot:
+      overrideScripts: "Demo-Boot-Platform-Linux.ps1"
+
+    env:
+      - name: USER_PASSWORD
+        value: |-
+          "{{ .Values.user.password }}"
+      - name: ADMIN_USER_NAME
+        value: |-
+          "{{ .Values.admin.username }}"
+      - name: DISABLE_DEFAULT_ADMIN
+        value: |-
+          "{{ .Values.admin.disable.default }}"
+      - name: EXM_BASE_URL
+        value: |-
+          "{{ .Values.exm.baseUrl }}"
+      - name: EXM_KIOSK_CD_BASE_URL
+        value: |-
+          "{{ .Values.exm.kioskCdBaseUrl }}"
+      - name: EXM_APP_BASE_URL
+        value: |-
+          "{{ .Values.exm.appBaseUrl }}"
+      - name: BOOT_OVERRIDE_SCRIPTS
+        value: |-
+          "{{ .Values.boot.overrideScripts }}"
+      - name: COVEO_ADMIN_USER_NAME
+        value: |-
+          "{{ .Values.coveo.admin.username }}"
+  xdbautomationworker:
+    env:
+      - name: DUMMY_VARIABLE
+        value: ""
+
+cd:
+  env:
+    - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+      value: "ContentDelivery"
+    - name: SITECORE_APPSETTINGS_SXAXM__DEFINE
+      value: "sxaconnect"
+    - name: SITECORE_APPSETTINGS_ENV__DEFINE
+      value: "Production"
+    - name: SITECORE_APPSETTINGS_UNICORN__DEFINE
+      value: "Disabled"
+    - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
+      value: "Disabled"
+    - name: SITECORE_APPSETTINGS_INTEGRATIONS__DEFINE
+      value: "Salesforce,Dynamics"
+global:
+  sitecore:
+    cm:
+      host: ""
+    cd:
+      host: ""
+    id:
+      host: ""
