@@ -1,0 +1,197 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cd
+  labels:
+    app: cd
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cd
+  template:
+    metadata:
+      labels:
+        app: cd
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      initContainers:
+        - name: wait-for-xconnect
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try\
+              \ {(iwr http://xconnect/healthz/ready).StatusCode -eq 200} catch\
+              \ { $false }));"]
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: cd
+      containers:
+      - name: sitecore-xp0-cd
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data
+            mountPath: "/backup"
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: Sitecore_InstanceName
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: Database_Server
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseservername.txt
+        - name: Core_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-core-database-username.txt
+        - name: Core_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-core-database-password.txt
+        - name: Web_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-web-database-username.txt
+        - name: Web_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-web-database-password.txt
+        - name: Forms_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-forms-database-username.txt
+        - name: Forms_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-forms-database-password.txt
+        - name: Exm_Master_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-exm-master-database-username.txt
+        - name: Exm_Master_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-exm-master-database-password.txt
+        - name: Messaging_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-messaging-database-username.txt
+        - name: Messaging_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-messaging-database-password.txt
+        - name: Sitecore_ConnectionStrings_Sitecore.Services.Token.SecurityKey
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-services-token-securitykey
+              key: sitecore-servicestokensecuritykey.txt
+        - name: Sitecore_License
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-license
+              key: sitecore-license.txt
+        - name: SitecoreAITenantID
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-ai
+              key: sitecore-ai-tenant-id.txt
+        - name: SitecoreAIConfigServiceURL
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-ai
+              key: sitecore-ai-service-url.txt
+        - name: SitecoreAIConfigServiceJWT
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-ai
+              key: sitecore-ai-service-token.txt
+        - name: Sitecore_ConnectionStrings_Security
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
+            ID=$(Core_Database_Username);Password=$(Core_Database_Password);
+        - name: Sitecore_ConnectionStrings_Web
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Web;User
+            ID=$(Web_Database_Username);Password=$(Web_Database_Password);
+        - name: Sitecore_ConnectionStrings_Messaging
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Messaging;User
+            ID=$(Messaging_Database_Username);Password=$(Messaging_Database_Password);
+        - name: Sitecore_ConnectionStrings_ExperienceForms
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.ExperienceForms;User
+            ID=$(Forms_Database_Username);Password=$(Forms_Database_Password);
+        - name: Sitecore_ConnectionStrings_Exm.Master
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Exm.master;User
+            ID=$(Exm_Master_Database_Username);Password=$(Exm_Master_Database_Password);
+        - name: Sitecore_ConnectionStrings_Solr.Search
+          value: http://solr:8983/solr;solrCloud=true
+        - name: Sitecore_ConnectionStrings_XConnect.Collection
+          value: http://xconnect
+        - name: Sitecore_ConnectionStrings_Xdb.MarketingAutomation.Operations.Client
+          value: http://xconnect
+        - name: Sitecore_ConnectionStrings_Xdb.MarketingAutomation.Reporting.Client
+          value: http://xconnect
+        - name: Sitecore_ConnectionStrings_Xdb.ReferenceData.Client
+          value: http://xconnect
+        - name: Sitecore_ConnectionStrings_Redis.Sessions
+          value: redis:6379,ssl=False,abortConnect=False
+        - name: EXM_RENDERER_URL
+          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+        - name: MEDIA_REQUEST_PROTECTION_SHARED_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-protect-media-requests
+              key: sitecore-media-request-protection-shared-secret.txt
+        - name: COVEO_SERVER_URL
+          value: "http://cd.{{ .Release.Namespace }}.svc.cluster.local/"
+        - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
+          value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: {{ tpl .value $ }}
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+        startupProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      imagePullSecrets:
+      - name: sitecore-docker-registry

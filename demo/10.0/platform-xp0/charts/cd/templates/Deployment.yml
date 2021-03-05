@@ -172,7 +172,7 @@ spec:
               value: Liveness
           timeoutSeconds: 300
           periodSeconds: 30
-          failureThreshold: 3
+          failureThreshold: 10
         startupProbe:
           httpGet:
             path: /healthz/ready

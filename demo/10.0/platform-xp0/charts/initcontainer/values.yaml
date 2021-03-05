@@ -76,6 +76,7 @@ coveo:
   admin:
     username: ""
   organizationId: ""
+  region: ""
   apiKey: ""
   searchApiKey: ""
   farmName: ""

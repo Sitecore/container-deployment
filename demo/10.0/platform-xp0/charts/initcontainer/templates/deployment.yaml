@@ -6,6 +6,8 @@ metadata:
     {{- include "initcontainer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "initcontainer.selectorLabels" . | nindent 6 }}
@@ -65,6 +67,8 @@ spec:
               value: Data Source=$(Database_Server);Initial Catalog=platform_init_ready;User ID=$(Database_Username);Password=$(Database_Password);
             - name: COVEO_ORGANIZATION_ID
               value: "{{ .Values.coveo.organizationId }}"
+            - name: COVEO_REGION
+              value: "{{ .Values.coveo.region }}"
             - name: COVEO_API_KEY
               value: "{{ .Values.coveo.apiKey }}"
             - name: COVEO_SEARCH_API_KEY

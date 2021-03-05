@@ -9,6 +9,7 @@ sitecore-xp0:
       servicebusentitypathout: ""
     sfmc: ""
     sfdc: ""
+    d365: ""
 
     env:
       - name: SITECORE_APPSETTINGS_ROLE__DEFINE
@@ -22,7 +23,7 @@ sitecore-xp0:
       - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
         value: "Enabled"
       - name: SITECORE_APPSETTINGS_INTEGRATIONS__DEFINE
-        value: "Salesforce"
+        value: "Salesforce,Dynamics"
       - name: SITECORE_APPSETTINGS_CONTENTHUB__DEFINE
         value: "Enabled"
       - name: SITECORE_CONNECTIONSTRINGS_CMP.ContentHub
@@ -43,6 +44,9 @@ sitecore-xp0:
       - name: SITECORE_CONNECTIONSTRINGS_SFDC
         value: |-
           "{{ .Values.sfdc}}"
+      - name: SITECORE_CONNECTIONSTRINGS_Dynamics365
+        value: |-
+          "{{ .Values.d365}}"
       - name: PROXY_API_HOST
         value: |-
           "https://{{ .Values.global.sitecore.cm.host }}"
@@ -113,7 +117,7 @@ cd:
     - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
       value: "Disabled"
     - name: SITECORE_APPSETTINGS_INTEGRATIONS__DEFINE
-      value: "Salesforce"
+      value: "Salesforce,Dynamics"
 global:
   sitecore:
     cm:
