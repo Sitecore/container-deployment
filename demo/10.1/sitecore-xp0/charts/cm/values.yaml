@@ -2,10 +2,10 @@ image: scr.sitecore.com/sxp/sitecore-xp0-cm:10.0.0-ltsc2019
 
 resources:
     limits:
-      memory: 4Gi
+      memory: 5Gi
     requests:
       cpu: 1
-      memory: 4Gi
+      memory: 5Gi
 
 env: {}
 
