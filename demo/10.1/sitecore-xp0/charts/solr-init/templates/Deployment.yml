@@ -28,6 +28,10 @@ spec:
     {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
+      initContainers:
+        - name: wait-for-solr
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://solr:8983/solr/admin/info/system).StatusCode -eq 200} catch { $false }));"]
     {{- end }}
     {{- with .Values.affinity }}
       affinity:
