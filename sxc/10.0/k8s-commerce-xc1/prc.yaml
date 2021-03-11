@@ -32,8 +32,8 @@ spec:
           image: mcr.microsoft.com/powershell:lts-nanoserver-1809
           command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://xdbcollection/healthz/ready).StatusCode -eq 200} catch { $false }));"]
       containers:
-      - name: sitecore-xp1-prc
-        image: {registry}/{project}/sitecore-xp1-prc:{version}
+      - name: sitecore-xc1-prc
+        image: {registry}/{sxc-project}/sitecore-xc1-prc:{commerce-version}
         ports:
         - containerPort: 80
         env:

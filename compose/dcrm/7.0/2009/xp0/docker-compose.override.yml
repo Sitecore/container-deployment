@@ -1,0 +1,12 @@
+services:
+  cm:
+    image: sitecore-dcrm-xp0-cm:${SITECORE_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_DCRM: ${ConnectionString_DCRM}
+      Sitecore_ConnectionStrings_Sitecore.DataExchange.Staging: ${ConnectionString_StagingDB}
+  xdbsearchworker:
+    image: sitecore-dcrm-xp0-xdbsearchworker:${SITECORE_VERSION}
+  xconnect:
+    image: sitecore-dcrm-xp0-xconnect:${SITECORE_VERSION}
+  mssql-init:
+    image: sitecore-dcrm-xp0-mssql-init:${SITECORE_VERSION}

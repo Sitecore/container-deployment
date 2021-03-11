@@ -5,9 +5,9 @@ bases:
   - ../../../xm1/ingress-nginx
 
 patchesJson6902:
-  - path: patch-ingress.json
+  - path: patch-ingress.yaml
     target:
-      group: extensions
+      group: networking.k8s.io
       kind: Ingress
       name: sitecore-ingress
-      version: v1beta1
+      version: v1

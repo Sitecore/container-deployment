@@ -242,6 +242,11 @@ spec:
           value: http://id
         - name: Sitecore_Identity_Server_Require_Https
           value: "false"
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
         - name: Sitecore_xc_Minions_Url
           value: http://engine-minions:5000/commerceops/
         - name: Sitecore_xc_Ops_Url

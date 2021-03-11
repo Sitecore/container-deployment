@@ -1,5 +1,0 @@
-version: "2.4"
-services:
-  hrz:
-    environment:
-      Sitecore_Plugins__Filters__ContentHub: +ContentHub

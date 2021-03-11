@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+images:
+  - name: sitecore-ts
+    newName: scr.sitecore.com/sxp/modules/sitecore-tenant-service
+    newTag: 6.0.0-ltsc2019
+
+resources:
+  - ts.yaml

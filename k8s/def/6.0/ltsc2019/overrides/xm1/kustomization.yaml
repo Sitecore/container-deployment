@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../xm1
+
+images:
+- name: sitecore-xm1-cm
+  newName: "{registry}/sitecore-def-xm1-cm"
+  newTag: tag
+- name: sitecore-xm1-cd
+  newName: "{registry}/sitecore-def-xm1-cd"
+  newTag: tag
+- name: sitecore-id
+  newName: "{registry}/sitecore-def-xm1-id"
+  newTag: tag
+  
+patchesStrategicMerge:
+- patch-cm.yaml
