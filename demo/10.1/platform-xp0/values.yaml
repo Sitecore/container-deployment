@@ -13,7 +13,7 @@ sitecore-xp0:
     sfmc: ""
     sfdc: ""
     d365: ""
-    opencalais_accesstoken: "f1u1kFvpYXwoIHA3OD7mx05VGHBsCkKt"
+    opencalais_accesstoken: ""
 
     env:
       - name: SITECORE_APPSETTINGS_ROLE__DEFINE
