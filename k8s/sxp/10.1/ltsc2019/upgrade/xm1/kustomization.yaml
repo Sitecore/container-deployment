@@ -16,4 +16,4 @@ resources:
 images:
 - name: sitecore-xm1-mssql-upgrade
   newName: scr.sitecore.com/sxp/sitecore-xm1-mssql-upgrade
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019

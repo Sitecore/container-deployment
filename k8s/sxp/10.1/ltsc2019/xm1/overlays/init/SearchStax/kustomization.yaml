@@ -7,7 +7,7 @@ patchesStrategicMerge:
 images:
 - name: sitecore-xm1-solr-init-searchstax
   newName: scr.sitecore.com/sxp/sitecore-xm1-solr-init-searchstax
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 generatorOptions:
   disableNameSuffixHash: true
 secretGenerator:

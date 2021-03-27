@@ -3,13 +3,13 @@ kind: Kustomization
 images:
 - name: sitecore-xm1-cd
   newName: scr.sitecore.com/sxp/sitecore-xm1-cd
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 - name: sitecore-xm1-cm
   newName: scr.sitecore.com/sxp/sitecore-xm1-cm
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 - name: sitecore-xm1-id
   newName: scr.sitecore.com/sxp/sitecore-id
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 resources:
 - cm.yaml
 - cd.yaml

@@ -3,10 +3,10 @@ kind: Kustomization
 images:
 - name: sitecore-xp1-mssql-init
   newName: scr.sitecore.com/sxp/sitecore-xp1-mssql-init
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 - name: sitecore-xp1-solr-init
   newName: scr.sitecore.com/sxp/sitecore-xp1-solr-init
-  newTag: 10.1-ltsc2019
+  newTag: 10.1.0-ltsc2019
 resources:
 - mssql-init.yaml
 - solr-init.yaml
