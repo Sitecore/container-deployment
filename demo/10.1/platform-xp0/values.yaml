@@ -13,6 +13,7 @@ sitecore-xp0:
     sfmc: ""
     sfdc: ""
     d365: ""
+    opencalais_accesstoken: ""
 
     env:
       - name: SITECORE_APPSETTINGS_ROLE__DEFINE
@@ -62,6 +63,9 @@ sitecore-xp0:
       - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
         value: |-
           "{{ .Values.dam.externalRedirectKey }}"
+      - name: OPENCALAIS_ACCESSTOKEN
+        value: |-
+          "{{ .Values.opencalais_accesstoken}}"
       - name: SitecoreAITenantID
         value: |-
           "{{  .Values.global.ai.sitecoreAITenantID }}"

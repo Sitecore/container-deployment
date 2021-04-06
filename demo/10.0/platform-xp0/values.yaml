@@ -10,6 +10,7 @@ sitecore-xp0:
     sfmc: ""
     sfdc: ""
     d365: ""
+    opencalais_accesstoken: ""
 
     env:
       - name: SITECORE_APPSETTINGS_ROLE__DEFINE
@@ -50,6 +51,9 @@ sitecore-xp0:
       - name: PROXY_API_HOST
         value: |-
           "https://{{ .Values.global.sitecore.cm.host }}"
+      - name: OPENCALAIS_ACCESSTOKEN
+        value: |-
+          "{{ .Values.opencalais_accesstoken}}"
   mssql:
     user:
       password: ""

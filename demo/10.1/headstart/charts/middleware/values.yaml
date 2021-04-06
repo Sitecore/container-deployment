@@ -1,0 +1,95 @@
+image: ""
+
+global:
+  sitecore:
+    middleware:
+      host: ""
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+
+ApplicationInsightsSettings_InstrumentationKey: ""
+
+AvalaraSettings_AccountID: ""
+AvalaraSettings_CompanyCode: ""
+AvalaraSettings_CompanyID: ""
+AvalaraSettings_LicenseKey: ""
+AvalaraSettings_BaseApiUrl: "https_//sandbox-rest.avatax.com/api/v2"
+
+BlobSettings_ConnectionString: ""
+BlobSettings_HostUrl: ""
+BlobSettings_Key: ""
+BlobSettings_ContainerNameQueue: "queue"
+BlobSettings_ContainerNameCache: "cache"
+BlobSettings_ContainerNameExchangeRates: "currency"
+BlobSettings_ContainerNameTranslations: "ngx-translate"
+CMSSettings_BaseUrl: "https_//ordercloud-cms-test.azurewebsites.net"
+
+CardConnectSettings_Authorization: ""
+CardConnectSettings_AuthorizationCad: ""
+CardConnectSettings_BaseUrl: "cardconnect.com"
+CardConnectSettings_CadMerchantID: ""
+CardConnectSettings_Site: "fts-uat"
+CardConnectSettings_UsdMerchantID: ""
+
+CosmosSettings_DatabaseName: ""
+CosmosSettings_EnableTcpConnectionEndpointRediscovery: "false"
+CosmosSettings_EndpointUri: ""
+CosmosSettings_PrimaryKey: ""
+CosmosSettings_RequestTimeoutInSeconds: "15"
+
+EasyPostSettings_APIKey: ""
+EasyPostSettings_FreeShippingTransitDays: "3"
+EasyPostSettings_NoRatesFallbackCost: "20"
+EasyPostSettings_NoRatesFallbackTransitDays: "3"
+
+EnvironmentSettings_AppTimeoutInSeconds: "30"
+EnvironmentSettings_BuildNumber: ""
+EnvironmentSettings_Commit: ""
+EnvironmentSettings_Environment: "Test"
+
+FlurlSettings_TimeoutInSeconds: "40"
+
+OrderCloudSettings_ApiUrl: "https_//sandboxapi.ordercloud.io"
+OrderCloudSettings_MiddlewareClientID: ""
+OrderCloudSettings_MiddlewareClientSecret: ""
+OrderCloudSettings_IncrementorPrefix: "DB_TEST"
+OrderCloudSettings_WebhookHashKey: ""
+
+SendGridSettings_ApiKey: ""
+SendgridSettings_FromEmail: ""
+SendgridSettings_CriticalSupportEmails: ""
+SendgridSettings_SupportCaseEmail: ""
+SendgridSettings_BillingEmail: ""
+SendgridSettings_OrderSubmitTemplateID: ""
+SendgridSettings_OrderApprovalTemplateID: ""
+SendgridSettings_LineItemStatusChangeTemplateID: ""
+SendgridSettings_QuoteOrderSubmitTemplateID: ""
+SendgridSettings_NewUserTemplateID: ""
+SendgridSettings_ProductInformationRequestTemplateID: ""
+SendgridSettings_PasswordResetTemplateID: ""
+SendgridSettings_CriticalSupportTemplateID: ""
+
+SmartyStreetSettings_AuthID: ""
+SmartyStreetSettings_AuthToken: ""
+SmartyStreetSettings_RefererHost: ""
+SmartyStreetSettings_WebsiteKey: ""
+
+UI_BaseAdminUrl: ""
+
+ZohoSettings_AccessToken: ""
+ZohoSettings_ClientId: ""
+ZohoSettings_ClientSecret: ""
+ZohoSettings_OrgID: ""
+ZohoSettings_PerformOrderSubmitTasks: "false"
+
+resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 128Mi

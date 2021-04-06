@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "buyer.fullname" . -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "buyer.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+  - secretName: global-buyer-tls
+    hosts:
+    - {{ .Values.global.sitecore.buyer.host | quote }}
+  rules:
+  - host: {{ .Values.global.sitecore.buyer.host | quote }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: buyer
+          servicePort: 80
+{{- end }}
