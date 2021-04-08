@@ -273,8 +273,6 @@ spec:
           value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
-        - name: OPENCALAIS_ACCESSTOKEN
-          value: "{{ .Values.opencalais_accesstoken}}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
