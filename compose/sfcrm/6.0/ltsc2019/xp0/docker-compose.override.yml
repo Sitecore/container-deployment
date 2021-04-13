@@ -1,0 +1,41 @@
+version: "2.4"
+services:
+  cm:
+    image: sfcrm/sitecore-xp0-cm:${SITECORE_VERSION}
+    build:
+      context: ./module
+      dockerfile: ./cm/Dockerfile
+      args:
+        BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xp0-cm:${SITECORE_VERSION}
+        DEF_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-def-xp0-assets:${DEF_VERSION}
+        SFCRM_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-sfcrm-xp0-assets:${SFCRM_VERSION}
+        TOOLING_IMAGE: ${SITECORE_TOOLS_REGISTRY}sitecore-docker-tools-assets:${TOOLS_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_mysf: ${MYSF_CONNECTIONSTRING}
+  mssql:
+    image: sfcrm/sitecore-xp0-mssql:${SITECORE_VERSION}
+    build:
+      context: ./module
+      dockerfile: ./mssql/Dockerfile
+      args:
+        BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xp0-mssql:${SITECORE_VERSION}
+        DEF_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-def-xp0-assets:${DEF_VERSION}
+        SFCRM_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-sfcrm-xp0-assets:${SFCRM_VERSION}
+  xdbsearchworker:
+    image: sfcrm/sitecore-xp0-xdbsearchworker:${SITECORE_VERSION}
+    build:
+      context: ./module
+      dockerfile: ./xdbsearchworker/Dockerfile
+      args:
+        BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xp0-xdbsearchworker:${SITECORE_VERSION}
+        SFCRM_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-sfcrm-xp0-assets:${SFCRM_VERSION}
+        TOOLING_IMAGE: ${SITECORE_TOOLS_REGISTRY}sitecore-docker-tools-assets:${TOOLS_VERSION}
+  xconnect:
+    image: sfcrm/sitecore-xp0-xconnect:${SITECORE_VERSION}
+    build:
+      context: ./module
+      dockerfile: ./xconnect/Dockerfile
+      args:
+        BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xp0-xconnect:${SITECORE_VERSION}
+        SFCRM_IMAGE: ${SITECORE_DOCKER_REGISTRY}modules/sitecore-sfcrm-xp0-assets:${SFCRM_VERSION}
+        TOOLING_IMAGE: ${SITECORE_TOOLS_REGISTRY}sitecore-docker-tools-assets:${TOOLS_VERSION}        
