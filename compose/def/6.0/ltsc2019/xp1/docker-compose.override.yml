@@ -1,0 +1,16 @@
+version: "2.4"
+services:
+  cd:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-cd:${SITECORE_VERSION}
+  cm:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-cm:${SITECORE_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_TenantService: https://${TENANT_SERVICE_HOST}
+  id:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-id:${SITECORE_VERSION}
+  xdbautomationworker:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-xdbautomationworker:${SITECORE_VERSION}
+  mssql:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-mssql:${SITECORE_VERSION}
+  mssql-init:
+    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-mssql-init:${SITECORE_VERSION}

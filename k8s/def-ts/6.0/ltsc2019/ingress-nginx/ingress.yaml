@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sitecore-ingress
+spec:
+  rules:
+  - host: ts.globalhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ts
+          servicePort: 80
+  tls:
+  - secretName: global-ts-tls
+    hosts:
+    - ts.globalhost
