@@ -5,6 +5,6 @@ bases:
   - ../../../k8s-sitecore-xp1/init
 
 images:
-- name: ideftdevacr.azurecr.io/sxp/sitecore-xp1-mssql-init
-  newName: "ideftdevacr.azurecr.io/experimental/sfcrm/sitecore-xp1-mssql-init"
-  newTag: sc101sfcrm6
+- name: scr.sitecore.com/sxp/sitecore-xp1-mssql-init
+  newName: "{registry}/sitecore-sfcrm-xp1-mssql-init"
+  newTag: tag
