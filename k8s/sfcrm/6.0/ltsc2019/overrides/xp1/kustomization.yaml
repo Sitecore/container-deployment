@@ -5,18 +5,18 @@ bases:
   - ../../k8s-sitecore-xp1
 
 images:
-- name: ideftdevacr.azurecr.io/sxp/sitecore-xp1-cm
-  newName: "ideftdevacr.azurecr.io/experimental/sfcrm/sitecore-xp1-cm"
-  newTag: sc101sfcrm6
-- name: ideftdevacr.azurecr.io/sxp/sitecore-xp1-xdbcollection
-  newName: "ideftdevacr.azurecr.io/experimental/sfcrm/sitecore-xp1-xdbcollection"
-  newTag: sc101sfcrm6
-- name: ideftdevacr.azurecr.io/sxp/sitecore-xp1-xdbsearch
-  newName: "ideftdevacr.azurecr.io/experimental/sfcrm/sitecore-xp1-xdbsearch"
-  newTag: sc101sfcrm6
-- name: ideftdevacr.azurecr.io/sxp/sitecore-xp1-xdbsearchworker
-  newName: "ideftdevacr.azurecr.io/experimental/sfcrm/sitecore-xp1-xdbsearchworker"
-  newTag: sc101sfcrm6
+- name: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newName: "{registry}/sitecore-sfcrm-xp1-cm"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbcollection
+  newName: "{registry}/sitecore-sfcrm-xp1-xdbcollection"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearch
+  newName: "{registry}/sitecore-sfcrm-xp1-xdbsearch"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker
+  newName: "{registry}/sitecore-sfcrm-xp1-xdbsearchworker"
+  newTag: tag
   
 patchesStrategicMerge:
 - patch-cm.yaml
