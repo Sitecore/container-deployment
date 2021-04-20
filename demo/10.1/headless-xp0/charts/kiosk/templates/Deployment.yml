@@ -34,6 +34,10 @@ spec:
             secretKeyRef:
               name: google-api-key
               key: google-apikey.txt
+        - name: SITECORE_API_HOST
+          value: "https://{{ .Values.global.sitecore.kioskcd.host }}"
+        - name: PROXY_API_HOST
+          value: "https://{{ .Values.global.sitecore.kiosk.host }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}

@@ -273,6 +273,10 @@ spec:
           value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
+        - name: OC_BUYER_CLIENT_ID
+          value: "{{ .Values.global.orderCloud.buyerClientId }}"
+        - name: OC_BASE_API_URL
+          value: "{{ .Values.global.orderCloud.baseApiUrl }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
