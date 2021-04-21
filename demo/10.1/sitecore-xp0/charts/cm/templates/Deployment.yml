@@ -166,6 +166,21 @@ spec:
             secretKeyRef:
               name: sitecore-license
               key: sitecore-license.txt
+        - name: BOXEVER_APIURL
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apiurl.txt
+        - name: BOXEVER_CLIENTKEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
+        - name: BOXEVER_APITOKEN
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apitoken.txt
         - name: Sitecore_ConnectionStrings_Core
           value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
             ID=$(Core_Database_Username);Password=$(Core_Database_Password);
