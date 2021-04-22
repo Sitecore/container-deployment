@@ -8,6 +8,11 @@ global:
       host: ""
     kiosk:
       host: ""
+    boxever:
+      host: ""
+  orderCloud:
+    buyerClientId: ""
+    baseApiUrl: ""
 
 platform-xp0:
   sitecore-xp0:

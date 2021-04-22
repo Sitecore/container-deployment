@@ -67,6 +67,8 @@ spec:
           value: "{{ .Values.global.orderCloud.buyerClientId }}"
         - name: OC_BASE_API_URL
           value: "{{ .Values.global.orderCloud.baseApiUrl }}"
+        - name: BOXEVER_PROXY_URL
+          value: "https://{{ .Values.global.sitecore.boxever.host }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}

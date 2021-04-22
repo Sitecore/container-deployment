@@ -38,6 +38,8 @@ spec:
           value: "https://{{ .Values.global.sitecore.kioskcd.host }}"
         - name: PROXY_API_HOST
           value: "https://{{ .Values.global.sitecore.kiosk.host }}"
+        - name: BOXEVER_PROXY_URL
+          value: "https://{{ .Values.global.sitecore.boxever.host }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
