@@ -77,3 +77,6 @@ coveo:
   apiKey: ""
   searchApiKey: ""
   farmName: ""
+
+dam:
+  url: ""

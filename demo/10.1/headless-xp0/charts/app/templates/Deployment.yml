@@ -59,6 +59,16 @@ spec:
             secretKeyRef:
               name: google-api-key
               key: google-apikey.txt
+        - name: SITECORE_API_HOST
+          value: "https://{{ .Values.global.sitecore.appcd.host }}"
+        - name: PROXY_API_HOST
+          value: "https://{{ .Values.global.sitecore.app.host }}"
+        - name: OC_BUYER_CLIENT_ID
+          value: "{{ .Values.global.orderCloud.buyerClientId }}"
+        - name: OC_BASE_API_URL
+          value: "{{ .Values.global.orderCloud.baseApiUrl }}"
+        - name: BOXEVER_PROXY_URL
+          value: "https://{{ .Values.global.sitecore.boxever.host }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}

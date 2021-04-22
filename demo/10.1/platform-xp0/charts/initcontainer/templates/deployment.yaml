@@ -73,6 +73,8 @@ spec:
               value: "{{ .Values.coveo.farmName }}"
             - name: COVEO_ADMIN_USER_NAME
               value: "{{ .Values.coveo.admin.username }}"
+            - name: DAM_URL
+              value: "{{ .Values.dam.url }}"
           ports:
             - name: http
               containerPort: 80

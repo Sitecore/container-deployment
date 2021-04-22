@@ -166,6 +166,21 @@ spec:
             secretKeyRef:
               name: sitecore-license
               key: sitecore-license.txt
+        - name: BOXEVER_APIURL
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apiurl.txt
+        - name: BOXEVER_CLIENTKEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
+        - name: BOXEVER_APITOKEN
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apitoken.txt
         - name: Sitecore_ConnectionStrings_Core
           value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
             ID=$(Core_Database_Username);Password=$(Core_Database_Password);
@@ -273,6 +288,10 @@ spec:
           value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
+        - name: OC_BUYER_CLIENT_ID
+          value: "{{ .Values.global.orderCloud.buyerClientId }}"
+        - name: OC_BASE_API_URL
+          value: "{{ .Values.global.orderCloud.baseApiUrl }}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}

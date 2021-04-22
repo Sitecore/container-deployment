@@ -1,5 +1,5 @@
 apiVersion: v2
-name: headless-xp0
+name: headless-bx-oc
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -23,6 +23,9 @@ version: 10.0.0
 appVersion: 1000.0.0
 
 dependencies:
-  - name: platform-xp0
+  - name: headless-xp0
     version: 10.0.0
-    repository: "file://../platform-xp0/"
+    repository: "file://../headless-xp0/"
+  - name: headstart
+    version: 1.0.0
+    repository: "file://../headstart/"
