@@ -12,5 +12,3 @@ services:
       Sitecore_ConnectionStrings_DAM.ExternalRedirectKey: ${DAM_ExternalRedirectKey}
   mssql:
     image: sitecore-chub-${TOPOLOGY}-mssql:${SITECORE_VERSION}
-        
-  
