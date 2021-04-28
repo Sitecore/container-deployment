@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cm
+spec:
+  selector:
+    matchLabels:
+      app: cm
+  template:
+    metadata:
+      labels:
+        app: cm
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp1-cm
+        env:
+        - name: CMP_ServiceBusEntityPathIn
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-cmp-service-bus-entity-path-in.txt
+        - name: CMP_ServiceBusSubscription
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-cmp-service-bus-subscription.txt
+        - name: CMP_ServiceBusEntityPathOut
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-cmp-service-bus-entity-path-out.txt
+        - name: CMP_ContentHub
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-cmp-content-hub.txt
+        - name: DAM_ContentHub
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-dam-content-hub.txt
+        - name: DAM_SearchPage
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-dam-search-page.txt
+        - name: DAM_ExternalRedirectKey
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-chub-connection-strings
+              key: sitecore-dam-external-redirect-key.txt
