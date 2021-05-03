@@ -6,8 +6,6 @@ services:
       Sitecore_ConnectionStrings_mysf: ${MYSF_Connectionstring}
   mssql:
     image: sitecore-sfcrm-xp1-mssql:${SITECORE_VERSION}
-  mssql-init:
-    image: sitecore-sfcrm-xp1-mssql-init:${SITECORE_VERSION}
   xdbsearchworker:
     image: sitecore-sfcrm-xp1-xdbsearchworker:${SITECORE_VERSION}
   xdbsearch:
