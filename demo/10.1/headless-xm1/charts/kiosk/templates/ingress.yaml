@@ -1,0 +1,40 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "kiosk.fullname" . -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "kiosk.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+  - secretName: global-cd-tls
+    hosts:
+    - {{ .Values.global.sitecore.kioskcd.host | quote }}
+  - secretName: global-kiosk-tls
+    hosts:
+    - {{ .Values.global.sitecore.kiosk.host | quote }}
+  rules:
+  - host: {{ .Values.global.sitecore.kioskcd.host | quote }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cd
+          servicePort: 80
+  - host: {{ .Values.global.sitecore.kiosk.host | quote }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kiosk
+          servicePort: 80
+{{- end }}
