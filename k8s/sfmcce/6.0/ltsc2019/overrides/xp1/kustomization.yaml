@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../k8s-sitecore-xp1
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newName: "{registry}/sitecore-sfmcce-xp1-cm"
+  newTag: tag
+
+patchesStrategicMerge:
+- patch-cm.yaml
