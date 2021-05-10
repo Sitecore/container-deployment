@@ -1,12 +1,10 @@
 version: "2.4"
 services:
   cd:
-    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-cd:${SITECORE_VERSION}
+    image: sitecore-def-${TOPOLOGY}-cd:${SITECORE_VERSION}
   cm:
-    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-cm:${SITECORE_VERSION}
+    image: sitecore-def-${TOPOLOGY}-cm:${SITECORE_VERSION}
   id:
-    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-id:${SITECORE_VERSION}
+    image: sitecore-def-${TOPOLOGY}-id:${SITECORE_VERSION}
   mssql:
-    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-mssql:${SITECORE_VERSION}
-  mssql-init:
-    image: scr.sitecore.com/sitecore-def-${TOPOLOGY}-mssql-init:${SITECORE_VERSION}
+    image: sitecore-def-${TOPOLOGY}-mssql:${SITECORE_VERSION}
