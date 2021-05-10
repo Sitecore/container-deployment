@@ -1,0 +1,19 @@
+version: "2.4"
+services:
+  cm:
+    image: sitecore-sfmcbde-xp0-cm:${SITECORE_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_sfmc: ${ConnectionString_sfmc}
+      Sitecore_ConnectionStrings_TenantService: ${ConnectionString_TS}
+  id:
+    image: sitecore-sfmcbde-id:${SITECORE_VERSION}
+  xdbautomationworker:
+    image: sitecore-sfmcbde-xp0-xdbautomationworker:${SITECORE_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_TenantService: ${ConnectionString_TS}
+  mssql:
+    image: sitecore-sfmcbde-xp0-mssql:${SITECORE_VERSION}
+  xdbsearchworker:
+    image: sitecore-sfmcbde-xp0-xdbsearchworker:${SITECORE_VERSION}
+  xconnect:
+    image: sitecore-sfmcbde-xp0-xconnect:${SITECORE_VERSION}
