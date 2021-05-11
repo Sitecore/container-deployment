@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../../k8s-sitecore-xp1/init
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-mssql-init
+  newName: "{registry}/sitecore-sfmcbde-xp1-mssql-init"
+  newTag: tag

@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../k8s-sitecore-xp1
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newName: "{registry}/sitecore-sfmcbde-xp1-cm"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-cd
+  newName: "{registry}/sitecore-sfmcbde-xp1-cd"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-id
+  newName: "{registry}/sitecore-sfmcbde-id"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbcollection
+  newName: "{registry}/sitecore-sfmcbde-xp1-xdbcollection"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearch
+  newName: "{registry}/sitecore-sfmcbde-xp1-xdbsearch"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker
+  newName: "{registry}/sitecore-sfmcbde-xp1-xdbsearchworker"
+  newTag: tag
+  
+patchesStrategicMerge:
+- patch-cm.yaml
