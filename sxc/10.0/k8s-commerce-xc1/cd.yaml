@@ -158,6 +158,11 @@ spec:
             secretKeyRef:
               name: sitecore-redis
               key: sitecore-redis-connection-string.txt
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
         - name: Sitecore_Identity_Server_Authority
           value: https://id.globalhost
         - name: Sitecore_Identity_Server_InternalAuthority
