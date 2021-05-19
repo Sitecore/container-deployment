@@ -26,9 +26,9 @@ images:
 - name: sitecore-xc-engine
   newName: {registry}/{sxc-project}/sitecore-xc-engine
   newTag: {commerce-version}
-- name: sitecore-xp1-prc
-  newName: {registry}/{project}/sitecore-xp1-prc
-  newTag: {version}
+- name: sitecore-xc1-prc
+  newName: {registry}/{sxc-project}/sitecore-xc1-prc
+  newTag: {commerce-version}
 - name: sitecore-xc1-xdbautomation
   newName: {registry}/{sxc-project}/sitecore-xc1-xdbautomation
   newTag: {commerce-version}
