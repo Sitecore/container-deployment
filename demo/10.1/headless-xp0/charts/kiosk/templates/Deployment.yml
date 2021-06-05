@@ -34,6 +34,11 @@ spec:
             secretKeyRef:
               name: google-api-key
               key: google-apikey.txt
+        - name: REACT_APP_BOXEVER_CLIENT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
         - name: SITECORE_API_HOST
           value: "https://{{ .Values.global.sitecore.kioskcd.host }}"
         - name: PROXY_API_HOST
