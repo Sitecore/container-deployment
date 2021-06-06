@@ -69,6 +69,11 @@ spec:
           value: "{{ .Values.global.orderCloud.baseApiUrl }}"
         - name: BOXEVER_PROXY_URL
           value: "https://{{ .Values.global.sitecore.boxever.host }}"
+        - name: REACT_APP_BOXEVER_CLIENT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
