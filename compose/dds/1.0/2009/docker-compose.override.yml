@@ -1,0 +1,84 @@
+services:
+  cm:
+    image: sitecore-dds-${TOPOLOGY}-cm:${VERSION}
+    environment: 
+      Sitecore_ConnectionStrings_EXM.AuthenticationKey: ${EXM_AuthenticationKey}
+      Sitecore_ConnectionStrings_EXM.CryptographicKey: ${EXM_CryptographicKey}
+      Sitecore_ConnectionStrings_EXM.InternalApiKey: ${EXM_InternalApiKey}
+      Sitecore_EXM_DedicatedServer: http://dds
+      Sitecore_EXM_EDS_SMTP_Server: ${EXM_EDS_SMTP_Server}
+      Sitecore_EXM_EDS_SMTP_Port: ${EXM_EDS_SMTP_Port}
+      Sitecore_EXM_EDS_SMTP_UserName: ${EXM_EDS_SMTP_UserName}
+      Sitecore_EXM_EDS_SMTP_Password: ${EXM_EDS_SMTP_Password}
+      Sitecore_EXM_EDS_SMTP_AuthenticationMethod: ${EXM_EDS_SMTP_AuthenticationMethod}
+      Sitecore_EXM_EDS_SMTP_StartTls: ${EXM_EDS_SMTP_StartTls}
+      Sitecore_EXM_EDS_POP3_Server: ${EXM_EDS_POP3_Server}
+      Sitecore_EXM_EDS_POP3_Port: ${EXM_EDS_POP3_Port}
+      Sitecore_EXM_EDS_POP3_UserName: ${EXM_EDS_POP3_UserName}
+      Sitecore_EXM_EDS_POP3_Password: ${EXM_EDS_POP3_Password}
+      Sitecore_EXM_EDS_POP3_UseSsl: ${EXM_EDS_POP3_UseSsl}
+      Sitecore_EXM_EDS_POP3_StartTls: ${EXM_EDS_POP3_StartTls}
+  dds:
+    image: sitecore-${TOPOLOGY}-dds:${VERSION}
+    depends_on:
+      id:
+        condition: service_started
+      cortexreporting:
+        condition: service_started
+      xdbcollection:
+        condition: service_started
+      xdbsearch:
+        condition: service_started
+      xdbautomation:
+        condition: service_started
+      xdbautomationrpt:
+        condition: service_started
+      xdbrefdata:
+        condition: service_started
+    environment: 
+      Sitecore_ConnectionStrings_EXM.InternalApiKey: ${EXM_InternalApiKey}
+      Sitecore_EXM_EDS_SMTP_Server: ${EXM_EDS_SMTP_Server}
+      Sitecore_EXM_EDS_SMTP_Port: ${EXM_EDS_SMTP_Port}
+      Sitecore_EXM_EDS_SMTP_UserName: ${EXM_EDS_SMTP_UserName}
+      Sitecore_EXM_EDS_SMTP_Password: ${EXM_EDS_SMTP_Password}
+      Sitecore_EXM_EDS_SMTP_AuthenticationMethod: ${EXM_EDS_SMTP_AuthenticationMethod}
+      Sitecore_EXM_EDS_SMTP_StartTls: ${EXM_EDS_SMTP_StartTls}
+      Sitecore_EXM_EDS_POP3_Server: ${EXM_EDS_POP3_Server}
+      Sitecore_EXM_EDS_POP3_Port: ${EXM_EDS_POP3_Port}
+      Sitecore_EXM_EDS_POP3_UserName: ${EXM_EDS_POP3_UserName}
+      Sitecore_EXM_EDS_POP3_Password: ${EXM_EDS_POP3_Password}
+      Sitecore_EXM_EDS_POP3_UseSsl: ${EXM_EDS_POP3_UseSsl}
+      Sitecore_EXM_EDS_POP3_StartTls: ${EXM_EDS_POP3_StartTls}
+      Sitecore_AppSettings_instanceNameMode:define: default
+      Sitecore_ConnectionStrings_Core: Data Source=mssql;Initial Catalog=Sitecore.Core;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Security: Data Source=mssql;Initial Catalog=Sitecore.Core;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Master: Data Source=mssql;Initial Catalog=Sitecore.Master;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Web: Data Source=mssql;Initial Catalog=Sitecore.Web;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Reporting.ApiKey: ${REPORTING_API_KEY}
+      Sitecore_ConnectionStrings_Messaging: Data Source=mssql;Initial Catalog=Sitecore.Messaging;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Xdb.Referencedata: Data Source=mssql;Initial Catalog=Sitecore.Referencedata;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_ExperienceForms: Data Source=mssql;Initial Catalog=Sitecore.ExperienceForms;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Exm.Master: Data Source=mssql;Initial Catalog=Sitecore.Exm.master;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Reporting: Data Source=mssql;Initial Catalog=Sitecore.Reporting;User ID=sa;Password=${SQL_SA_PASSWORD}
+      Sitecore_ConnectionStrings_Sitecore.Reporting.Client: http://cortexreporting
+      Sitecore_ConnectionStrings_Solr.Search: http://solr:8983/solr;solrCloud=true
+      Sitecore_ConnectionStrings_XConnect.Collection: http://xdbcollection
+      Sitecore_ConnectionStrings_XConnect.Search: http://xdbsearch
+      Sitecore_ConnectionStrings_Xdb.MarketingAutomation.Operations.Client: http://xdbautomation
+      Sitecore_ConnectionStrings_Xdb.MarketingAutomation.Reporting.Client: http://xdbautomationrpt
+      Sitecore_ConnectionStrings_Xdb.ReferenceData.Client: http://xdbrefdata
+      Sitecore_Processing_Service_Url: http://prc
+      Sitecore_Processing_Service_Require_Https: 'false'
+      Sitecore_AppSettings_Telerik.AsyncUpload.ConfigurationEncryptionKey: ${TELERIK_ENCRYPTION_KEY}
+      Sitecore_AppSettings_Telerik.Upload.ConfigurationHashKey: ${TELERIK_ENCRYPTION_KEY}
+      Sitecore_AppSettings_Telerik.Web.UI.DialogParametersEncryptionKey: ${TELERIK_ENCRYPTION_KEY}
+      Sitecore_License: ${SITECORE_LICENSE}
+      Sitecore_Identity_Server_Authority: https://${ID_HOST}
+      Sitecore_Identity_Server_InternalAuthority: http://id
+      Sitecore_Identity_Server_CallbackAuthority: https://${CM_HOST}
+      Sitecore_Identity_Server_Require_Https: "false"
+      SOLR_CORE_PREFIX_NAME: ${SOLR_CORE_PREFIX_NAME}
+      MEDIA_REQUEST_PROTECTION_SHARED_SECRET: ${MEDIA_REQUEST_PROTECTION_SHARED_SECRET}
+    healthcheck:
+      test: ["CMD", "powershell", "-command", "C:/Healthchecks/Healthcheck.ps1"]
+      timeout: 300s
