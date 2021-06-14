@@ -1,0 +1,13 @@
+version: "2.4"
+services:
+  cm:
+    image: sitecore-dcrm-xp0-cm:${SITECORE_VERSION}
+    environment:
+      Sitecore_ConnectionStrings_DCRM: ${ConnectionString_DCRM}
+      Sitecore_ConnectionStrings_Sitecore.DataExchange.Staging: ${ConnectionString_StagingDB}
+  mssql:
+    image: sitecore-dcrm-xp0-mssql:${SITECORE_VERSION}
+  xdbsearchworker:
+    image: sitecore-dcrm-xp0-xdbsearchworker:${SITECORE_VERSION}
+  xconnect:
+    image: sitecore-dcrm-xp0-xconnect:${SITECORE_VERSION}
