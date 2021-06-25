@@ -1,0 +1,42 @@
+image: mcr.microsoft.com/mssql/server:2019-latest
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+volumeClaim:
+  storageClassName: "managed-premium"
+  storageSize: "5Gi"
+  accessModes: 
+    - ReadWriteOnce
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 1433
+
+edition: Express
+sqlSaPassword:
+
+resources:
+  limits:
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 2Gi
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations: []
+
+affinity: {}
+
+env: {}
