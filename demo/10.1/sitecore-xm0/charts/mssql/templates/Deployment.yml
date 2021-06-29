@@ -51,8 +51,6 @@ spec:
                 secretKeyRef:
                   name: sitecore-database
                   key: sitecore-databasepassword.txt
-            - name: SITECORE_ADMIN_PASSWORD 
-              value: "{{ .Values.admin.password }}"
           ports:
             - name: default
               containerPort: 1433

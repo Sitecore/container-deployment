@@ -24,3 +24,10 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
+
+admin:
+  username: ""
+  password: ""
+  
+user:
+  password: ""

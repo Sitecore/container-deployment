@@ -34,8 +34,12 @@ spec:
                 secretKeyRef:
                   name: sitecore-database
                   key: sitecore-databasepassword.txt
+            - name: SITECORE_ADMIN_USERNAME
+              value: "{{ .Values.admin.username }}"
             - name: SITECORE_ADMIN_PASSWORD 
               value: "{{ .Values.admin.password }}"
+            - name: SITECORE_USER_PASSWORD 
+              value: "{{ .Values.user.password }}"
             - name: POST_DEPLOYMENT_WAIT_PERIOD
               value: "300"
           resources:
