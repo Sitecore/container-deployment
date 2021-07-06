@@ -214,6 +214,8 @@ spec:
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
         - name: RENDERING_HOST_PUBLIC_URI
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
+        - name: Sitecore_Horizon_ClientHost
+          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SITECORE_JSS_EDITING_SECRET
           valueFrom:
             secretKeyRef:
@@ -268,6 +270,42 @@ spec:
             secretKeyRef:
               name: google-api-key
               key: google-apikey.txt
+        - name: Sitecore_ConnectionStrings_ExperienceEdge.Authority
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-authority.txt
+        - name: Sitecore_ExperienceEdge_CDNUri
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-cdnuri.txt
+        - name: Sitecore_ExperienceEdge_CDNMediaPrefix
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-cdnmediaprefix.txt
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-deliveryendpoint.txt
+        - name: Sitecore_ExperienceEdge_SolrCoreName
+          value: "$(SOLR_CORE_PREFIX_NAME)_master_index"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerAttemptsBeforeBreak
+          value: "12"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerDurationOfBreak
+          value: "00:15:00"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureRetryCount
+          value: "3"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureSleepTime
+          value: "00:00:10"
+        - name: Sitecore_ExperienceEdge_EnableItemLanguageFallback
+          value: "false"
+        - name: Sitecore_ExperienceEdge_EnableFieldLanguageFallback
+          value: "false"
+        - name: Sitecore_ExperienceEdge_PublishingTargetId
+          value: "{8E080626-DDC3-4EF4-A1D1-F0BE4A200254}"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
