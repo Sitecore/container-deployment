@@ -1,4 +1,4 @@
-image: sitecoredemocontainers.azurecr.io/demo/lighthouse-xp0-tenant-service:10.1.0-ltsc2019
+image: 
 
 resources:
     limits:
