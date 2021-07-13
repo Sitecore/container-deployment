@@ -1,5 +1,7 @@
 image: 
 
+sfmc: ""
+
 resources:
     limits:
       memory: 768Mi
