@@ -36,7 +36,7 @@ spec:
               name: sitecore-tenantservice
               key: sitecore-tenantservice-clientsecret.txt
         - name: TenantService_ConnectionStrings_sitecore
-          value: "database=master;tenant id={256E877A-84E5-470A-9FE8-B1473AFD9E9E};host=http://cm;timeout=20;auth endpoint=http://id/;client secret=$(Client_Secret);client id=$(Client_Id)"
+          value: "database=master;tenant id={256E877A-84E5-470A-9FE8-B1473AFD9E9E};host=http://cm.{{ .Release.Namespace }}.svc.cluster.local;timeout=20;auth endpoint=http://id/;client secret=$(Client_Secret);client id=$(Client_Id)"
         - name: TenantService_ConnectionStrings_xconnect.collection
           value: "http://xconnect"
         - name: TenantService_ConnectionStrings_Xdb.ReferenceData.Client
