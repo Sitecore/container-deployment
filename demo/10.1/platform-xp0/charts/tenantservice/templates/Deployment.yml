@@ -44,7 +44,7 @@ spec:
         - name: TenantService_ConnectionStrings_sfmc
           value: "{{ .Values.sfmc }}"
         - name: TenantService_SfmcJourney_ExecuteUrl
-          value: "https://{{ .Values.global.sitecore.tenantservice.host }}/api/tenantservice?id={256E877A-84E5-470A-9FE8-B1473AFD9E9E}"
+          value: "https://{{ .Values.global.sitecore.tenantservice.host }}/api/tenantservice?id={2284810D-6608-46C7-95CA-2052B80E29BC}"
         livenessProbe:
           httpGet:
             path: /healthz/live
