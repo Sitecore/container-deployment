@@ -1,0 +1,33 @@
+image: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    cpu: 300m
+    memory: 512Mi
+
+nodeSelector:
+  kubernetes.io/os: windows
+
+tolerations: []
+
+affinity: {}
+
+admin:
+  username: ""
+  password: ""
+  
+user:
+  password: ""
