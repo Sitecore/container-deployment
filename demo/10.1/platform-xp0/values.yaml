@@ -155,6 +155,10 @@ global:
       host: ""
     id:
       host: ""
+    authoringhost:
+      host: ""
+    tenantservice:
+      host: ""
   ai:
     sitecoreAITenantID: ""
     sitecoreAIConfigServiceURL: ""
