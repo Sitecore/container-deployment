@@ -16,37 +16,37 @@ spec:
       containers:
       - name: sitecore-xm1-cm
         env:
-        - name: CMP_ServiceBusEntityPathIn
+        - name: Sitecore_ConnectionStrings_CMP.ServiceBusEntityPathIn
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-cmp-service-bus-entity-path-in.txt
-        - name: CMP_ServiceBusSubscription
+        - name: Sitecore_ConnectionStrings_CMP.ServiceBusSubscription
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-cmp-service-bus-subscription.txt
-        - name: CMP_ServiceBusEntityPathOut
+        - name: Sitecore_ConnectionStrings_CMP.ServiceBusEntityPathOut
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-cmp-service-bus-entity-path-out.txt
-        - name: CMP_ContentHub
+        - name: Sitecore_ConnectionStrings_CMP.ContentHub
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-cmp-content-hub.txt
-        - name: DAM_ContentHub
+        - name: Sitecore_ConnectionStrings_DAM.ContentHub
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-dam-content-hub.txt
-        - name: DAM_SearchPage
+        - name: Sitecore_ConnectionStrings_DAM.SearchPage
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
               key: sitecore-dam-search-page.txt
-        - name: DAM_ExternalRedirectKey
+        - name: Sitecore_ConnectionStrings_DAM.ExternalRedirectKey
           valueFrom:
             secretKeyRef:
               name: sitecore-chub-connection-strings
