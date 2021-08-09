@@ -65,6 +65,8 @@ spec:
               value: "{{ .Values.vercel.token }}"
             - name: VERCEL_SCOPE
               value: "{{ .Values.vercel.scope }}"
+            - name: CONTENT_HUB_API_KEY
+              value: "{{ .Values.contentHub.apiKey }}"
             - name: PUBLIC_HOST_CM
               value: "https://{{ .Values.global.sitecore.cm.host }}"
             - name: PUBLIC_HOST_ID
