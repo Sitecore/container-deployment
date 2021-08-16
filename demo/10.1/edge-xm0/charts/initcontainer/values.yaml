@@ -72,6 +72,9 @@ admin:
 dam:
   url: ""
 
+contentHub:
+  apiKey: ""
+
 vercel:
   token: ""
   scope: ""
