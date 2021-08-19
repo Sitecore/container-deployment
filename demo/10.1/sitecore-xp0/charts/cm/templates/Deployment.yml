@@ -228,8 +228,6 @@ spec:
           value: http://xconnect
         - name: Sitecore_ConnectionStrings_Xdb.ReferenceData.Client
           value: http://xconnect
-        - name: Sitecore_ConnectionStrings_tenantservice
-          value: http://tenantservice
         - name: Sitecore_Identity_Server_Authority
           value: "https://{{ .Values.global.sitecore.id.host }}"
         - name: Sitecore_Identity_Server_CallbackAuthority
