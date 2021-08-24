@@ -20,6 +20,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: boxever
           servicePort: 80

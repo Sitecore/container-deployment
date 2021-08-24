@@ -13,6 +13,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: cd
           servicePort: 80
@@ -20,6 +21,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: cm
           servicePort: 80
@@ -27,6 +29,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: id
           servicePort: 80
@@ -34,6 +37,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: authoringhost
           servicePort: 80

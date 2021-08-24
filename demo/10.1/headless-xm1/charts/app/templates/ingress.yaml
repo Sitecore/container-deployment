@@ -23,6 +23,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: cd
           servicePort: 80
@@ -30,6 +31,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: app
           servicePort: 80
