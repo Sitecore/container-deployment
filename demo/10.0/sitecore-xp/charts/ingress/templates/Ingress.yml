@@ -14,24 +14,30 @@ spec:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: cd
-          servicePort: 80
+          service:
+            name: cd
+            port: 
+              number: 80
   - host: "{{ .Values.global.sitecore.cm.host }}"
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: cm
-          servicePort: 80
+          service:
+            name: cm
+            port: 
+              number: 80
   - host: "{{ .Values.global.sitecore.id.host }}"
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: id
-          servicePort: 80
+          service:
+            name: id
+            port: 
+              number: 80
   tls:
   - secretName: global-cd-tls
     hosts:

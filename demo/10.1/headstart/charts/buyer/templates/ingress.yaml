@@ -22,6 +22,8 @@ spec:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: buyer
-          servicePort: 80
+          service:
+            name: buyer
+            port: 
+              number: 80
 {{- end }}

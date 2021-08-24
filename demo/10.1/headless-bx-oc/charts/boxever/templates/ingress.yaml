@@ -22,6 +22,8 @@ spec:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: boxever
-          servicePort: 80
+          service:
+            name: boxever
+            port: 
+              number: 80
 {{- end }}

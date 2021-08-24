@@ -25,14 +25,18 @@ spec:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: cd
-          servicePort: 80
+          service:
+            name: cd
+            port: 
+              number: 80
   - host: {{ .Values.global.sitecore.app.host | quote }}
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: app
-          servicePort: 80
+          service:
+            name: app
+            port: 
+              number: 80
 {{- end }}

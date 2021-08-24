@@ -22,6 +22,8 @@ spec:
       - path: /
         pathType: ImplementationSpecific
         backend:
-          serviceName: middleware
-          servicePort: 80
+          service:
+            name: middleware
+            port: 
+              number: 80
 {{- end }}
