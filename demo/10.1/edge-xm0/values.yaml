@@ -1,0 +1,33 @@
+sitecore-xm0:
+  cm:
+    cmp:
+      contenthub: ""
+      servicebusentitypathin: ""
+      servicebussubscription: ""
+      servicebusentitypathout: ""
+    dam:
+      url: ""
+      externalRedirectKey: "Sitecore"
+
+    env:
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ContentHub
+        value: |-
+          "{{ .Values.cmp.contenthub }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathIn
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathin }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusSubscription
+        value: |-
+          "{{ .Values.cmp.servicebussubscription }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathOut
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathout }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ContentHub
+        value: |-
+          "{{ .Values.dam.url }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.SearchPage
+        value: |-
+          "{{ .Values.dam.url }}/en-us/sitecore-dam-connect/approved-assets"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
+        value: |-
+          "{{ .Values.dam.externalRedirectKey }}"
