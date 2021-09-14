@@ -45,6 +45,11 @@ spec:
             secretKeyRef:
               name: sitecore-identity
               key: sitecore-identitysecret.txt
+        - name: Sitecore_Sitecore__IdentityServer__Clients__CredentialsClient__ClientSecrets__TenantService
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-tenantservice
+              key: sitecore-tenantservice-clientsecret.txt
         - name: Sitecore_Sitecore__IdentityServer__CertificateRawData
           valueFrom:
             secretKeyRef:

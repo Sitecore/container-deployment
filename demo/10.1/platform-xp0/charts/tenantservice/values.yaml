@@ -1,0 +1,10 @@
+image: 
+
+sfmc: ""
+
+resources:
+    limits:
+      memory: 768Mi
+    requests:
+      cpu: 500m
+      memory: 768Mi
