@@ -1,4 +1,4 @@
-image: "hello-world"
+image: "scr.sitecore.com/sxp/modules/sitecore-tenant-service:6.0.0-ltsc2019"
 
 sfmc: ""
 
