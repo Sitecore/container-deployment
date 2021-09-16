@@ -83,6 +83,16 @@ spec:
                 secretKeyRef:
                   name: sitecore-settings
                   key: sitecore-settings-jss-editing-secret.txt
+            - name: CDP_CLIENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-client-key.txt
+            - name: CDP_API_TARGET_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-api-target-endpoint.txt
           ports:
             - name: http
               containerPort: 80
