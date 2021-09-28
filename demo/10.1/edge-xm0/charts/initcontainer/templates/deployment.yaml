@@ -92,7 +92,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: edge-cdp
-                  key: edge-cdp-api-target-endpoint.txt
+                  key: edge-cdp-api-target-endpoint-ui.txt
+            - name: CDP_PROXY_URL
+              value: "https://{{ .Values.global.sitecore.cdp.host }}"
           ports:
             - name: http
               containerPort: 80
