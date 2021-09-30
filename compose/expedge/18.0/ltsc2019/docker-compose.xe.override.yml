@@ -1,0 +1,17 @@
+version: "2.4"
+services:
+  cm:
+    image: sitecore-experience-edge-connector-${TOPOLOGY}-cm:${VERSION}
+    environment:
+      Sitecore_ConnectionStrings_ExperienceEdge.Authority: "${XE_AUTHORITY}"
+      Sitecore_ExperienceEdge_CDNUri: "${XE_CDN_URI}"
+      Sitecore_ExperienceEdge_CDNMediaPrefix: "${XE_CDN_MEDIA_PREFIX}"
+      Sitecore_ExperienceEdge_DeliveryEndpoint: "${XE_DELIVERY_ENDPOINT}"
+      Sitecore_ExperienceEdge_SolrCoreName: "${SOLR_CORE_PREFIX_NAME}_master_index"
+      Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerAttemptsBeforeBreak: "12"
+      Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerDurationOfBreak: "00:15:00"
+      Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureRetryCount: "3"
+      Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureSleepTime: "00:00:10"
+      Sitecore_ExperienceEdge_EnableItemLanguageFallback: "false"
+      Sitecore_ExperienceEdge_EnableFieldLanguageFallback: "false"
+      Sitecore_ExperienceEdge_PublishingTargetId: "{8E080626-DDC3-4EF4-A1D1-F0BE4A200254}"
