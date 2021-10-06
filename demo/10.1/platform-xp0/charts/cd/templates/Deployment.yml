@@ -139,7 +139,7 @@ spec:
         - name: Sitecore_ConnectionStrings_Redis.Sessions
           value: redis:6379,ssl=False,abortConnect=False
         - name: EXM_RENDERER_URL
-          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+          value: "http://localhost"
         - name: SOLR_CORE_PREFIX_NAME
           valueFrom:
             secretKeyRef:
@@ -151,7 +151,7 @@ spec:
               name: sitecore-protect-media-requests
               key: sitecore-media-request-protection-shared-secret.txt
         - name: COVEO_SERVER_URL
-          value: "http://cd.{{ .Release.Namespace }}.svc.cluster.local/"
+          value: "http://localhost/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
         {{- range .Values.env }}
