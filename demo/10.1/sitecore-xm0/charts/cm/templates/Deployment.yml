@@ -209,7 +209,7 @@ spec:
         - name: Sitecore_Identity_Server_Require_Https
           value: "false"
         - name: EXM_RENDERER_URL
-          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+          value: "http://localhost"
         - name: RENDERING_HOST_ENDPOINT_URI
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
         - name: RENDERING_HOST_PUBLIC_URI

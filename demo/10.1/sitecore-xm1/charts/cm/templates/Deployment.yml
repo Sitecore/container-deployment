@@ -209,7 +209,7 @@ spec:
         - name: Sitecore_Identity_Server_Require_Https
           value: "false"
         - name: EXM_RENDERER_URL
-          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+          value: "http://localhost"
         - name: Sitecore_Horizon_ClientHost
           value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SOLR_CORE_PREFIX_NAME
@@ -257,7 +257,7 @@ spec:
         - name: HOST_CD
           value: "http://cd"
         - name: COVEO_SERVER_URL
-          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local/"
+          value: "http://localhost/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
         - name: OC_BUYER_CLIENT_ID
