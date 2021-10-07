@@ -74,6 +74,7 @@ dam:
 
 contentHub:
   apiKey: ""
+  endpointUrl: ""
 
 vercel:
   token: ""

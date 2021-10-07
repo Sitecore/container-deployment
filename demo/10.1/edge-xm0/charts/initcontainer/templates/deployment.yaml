@@ -67,6 +67,10 @@ spec:
               value: "{{ .Values.vercel.scope }}"
             - name: CONTENT_HUB_API_KEY
               value: "{{ .Values.contentHub.apiKey }}"
+            - name: CMP_PREVIEW_API_KEY
+              value: "{{ .Values.contentHub.apiKey }}"
+            - name: CMP_PREVIEW_ENDPOINT_URL
+              value: "{{ .Values.contentHub.endpointUrl }}"
             - name: PUBLIC_HOST_CM
               value: "https://{{ .Values.global.sitecore.cm.host }}"
             - name: PUBLIC_HOST_ID
