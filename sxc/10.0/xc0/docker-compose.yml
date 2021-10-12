@@ -61,7 +61,7 @@ services:
       restart: unless-stopped
   id:
     isolation: ${ISOLATION}
-    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id:${XC_PACKAGES_TAG}
+    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id6:${XC_PACKAGES_TAG}
     depends_on:
       mssql:
         condition: service_healthy

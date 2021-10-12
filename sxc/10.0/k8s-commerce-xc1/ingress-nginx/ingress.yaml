@@ -1,8 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sitecore-ingress
   annotations:
+    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -16,58 +17,82 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: cd
-          servicePort: 80
+          service:
+            name: cd
+            port:
+              number: 80
   - host: cm.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: cm
-          servicePort: 80
+          service:
+            name: cm
+            port:
+              number: 80
   - host: id.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: id
-          servicePort: 80
+          service:
+            name: id
+            port:
+              number: 80
   - host: bizfx.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: bizfx
-          servicePort: 80
+          service:
+            name: bizfx
+            port:
+              number: 80
   - host: authoring.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: engine-authoring
-          servicePort: 5000
+          service:
+            name: engine-authoring
+            port:
+              number: 5000
   - host: minions.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: engine-minions
-          servicePort: 5000
+          service:
+            name: engine-minions
+            port:
+              number: 5000
   - host: ops.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: engine-ops
-          servicePort: 5000
+          service:
+            name: engine-ops
+            port:
+              number: 5000
   - host: shops.globalhost
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: engine-shops
-          servicePort: 5000
+          service:
+            name: engine-shops
+            port:
+              number: 5000
   tls:
   - secretName: global-cd-tls
     hosts:
