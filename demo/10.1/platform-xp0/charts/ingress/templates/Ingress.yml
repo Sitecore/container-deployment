@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: platform-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "250m"
+spec:
+  rules:
+  - host: "{{ .Values.global.sitecore.tenantservice.host }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tenantservice
+          servicePort: 80
+  tls:
+  - secretName: global-ts-tls
+    hosts:
+    - "{{ .Values.global.sitecore.tenantservice.host }}"

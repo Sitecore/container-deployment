@@ -34,7 +34,7 @@ spec:
               key: sitecore-license.txt
 
         - name: Sitecore_FederatedUI__HostBaseUrl
-          value: "http://authoringhost.{{ .Release.Namespace }}.svc.cluster.local"
+          value: "http://localhost"
 
         - name: Sitecore_SitecorePlatform__ContentManagementUrl
           value: "https://{{ .Values.global.sitecore.cm.host }}"

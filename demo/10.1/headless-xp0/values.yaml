@@ -10,6 +10,8 @@ global:
       host: ""
     boxever:
       host: ""
+    tenantservice:
+      host: ""
   orderCloud:
     buyerClientId: ""
     baseApiUrl: ""
