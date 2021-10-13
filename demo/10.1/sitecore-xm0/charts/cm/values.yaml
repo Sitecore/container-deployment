@@ -9,12 +9,6 @@ resources:
 
 env: {}
 
-volumeClaim:
-  storageClassName: "managed-premium"
-  storageSize: "3Gi"
-  accessModes: 
-    - ReadWriteOnce
-
 global:
   orderCloud:
     buyerClientId: ""
