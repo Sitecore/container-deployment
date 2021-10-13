@@ -120,7 +120,7 @@ ForEach-Object {
     $envContent = $envContent -replace "XC_ENGINE_BRAINTREEPUBLICKEY=.*", "XC_ENGINE_BRAINTREEPUBLICKEY=$braintreePublicKey"
     $envContent = $envContent -replace "XC_ENGINE_BRAINTREEPRIVATEKEY=.*", "XC_ENGINE_BRAINTREEPRIVATEKEY=$braintreePrivateKey"
     $envContent = $envContent -replace "ISOLATION=.*", "ISOLATION=$isolation"
-    $envContent = $envContent -replace "TRAEFIK_ISOLATION=.*", "TRAEFIK_ISOLATION=default" # There is no traefik that supports proces isolation in 1909 so important this stays as default and isn't overwritten by isolation above
+    $envContent = $envContent -replace "TRAEFIK_ISOLATION=.*", "TRAEFIK_ISOLATION=hyperv" # There is no traefik that supports proces isolation. this is to ensure the content is not replaced from above
 
     Set-Content -Path $_ -Value $envContent -Force
 

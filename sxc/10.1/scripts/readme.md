@@ -42,11 +42,11 @@ This folder contains a set of scripts and json files, provided as examples, to f
 >    }
 > ```
 
-**configltsc20H2.json**, **config2004.json**, **config2009.json**, and **configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows the customized files to be used in the build and run processes.
+**configltsc20H2.json**, **config2009.json**, and **configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows the customized files to be used in the build and run processes.
 
 | Variable        | Value                       | Description                                                  |
 | --------------- | --------------------------- | -------------------------------------------------------------|
-| sxptag | 10.1.0-ltsc201 | Short tag of the SXP container image tag you want to consume. The short tag consists of the SXP version and the operating system version. |
+| sxptag | 10.1.0-ltsc2019 | Short tag of the SXP container image tag you want to consume. The short tag consists of the SXP version and the operating system version. |
 | customercommercetag | 10.1.0-ltsc2019 | Tag for the XC container images you built with your application. |
 | spetag | 6.2.0-1809 | Sitecore Powershell Extensions container image tag. |
 | sxatag | 10.1.0-1809 | Sitecore Experience Accelerator container image tag. |
