@@ -48,7 +48,7 @@ sitecore-xp0:
       - name: SITECORE_CONNECTIONSTRINGS_SFDC
         value: |-
           "{{ .Values.sfdc}}"
-      - name: SITECORE_CONNECTIONSTRINGS_Dynamics365
+      - name: SITECORE_CONNECTIONSTRINGS_DCRM
         value: |-
           "{{ .Values.d365}}"
       - name: PROXY_API_HOST
