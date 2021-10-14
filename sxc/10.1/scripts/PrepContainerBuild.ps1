@@ -44,11 +44,15 @@ if (Test-Path("$jsonFile"))
 
     #Find the release zip archives and expand them into the tmpDir
     $releaseFound = 0
-    $releaseZips = Get-ChildItem -Path $releaseZipPath -Filter "Sitecore.Commerce.*.zip" -Recurse
+    $releaseZips = Get-ChildItem -Path $releaseZipPath -Filter "Sitecore.*Commerce.*.zip" -Recurse
     foreach ($rZip in $releaseZips) {
         if ($rZip.Name -match '(.*WDP\.\d\d\d\d.*)') {
             Expand-Archive -Path $rZip.Fullname -DestinationPath $tmpDir -Force
             $releaseFound += 1
+        } elseif ($rZip.Name -match '(Sitecore.Identity.*.scwdp.zip)') {
+            $tempZip = Get-ChildItem -Path $tmpDir -Filter "Sitecore.Identity.Config.Commerce.*.zip" -Recurse
+            Remove-Item -Path $tempZip.FullName -Force
+            Copy-Item $rZip.FullName -Destination $tmpDir -Force
         }
     }
 
