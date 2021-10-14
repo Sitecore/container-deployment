@@ -38,22 +38,21 @@ This folder contains a set of scripts and json files, provided as examples, to f
 >    }
 > ```
 
-**configltsc2019.json** and **config1909.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows to customize the files for use in the build and run processes.
+**config20H2.json**, **config2009.json**, and **configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows to customize the files for use in the build and run processes.
 
 | Variable        | Value                       | Description                                                  |
 | --------------- | --------------------------- | -------------------------------------------------------------|
-| shorttag | 10.0.0-ltsc201 | Short tag of the SXP container image tag you want to consume. The short tag consists of the SXP version and the operating system version. |
-| sxptag | 10.0.0.004346.337-10.0.17763.1339-ltsc2019 | Long tag of the SXP container image you want to consume. Example of long tag: "10.0.0.004346.337-10.0.17763.1339-ltsc2019" -> *[XP Version].[XP Revision].[Container Build Number]-[Operating System Version].[Operating System Patch Level]-[Operating System Name]*. |
-| customercommercetag | 10.0.0.60231.10194-pbi-422197-0024-10.0.17763.1282-ltsc2019 | Tag for the XC container images you built with your application. |
-| spetag | 6.1.1.205-10.0.17763.1339-1809 | Sitecore Powershell Extensions container image tag. |
-| sxatag | 10.0.0.3138.205-10.0.17763.1339-1809 | Sitecore Experience Accelerator container image tag. |
+| sxptag | 10.0-ltsc2019 | Short tag of the SXP container image you want to consume. |
+| customercommercetag | 10.0-ltsc2019 | Tag for the XC container images you built with your application. |
+| spetag | 6.1.1-1809 | Sitecore Powershell Extensions container image tag. |
+| sxatag | 10.0.0-1809 | Sitecore Experience Accelerator container image tag. |
 | scrdockerregistry | scr.sitecore.com | Sitecore Container Registry name. |
 | sxpproject | platform | Sitecore Experience Platform container project name. |
 | sxcproject | sxc | Sitecore Experience Commerce container project name. |
 | baseproject | base | Container project name for base containers, like operating system containers from Microsoft. |
 | modulesproject | modules | Container project name for Sitecore Modules, like Sitecore Experience Accelerator. |
 | nonproductionproject | nonproduction | Container project name for container images that are not for production. Provided MSSQL and Solr container images are *not-production* images. It is expected that customers provide suitable MSSQL and Solr environments for production deployments. |
-| nonproductiontag | 10.0.0-ltsc2019 | Image tag for non-production container images. |
+| nonproductiontag | 10.0-ltsc2019 | Image tag for non-production container images. |
 | os_image_tag | ltsc2019 | Operating System name on which to build and run containers. Valid values are *ltsc2019* and *1909* |
 
 **FakeLicenseFile.txt** -> fake license file used as a place holder for the -licenseFilePath command-line parameter.

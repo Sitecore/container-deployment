@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       containers:
       - name: sitecore-xc-id
-        image: {registry}/{sxc-project}/sitecore-xc-id:{commerce-version}
+        image: {registry}/{sxc-project}/sitecore-xc-id6:{commerce-version}
         ports:
         - containerPort: 80
         env:
