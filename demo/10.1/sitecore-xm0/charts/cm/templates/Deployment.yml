@@ -20,17 +20,10 @@ spec:
     spec:
       nodeSelector:
         beta.kubernetes.io/os: windows
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: cm
       containers:
       - name: sitecore-xp0-cm
         image: "{{ .Values.image }}"
         imagePullPolicy: Always
-        volumeMounts:
-            - name: data
-              mountPath: "/backup"
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
         ports:
