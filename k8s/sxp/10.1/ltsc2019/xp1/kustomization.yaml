@@ -8,7 +8,7 @@ images:
   newName: scr.sitecore.com/sxp/sitecore-xp1-cm
   newTag: 10.1-ltsc2019
 - name: sitecore-xp1-id
-  newName: scr.sitecore.com/sxp/sitecore-id
+  newName: scr.sitecore.com/sxp/sitecore-id6
   newTag: 10.1-ltsc2019
 - name: sitecore-xp1-cortexprocessing
   newName: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessing
