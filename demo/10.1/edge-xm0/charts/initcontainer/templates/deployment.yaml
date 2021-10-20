@@ -71,6 +71,8 @@ spec:
               value: "{{ .Values.contentHub.apiKey }}"
             - name: CMP_PREVIEW_ENDPOINT_URL
               value: "{{ .Values.contentHub.endpointUrl }}"
+            - name: EXPERIENCE_EDGE_API_KEY
+              value: "{{ .Values.edge.apiKey }}"
             - name: PUBLIC_HOST_CM
               value: "https://{{ .Values.global.sitecore.cm.host }}"
             - name: PUBLIC_HOST_ID

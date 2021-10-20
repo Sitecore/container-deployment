@@ -79,3 +79,6 @@ contentHub:
 vercel:
   token: ""
   scope: ""
+
+edge:
+  apiKey: ""
