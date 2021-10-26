@@ -1,5 +1,7 @@
 version: "2.4"
 services:
+  cd:
+    image: sitecore-chub-${TOPOLOGY}-cd:${SITECORE_VERSION}
   cm:
     image: sitecore-chub-${TOPOLOGY}-cm:${SITECORE_VERSION}
     environment:
