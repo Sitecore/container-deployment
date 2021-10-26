@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cdp
+  labels:
+    {{- include "cdp.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cdp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "cdp.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+      - name: sitecore-docker-registry
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+          - containerPort: 80
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://*:80"
+            - name: CDP_API_TARGET_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-api-target-endpoint-proxy.txt
+            - name: CDP_CLIENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-client-key.txt
+            - name: CDP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-api-token.txt
