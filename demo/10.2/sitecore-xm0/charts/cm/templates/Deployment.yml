@@ -158,6 +158,21 @@ spec:
             secretKeyRef:
               name: boxever
               key: boxever-clientkey.txt
+        - name: GIT_SYNC_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-private-key.txt
+        - name: GIT_SYNC_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-public-key.txt
+        - name: GIT_SYNC_REPO
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-repo.txt
         - name: Sitecore_ConnectionStrings_Core
           value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
             ID=$(Core_Database_Username);Password=$(Core_Database_Password);
