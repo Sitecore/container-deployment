@@ -1,8 +1,0 @@
-version: "2.4"
-services:
-  cm:
-    image: sitecore-sfmcce-xp0-cm:${SITECORE_VERSION}
-    environment:
-        Sitecore_ConnectionStrings_sfmc: ${SFMC_CONNECTIONSTRING}
-  mssql:
-    image: sitecore-sfmcce-xp0-mssql:${SITECORE_VERSION}
