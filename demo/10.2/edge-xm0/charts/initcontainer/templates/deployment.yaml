@@ -76,6 +76,11 @@ spec:
                 secretKeyRef:
                   name: experience-edge
                   key: experience-edge-apikey.txt
+            - name: GIT_SYNC_REPO
+              valueFrom:
+                secretKeyRef:
+                  name: git-sync
+                  key: git-sync-repo.txt
             - name: PUBLIC_HOST_CM
               value: "https://{{ .Values.global.sitecore.cm.host }}"
             - name: PUBLIC_HOST_ID
