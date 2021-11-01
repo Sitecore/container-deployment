@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "initcontainer.labels" . | nindent 4 }}
 spec:
+  strategy:
+    type: Recreate
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -14,6 +16,7 @@ spec:
       labels:
         {{- include "initcontainer.selectorLabels" . | nindent 8 }}
       annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
         "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
     spec:
     {{- with .Values.imagePullSecrets }}
