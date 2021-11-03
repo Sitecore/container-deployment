@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mssql-init
+spec:
+  replicas: {{ .Values.replicaCount }}
+  backoffLimit: 10
+  template:
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          env:
+            - name: SQL_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseservername.txt
+            - name: SQL_ADMIN_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseusername.txt
+            - name: SQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: SITECORE_ADMIN_USERNAME
+              value: "{{ .Values.admin.username }}"
+            - name: SITECORE_ADMIN_PASSWORD 
+              value: "{{ .Values.admin.password }}"
+            - name: SITECORE_USER_PASSWORD 
+              value: "{{ .Values.user.password }}"
+            - name: POST_DEPLOYMENT_WAIT_PERIOD
+              value: "300"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      initContainers:
+        - name: wait-for-solr
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://solr:8983/solr/admin/info/system).StatusCode -eq 200} catch { $false }));"]
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
