@@ -224,6 +224,8 @@ spec:
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
         - name: Sitecore_Horizon_ClientHost
           value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
+        - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+          value: "Standalone"
         - name: SITECORE_JSS_EDITING_SECRET
           valueFrom:
             secretKeyRef:
