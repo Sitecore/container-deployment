@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+images:
+- name: sitecore-xc-mssql-upgrade
+  newName: {registry}/sxc/sitecore-xc-mssql-upgrade
+  newTag: {commerce-version}
+
+configMapGenerator:
+- name: mssql-upgrade-config
+  files:
+  - configuration/sql-server.txt
+  - configuration/sql-database-prefix.txt
+  - configuration/is-always-encrypted.txt
+  - configuration/commerce-engine-global-databasename.txt
+  - configuration/commerce-engine-shared-databasename.txt
+  - configuration/commerce-engine-archive-databasename.txt
+
+secretGenerator:
+- name: mssql-upgrade-secret
+  files:
+  - configuration/sql-user-name.txt
+  - configuration/sql-password.txt
+  - configuration/commerce-engine-database-masterkey-password.txt
+  - configuration/sitecore-license.txt
+
+resources:
+- mssql-upgrade.yaml
