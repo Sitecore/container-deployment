@@ -1,0 +1,75 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- configmaps
+
+images:
+- name: sitecore-xc-bizfx
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-bizfx
+  newTag: {commerce-version}
+- name: sitecore-xc1-cd
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-cd
+  newTag: {commerce-version}
+- name: sitecore-xc1-cm
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-cm
+  newTag: {commerce-version}
+- name: sitecore-xc-id
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-id6
+  newTag: {commerce-version}
+- name: sitecore-xp1-cortexprocessing
+  newName: {registry}/{project}/sitecore-xp1-cortexprocessing
+  newTag: {version}
+- name: sitecore-xp1-cortexprocessingworker
+  newName: {registry}/{project}/sitecore-xp1-cortexprocessingworker
+  newTag: {version}
+- name: sitecore-xp1-cortexreporting
+  newName: {registry}/{project}/sitecore-xp1-cortexreporting
+  newTag: {version}
+- name: sitecore-xc-engine
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-engine
+  newTag: {commerce-version}
+- name: sitecore-xc1-prc
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-prc
+  newTag: {commerce-version}
+- name: sitecore-xc1-xdbautomation
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbautomation
+  newTag: {commerce-version}
+- name: sitecore-xp1-xdbautomationrpt
+  newName: {registry}/{project}/sitecore-xp1-xdbautomationrpt
+  newTag: {version}
+- name: sitecore-xc1-xdbautomationworker
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbautomationworker
+  newTag: {commerce-version}
+- name: sitecore-xc1-xdbcollection
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbcollection
+  newTag: {commerce-version}
+- name: sitecore-xp1-xdbrefdata
+  newName: {registry}/{project}/sitecore-xp1-xdbrefdata
+  newTag: {version}
+- name: sitecore-xc1-xdbsearch
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbsearch
+  newTag: {commerce-version}
+- name: sitecore-xc1-xdbsearchworker
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbsearchworker
+  newTag: {commerce-version}
+
+resources:
+  - bizfx.yaml
+  - cm.yaml
+  - cd.yaml
+  - id.yaml
+  - cortexprocessing.yaml
+  - cortexprocessingworker.yaml
+  - cortexreporting.yaml
+  - engine-authoring.yaml
+  - engine-minions.yaml  
+  - engine-shops.yaml
+  - prc.yaml
+  - xdbautomation.yaml
+  - xdbautomationrpt.yaml
+  - xdbautomationworker.yaml
+  - xdbcollection.yaml
+  - xdbrefdata.yaml
+  - xdbsearch.yaml
+  - xdbsearchworker.yaml
