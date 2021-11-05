@@ -1,0 +1,14 @@
+{
+    "sxptag":  "10.2-2009",
+    "customercommercetag":  "10.2-2009",
+    "spetag":  "6.3-2009",
+    "sxatag":  "10.2-2009",
+    "scrdockerregistry":  "scr.sitecore.com",
+    "sxpproject":  "sxp",
+    "sxcproject":  "sxc",
+    "baseproject":  "base",
+    "modulesproject":  "modules",
+    "nonproductionproject":  "nonproduction",
+    "nonproductiontag":  "10.2-2009",
+    "os_image_tag":  "2009"
+}
