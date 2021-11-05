@@ -1,0 +1,13 @@
+services:
+  mssql-upgrade:
+    isolation: ${ISOLATION}
+    image:  ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-mssql-upgrade:${XC_PACKAGES_TAG}
+    environment:
+      IS_ALWAYS_ENCRYPTED: ${IS_ALWAYS_ENCRYPTED}
+      XC_SQL_GLOBAL_CONNECTION_STRING: Data Source=${SQL_SERVER};Initial Catalog=${XC_GLOBAL_DB};User ID=${SQL_USERNAME};Password=${SQL_PASSWORD};
+      XC_SQL_SHARED_CONNECTION_STRING: Data Source=${SQL_SERVER};Initial Catalog=${XC_SHARED_DB};User ID=${SQL_USERNAME};Password=${SQL_PASSWORD};
+      XC_SQL_ARCHIVE_CONNECTION_STRING: Data Source=${SQL_SERVER};Initial Catalog=${XC_SHARED_ARCHIVE_DB};User ID=${SQL_USERNAME};Password=${SQL_PASSWORD};
+      Sitecore_License: ${SITECORE_LICENSE}
+      Sitecore_ConnectionStrings_Core: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Core;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Master: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Master;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}
+      Sitecore_ConnectionStrings_Web: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Web;User ID=${SQL_USERNAME};Password=${SQL_PASSWORD}

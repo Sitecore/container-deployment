@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: solr-init
+        image: sitecore-xc1-solr-init-searchstax
+        env:
+        - name: SITECORE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-string.txt       
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+        - name: COMMERCE_SOLR_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-connection-string.txt
+        - name: SOLR_COMMERCE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: commerce-solr
+              key: commerce-solr-prefix-name.txt
+        - name: SEARCH_STAX_APIKEY
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-apikey.txt
+        - name: SEARCH_STAX_ACCOUNT_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-account-name.txt
+        - name: SEARCH_STAX_DEPLOYMENT_UID
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-deployment-uid.txt
+      restartPolicy: Never
+  backoffLimit: 5

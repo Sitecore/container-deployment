@@ -1,0 +1,47 @@
+services:
+  solr-init:
+    image: sitecore-xc0-solr-init
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/solr-init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-solr-init:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc0-assets:${XC_PACKAGES_TAG}
+        XC_TOPOLOGY: xc0
+        SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
+  cm:
+    build:
+      isolation: ${ISOLATION}
+      context: ./cm
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-cm:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc0-assets:${XC_PACKAGES_TAG}
+        XC_ROLE_CONFIGS: cm
+    image: sitecore-xc0-cm
+  xconnect:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbautomation
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-xconnect:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc0-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xconnect/content/inetpub/wwwroot
+    image: sitecore-xc0-xconnect
+  xdbsearchworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-xdbsearchworker:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc0-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbsearchworker/content/inetpub/wwwroot/App_Data/jobs/continuous/IndexWorker
+    image: sitecore-xc0-xdbsearchworker
+  xdbautomationworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp0-xdbautomationworker:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc0-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbautomationworker/content/inetpub/wwwroot/App_Data/jobs/continuous/AutomationEngine
+    image: sitecore-xc0-xdbautomationworker

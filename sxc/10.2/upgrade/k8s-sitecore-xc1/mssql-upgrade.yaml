@@ -1,0 +1,79 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mssql-upgrade
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: mssql-upgrade
+        image: sitecore-xc-mssql-upgrade
+        env:
+        - name: SQL_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sql-password.txt
+        - name: SQL_ADMIN_LOGIN
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sql-user-name.txt
+        - name: SQL_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: sql-server.txt
+        - name: SQL_DATABASE_PREFIX
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: sql-database-prefix.txt
+        - name: IS_ALWAYS_ENCRYPTED
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: is-always-encrypted.txt
+        - name: SITECORE_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: sitecore-license.txt
+        - name: XC_GLOBAL_DB
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: commerce-engine-global-databasename.txt
+        - name: XC_SHARED_DB
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: commerce-engine-shared-databasename.txt
+        - name: XC_SHARED_ARCHIVE_DB
+          valueFrom:
+            configMapKeyRef:
+              name: mssql-upgrade-config
+              key: commerce-engine-archive-databasename.txt
+        - name: XC_DB_Masterkey_Password
+          valueFrom:
+            secretKeyRef:
+              name: mssql-upgrade-secret
+              key: commerce-engine-database-masterkey-password.txt
+        - name: XC_SQL_GLOBAL_CONNECTION_STRING
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(XC_GLOBAL_DB);User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+        - name: XC_SQL_SHARED_CONNECTION_STRING
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(XC_SHARED_DB);User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+        - name: XC_SQL_ARCHIVE_CONNECTION_STRING
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(XC_SHARED_ARCHIVE_DB);User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+        - name: Sitecore_ConnectionStrings_Core
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Core;User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+        - name: Sitecore_ConnectionStrings_Master
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Master;User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+        - name: Sitecore_ConnectionStrings_Web
+          value: Data Source=$(SQL_SERVER);Initial Catalog=$(SQL_DATABASE_PREFIX).Web;User ID=$(SQL_ADMIN_LOGIN);Password=$(SQL_ADMIN_PASSWORD);
+      restartPolicy: Never
+  backoffLimit: 5
