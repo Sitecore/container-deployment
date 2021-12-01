@@ -344,5 +344,27 @@ spec:
         - name: wait-id
           image: mcr.microsoft.com/powershell:lts-nanoserver-1809
           command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://id/healthz/live).StatusCode -eq 200} catch { $false }));"]
+        - name: wait-for-sql
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "Install-Module SQLServer -Confirm:$False -Force -SkipPublisherCheck; Import-Module C:\\Users\\ContainerAdministrator\\Documents\\PowerShell\\Modules\\SqlServer\\; do { Start-Sleep -Seconds 3 } until ($(invoke-sqlcmd -ServerInstance $env:Database_Server -U $env:Database_Username -P $env:Database_Password -Query \"select name from sys.databases where name = 'platform_init_ready'\"));"]
+          securityContext:
+            windowsOptions:
+                runAsUserName: "ContainerAdministrator"
+          env:
+            - name: Database_Server
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseservername.txt
+            - name: Database_Username
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseusername.txt
+            - name: Database_Password
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
       imagePullSecrets:
       - name: sitecore-docker-registry
