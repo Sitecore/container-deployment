@@ -233,30 +233,30 @@ spec:
             secretKeyRef:
               name: exm
               key: sitecore-exm-internalapi-key.txt 
-        - name: Sitecore_EXM_SMTP_Server
+        - name: Sitecore_EXM_EDS_SMTP_Server
           value: "localhost"
-        - name: Sitecore_EXM_SMTP_Port
+        - name: Sitecore_EXM_EDS_SMTP_Port
           value: "25"
-        - name: Sitecore_EXM_SMTP_UserName
+        - name: Sitecore_EXM_EDS_SMTP_UserName
           value: ""
-        - name: Sitecore_EXM_SMTP_Password
+        - name: Sitecore_EXM_EDS_SMTP_Password
           value: ""
-        - name: Sitecore_EXM_SMTP_AuthenticationMethod
+        - name: Sitecore_EXM_EDS_SMTP_AuthenticationMethod
           value: "None"
-        - name: Sitecore_EXM_SMTP_StartTls
+        - name: Sitecore_EXM_EDS_SMTP_StartTls
           value: "false"
-        - name: Sitecore_EXM_POP3_Server
+        - name: Sitecore_EXM_EDS_POP3_Server
           value: "localhost"
-        - name: Sitecore_EXM_POP3_Port
+        - name: Sitecore_EXM_EDS_POP3_Port
           value: "110"
-        - name: Sitecore_EXM_POP3_UserName
+        - name: Sitecore_EXM_EDS_POP3_UserName
           value: ""
-        - name: Sitecore_EXM_POP3_Password
+        - name: Sitecore_EXM_EDS_POP3_Password
           value: ""
-        - name: Sitecore_EXM_POP3_UseSsl
+        - name: Sitecore_EXM_EDS_POP3_UseSsl
           value: "false"
-        - name: Sitecore_EXM_POP3_StartTls
-          value: "false"            
+        - name: Sitecore_EXM_EDS_POP3_StartTls
+          value: "false"           
         livenessProbe:
           httpGet:
             path: /healthz/live
