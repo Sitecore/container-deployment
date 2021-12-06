@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../k8s-sitecore-xp1
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-cd
+  newName: "{registry}/sitecore-sfmcbde-xp1-cd"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-id6
+  newName: "{registry}/sitecore-sfmcbde-id"
+  newTag: tag
+- name: scr.sitecore.com/sxp/modules/sitecore-tenant-service
+  newName: "{registry}/sitecore-sfmcbde-tenant-service"
+  newTag: tag
+
+resources:
+- ts.yaml
+
+patchesStrategicMerge:
+- patch-cm.yaml
+- patch-xdbautomationworker.yaml
+- patch-ts.yaml
