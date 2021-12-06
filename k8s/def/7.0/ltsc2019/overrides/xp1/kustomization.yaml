@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../xp1
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newName: "{registry}/sitecore-def-xp1-cm"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-cd
+  newName: "{registry}/sitecore-def-xp1-cd"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-id6
+  newName: "{registry}/sitecore-def-xp1-id"
+  newTag: tag
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbautomationworker
+  newName: "{registry}/sitecore-def-xp1-xdbautomationworker"
+  newTag: tag
+  
+patchesStrategicMerge:
+- patch-cd.def.yaml
+- patch-cm.def.yaml
+- patch-xdbautomationworker.def.yaml
