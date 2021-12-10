@@ -38,5 +38,3 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
-
-env: {}

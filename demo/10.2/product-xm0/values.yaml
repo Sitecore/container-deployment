@@ -9,7 +9,7 @@ sitecore-xm0:
       url: ""
       externalRedirectKey: "Sitecore"
 
-    env:
+    chartVariables:
       - name: SITECORE_CONNECTIONSTRINGS_CMP.ContentHub
         value: |-
           "{{ .Values.cmp.contenthub }}"
@@ -31,3 +31,14 @@ sitecore-xm0:
       - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
         value: |-
           "{{ .Values.dam.externalRedirectKey }}"
+
+global:
+  sitecore:
+    cm:
+      host: ""
+    id:
+      host: ""
+    authoringhost:
+      host: ""
+    cdp:
+      host: ""

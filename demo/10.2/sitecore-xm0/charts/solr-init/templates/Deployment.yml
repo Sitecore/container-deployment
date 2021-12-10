@@ -23,6 +23,10 @@ spec:
               value: http://solr:8983/solr;solrCloud=true
             - name: SOLR_CORE_PREFIX_NAME
               value: sitecore
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
     {{- with .Values.nodeSelector }}

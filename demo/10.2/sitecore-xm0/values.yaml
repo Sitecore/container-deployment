@@ -16,6 +16,15 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+global:
+  sitecore:
+    cm:
+      host: ""
+    id:
+      host: ""
+    authoringhost:
+      host: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

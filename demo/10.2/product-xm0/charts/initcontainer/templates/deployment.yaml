@@ -112,6 +112,10 @@ spec:
                   key: edge-cdp-api-target-endpoint-ui.txt
             - name: CDP_PROXY_URL
               value: "https://{{ .Values.global.sitecore.cdp.host }}"
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 80
