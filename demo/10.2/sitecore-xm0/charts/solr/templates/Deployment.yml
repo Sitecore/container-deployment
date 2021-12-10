@@ -48,6 +48,10 @@ spec:
               value: "{{ .Values.javaMem }}"
             - name: "SOLR_MODE"
               value: "{{ .Values.solrMode }}"
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           ports:
             - name: default
               containerPort: 8983

@@ -65,9 +65,20 @@ spec:
             - name: DAM_URL
               value: "{{ .Values.dam.url }}"
             - name: VERCEL_TOKEN
-              value: "{{ .Values.vercel.token }}"
+              valueFrom:
+                secretKeyRef:
+                  name: vercel
+                  key: vercel-token.txt
             - name: VERCEL_SCOPE
-              value: "{{ .Values.vercel.scope }}"
+              valueFrom:
+                secretKeyRef:
+                  name: vercel
+                  key: vercel-scope.txt
+            - name: VERCEL_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: vercel
+                  key: vercel-region.txt
             - name: CONTENT_HUB_API_KEY
               value: "{{ .Values.contentHub.apiKey }}"
             - name: CMP_PREVIEW_API_KEY
@@ -112,6 +123,10 @@ spec:
                   key: edge-cdp-api-target-endpoint-ui.txt
             - name: CDP_PROXY_URL
               value: "https://{{ .Values.global.sitecore.cdp.host }}"
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 80

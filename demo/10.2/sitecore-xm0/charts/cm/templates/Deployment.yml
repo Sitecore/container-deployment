@@ -316,9 +316,13 @@ spec:
           value: "false"
         - name: Sitecore_ExperienceEdge_PublishingTargetId
           value: "{8E080626-DDC3-4EF4-A1D1-F0BE4A200254}"
-        {{- range .Values.env }}
+        {{- range .Values.chartVariables }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
+        {{- end }}
+        {{- range $key, $value := $.Values.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
         {{- end }}
         livenessProbe:
           httpGet:

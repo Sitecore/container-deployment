@@ -44,3 +44,7 @@ spec:
                 secretKeyRef:
                   name: edge-cdp
                   key: edge-cdp-api-token.txt
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}

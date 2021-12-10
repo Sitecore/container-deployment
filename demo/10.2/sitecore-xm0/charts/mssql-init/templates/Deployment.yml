@@ -42,6 +42,10 @@ spec:
               value: "{{ .Values.user.password }}"
             - name: POST_DEPLOYMENT_WAIT_PERIOD
               value: "300"
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
     {{- with .Values.nodeSelector }}
