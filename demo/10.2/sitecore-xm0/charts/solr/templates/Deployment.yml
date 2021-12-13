@@ -48,6 +48,8 @@ spec:
               value: "{{ .Values.javaMem }}"
             - name: "SOLR_MODE"
               value: "{{ .Values.solrMode }}"
+            - name: "LOG4J_FORMAT_MSG_NO_LOOKUPS"
+              value: "true"
             {{- range $key, $value := $.Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
