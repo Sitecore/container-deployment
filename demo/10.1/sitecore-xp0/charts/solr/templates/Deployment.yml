@@ -48,6 +48,8 @@ spec:
               value: "{{ .Values.javaMem }}"
             - name: "SOLR_MODE"
               value: "{{ .Values.solrMode }}"
+            - name: "LOG4J_FORMAT_MSG_NO_LOOKUPS"
+              value: "true"
           ports:
             - name: default
               containerPort: 8983

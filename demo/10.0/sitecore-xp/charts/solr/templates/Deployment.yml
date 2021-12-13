@@ -25,6 +25,8 @@ spec:
         env:
         - name: SOLR_MODE
           value: solrcloud
+        - name: LOG4J_FORMAT_MSG_NO_LOOKUPS 
+          value: "true"
         volumeMounts:
           - name: data
             mountPath: "data"
