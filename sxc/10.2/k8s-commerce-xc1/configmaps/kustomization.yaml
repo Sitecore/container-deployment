@@ -22,46 +22,46 @@ vars:
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[cd-hostname]
+    fieldpath: data.cd-hostname
 - name: cm-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[cm-hostname]
+    fieldpath: data.cm-hostname
 - name: id-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[id-hostname]
+    fieldpath: data.id-hostname
 - name: bizfx-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[bizfx-hostname]
+    fieldpath: data.bizfx-hostname
 - name: engine-authoring-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[engine-authoring-hostname]
+    fieldpath: data.engine-authoring-hostname
 - name: engine-minions-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[engine-minions-hostname]
+    fieldpath: data.engine-minions-hostname
 - name: engine-shops-hostname
   objref:
     kind: ConfigMap
     name: sitecore-hostnames
     apiVersion: v1
   fieldref:
-    fieldpath: data[engine-shops-hostname]
+    fieldpath: data.engine-shops-hostname
