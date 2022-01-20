@@ -51,12 +51,21 @@ spec:
           periodSeconds: 10
           failureThreshold: 10
         volumeMounts:
-          - mountPath: /tmp
-            name: tmp
+            - mountPath: /tmp
+              name: tmp
+            - mountPath: /var/solr
+              name: solrdata
         resources:
           requests:
-            memory: 2048Mi
+            memory: 2Gi
             cpu: 500m
+          limits:
+            memory: 3Gi
+            cpu: 1500m
       volumes:
-        - emptyDir: {}
-          name: tmp
+        - name: tmp
+          emptyDir: {}
+        - name: solrdata 
+          persistentVolumeClaim:
+           claimName: solr-data  
+          

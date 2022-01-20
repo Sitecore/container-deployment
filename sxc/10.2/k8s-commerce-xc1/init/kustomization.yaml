@@ -3,11 +3,11 @@ kind: Kustomization
 
 images:
 - name: sitecore-xc1-mssql-init
-  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-mssql-init
-  newTag: {commerce-version}
+  newName: scr.sitecore.com/sxc/nonproduction/sitecore-xc1-mssql-init
+  newTag: 10.2-ltsc2019
 - name: sitecore-xc1-solr-init
-  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-solr-init
-  newTag: {commerce-version}
+  newName: scr.sitecore.com/sxc/nonproduction/sitecore-xc1-solr-init
+  newTag: 10.2-ltsc2019
 
 resources:
   - mssql-init.yaml

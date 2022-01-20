@@ -212,6 +212,8 @@ spec:
         - mountPath: C:\engine\wwwroot\logs
           name: logs
           subPath: engineauthoring
+        - mountPath: C:\engine\wwwroot\data\Environments
+          name: engine-env
         resources:
           requests:
             memory: 500Mi
@@ -223,5 +225,8 @@ spec:
       - name: logs
         persistentVolumeClaim:
           claimName: logs
+      - name: engine-env
+        persistentVolumeClaim:
+          claimName: engine-env
       imagePullSecrets:
       - name: sitecore-docker-registry

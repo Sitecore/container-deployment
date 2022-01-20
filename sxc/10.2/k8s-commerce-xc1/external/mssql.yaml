@@ -50,8 +50,10 @@ spec:
             name: sql
         resources:
           requests:
-            memory: 1200Mi
+           memory: 1200Mi
             cpu: 200m
+
       volumes:
         - name: sql
-          emptyDir: {}
+          persistentVolumeClaim:
+           claimName: mssql-data
