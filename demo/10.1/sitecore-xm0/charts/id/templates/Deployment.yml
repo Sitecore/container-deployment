@@ -15,7 +15,7 @@ spec:
         app: id
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-xp0-id
         image: "{{ .Values.image }}"

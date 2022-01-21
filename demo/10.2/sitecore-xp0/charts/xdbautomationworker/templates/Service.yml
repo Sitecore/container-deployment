@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: xdbautomationworker
+spec:
+  selector:
+    app: xdbautomationworker
+  ports:
+  - protocol: TCP
+    port: 8080

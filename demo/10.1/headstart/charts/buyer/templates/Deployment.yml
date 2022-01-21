@@ -15,7 +15,7 @@ spec:
         app: buyer
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        kubernetes.io/os: linux
       containers:
       - name: sitecore-xp0-buyer
         image: "{{ .Values.image }}"

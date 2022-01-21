@@ -1,0 +1,10 @@
+image: scr.sitecore.com/sxp/sitecore-xp1-cd:10.2.0-ltsc2019
+
+resources:
+    limits:
+      memory: 3Gi
+    requests:
+      cpu: 500m
+      memory: 3Gi
+
+env: {}

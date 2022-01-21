@@ -15,7 +15,7 @@ spec:
         app: mssql
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: mssql
         image: "{{ .Values.image }}"

@@ -1,0 +1,9 @@
+image: scr.sitecore.com/sxp/sitecore-xp0-xconnect:10.2.0-ltsc2019
+ 
+resources:
+    limits:
+      memory: 1536Mi
+    requests:
+      cpu: 200m
+      memory: 1536Mi
+  

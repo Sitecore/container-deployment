@@ -1,0 +1,61 @@
+# Default values for initcontainer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+
+pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+service:
+  type: ClusterIP
+  port: 80
+
+cmServiceNameOverride: ""
+
+resources:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations: []
+
+affinity: {}
+
+admin:
+  username: ""
+  password: ""
+
+coveo:
+  admin:
+    username: ""
+  organizationId: ""
+  region: ""
+  apiKey: ""
+  searchApiKey: ""
+  farmName: ""
+
+dam:
+  url: ""

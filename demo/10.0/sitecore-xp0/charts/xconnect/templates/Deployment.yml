@@ -17,7 +17,7 @@ spec:
         "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-0-xconnect
         image: "{{ .Values.image }}"

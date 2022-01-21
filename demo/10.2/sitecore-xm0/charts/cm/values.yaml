@@ -1,4 +1,4 @@
-image: scr.sitecore.com/sxp/sitecore-xp0-cm:10.0.0-ltsc2019
+image: scr.sitecore.com/sxp/sitecore-xp0-cm:10.2.0-ltsc2019
 
 resources:
     limits:

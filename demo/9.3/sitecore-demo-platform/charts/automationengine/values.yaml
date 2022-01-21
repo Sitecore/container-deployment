@@ -56,7 +56,7 @@ readinessProbe:
   timeoutSeconds: 60
 
 nodeSelector:
-  beta.kubernetes.io/os: windows
+  kubernetes.io/os: windows
 
 tolerations: []
 

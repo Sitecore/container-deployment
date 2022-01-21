@@ -15,7 +15,7 @@ spec:
         app: cortexprocessing
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-xp1-cortexprocessing
         image: "{{ .Values.image }}"
