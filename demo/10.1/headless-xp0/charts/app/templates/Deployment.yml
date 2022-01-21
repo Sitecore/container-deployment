@@ -15,7 +15,7 @@ spec:
         app: app
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        kubernetes.io/os: linux
       initContainers:
       - name: wait-for-cd
         image: mcr.microsoft.com/powershell:lts-ubuntu-16.04

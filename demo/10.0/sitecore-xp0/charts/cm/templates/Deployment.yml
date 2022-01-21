@@ -19,7 +19,7 @@ spec:
         "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       initContainers:
         - name: wait-for-xconnect
           image: mcr.microsoft.com/powershell:lts-nanoserver-1809

@@ -82,9 +82,25 @@ spec:
             - name: CONTENT_HUB_API_KEY
               value: "{{ .Values.contentHub.apiKey }}"
             - name: CMP_PREVIEW_API_KEY
-              value: "{{ .Values.contentHub.apiKey }}"
+              valueFrom:
+                secretKeyRef:
+                  name: contenthub
+                  key: contenthub-preview-apikey.txt
             - name: CMP_PREVIEW_ENDPOINT_URL
-              value: "{{ .Values.contentHub.endpointUrl }}"
+              valueFrom:
+                secretKeyRef:
+                  name: contenthub
+                  key: contenthub-preview-endpointurl.txt
+            - name: CMP_DELIVERY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: contenthub
+                  key: contenthub-delivery-apikey.txt
+            - name: CMP_DELIVERY_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: contenthub
+                  key: contenthub-delivery-endpointurl.txt
             - name: EXPERIENCE_EDGE_API_KEY
               valueFrom:
                 secretKeyRef:

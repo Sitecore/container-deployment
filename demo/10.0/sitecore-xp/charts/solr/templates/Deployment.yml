@@ -15,7 +15,7 @@ spec:
         app: solr
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: solr
         image: "{{ .Values.image }}"

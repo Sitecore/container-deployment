@@ -15,7 +15,7 @@ spec:
         app: cortexreporting
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-xp1-cortexreporting
         image: "{{ .Values.image }}"

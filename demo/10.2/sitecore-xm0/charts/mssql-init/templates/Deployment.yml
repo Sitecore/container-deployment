@@ -35,11 +35,20 @@ spec:
                   name: sitecore-database
                   key: sitecore-databasepassword.txt
             - name: SITECORE_ADMIN_USERNAME
-              value: "{{ .Values.admin.username }}"
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-admin-username.txt
             - name: SITECORE_ADMIN_PASSWORD 
-              value: "{{ .Values.admin.password }}"
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-admin-password.txt
             - name: SITECORE_USER_PASSWORD 
-              value: "{{ .Values.user.password }}"
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-user-password.txt
             - name: POST_DEPLOYMENT_WAIT_PERIOD
               value: "300"
             {{- range $key, $value := $.Values.env }}
@@ -52,9 +61,9 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       initContainers:
-        - name: wait-for-solr
+        - name: wait-for-sql
           image: mcr.microsoft.com/powershell:lts-nanoserver-1809
-          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://solr:8983/solr/admin/info/system).StatusCode -eq 200} catch { $false }));"]
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 2 } until ($(try {(Test-Connection -TcpPort 1433 mssql) -eq $True } catch { $false }));"]
     {{- end }}
     {{- with .Values.affinity }}
       affinity:

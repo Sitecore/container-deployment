@@ -19,7 +19,7 @@ spec:
         "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-xp0-cm
         image: "{{ .Values.image }}"
@@ -345,12 +345,9 @@ spec:
           periodSeconds: 30
           failureThreshold: 10
       initContainers:
-        - name: wait-id
-          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
-          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://id/healthz/live).StatusCode -eq 200} catch { $false }));"]
         - name: wait-for-sql
-          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
-          command: ["pwsh", "-Command", "Install-Module SQLServer -Confirm:$False -Force -SkipPublisherCheck; Import-Module C:\\Users\\ContainerAdministrator\\Documents\\PowerShell\\Modules\\SqlServer\\; do { Start-Sleep -Seconds 3 } until ($(invoke-sqlcmd -ServerInstance $env:Database_Server -U $env:Database_Username -P $env:Database_Password -Query \"select name from sys.databases where name = 'platform_init_ready'\"));"]
+          image: adoprog/wait-for-sql:latest-1809
+          command: ["pwsh", "-Command", "Import-Module C:\\Users\\ContainerAdministrator\\Documents\\PowerShell\\Modules\\SqlServer\\; do { Start-Sleep -Seconds 3 } until ($(invoke-sqlcmd -ServerInstance $env:Database_Server -U $env:Database_Username -P $env:Database_Password -Query \"select name from sys.databases where name = 'platform_init_ready'\"));"]
           securityContext:
             windowsOptions:
                 runAsUserName: "ContainerAdministrator"
