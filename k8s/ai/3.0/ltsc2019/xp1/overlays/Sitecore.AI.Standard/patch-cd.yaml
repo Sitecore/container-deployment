@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cd
+spec:
+  selector:
+    matchLabels:
+      app: cd
+  template:
+    metadata:
+      labels:
+        app: cd
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp1-cd
+        env:
+        - name: TENANTID
+          value: 
+        - name: ML_CONFIG_BASEURL
+          value:
+        - name: ML_CONFIG_TOKEN
+          value:

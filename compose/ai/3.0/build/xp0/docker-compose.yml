@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  cm:
+    image: sitecore-ai-standard-integration-${TOPOLOGY}-cm:${SITECORE_AI_VERSION}
+    build:
+      context: ./cm
+      args:
+        CM_BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-${TOPOLOGY}-cm:${SITECORE_VERSION}
+        SITECOREAI_INTEGRATION_ASSET_IMAGE : ${SITECOREAI_INTEGRATION_ASSET_IMAGE}:${SITECORE_AI_VERSION}
+  xconnect:
+    image: sitecore-ai-standard-integration-${TOPOLOGY}-xconnect:${SITECORE_AI_VERSION}
+    build:
+      context: ./xconnect
+      args:
+        XCONNECT_BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-${TOPOLOGY}-xconnect:${SITECORE_VERSION}
+        SITECOREAI_INTEGRATION_ASSET_IMAGE : ${SITECOREAI_INTEGRATION_ASSET_IMAGE}:${SITECORE_AI_VERSION}
+  cortexprocessingworker:
+    image: sitecore-ai-standard-integration-${TOPOLOGY}-cortexprocessingworker:${SITECORE_AI_VERSION}
+    build:
+      context: ./cortexprocessingworker
+      args:
+        CORTEXPROCESSING_BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-${TOPOLOGY}-cortexprocessingworker:${SITECORE_VERSION}
+        SITECOREAI_INTEGRATION_ASSET_IMAGE : ${SITECOREAI_INTEGRATION_ASSET_IMAGE}:${SITECORE_AI_VERSION}
+  xdbsearchworker:
+    image: sitecore-ai-standard-integration-${TOPOLOGY}-xdbsearchworker:${SITECORE_AI_VERSION}
+    build:
+      context: ./xdbsearchworker
+      args:
+        XDBSEARCHWORKER_BASE_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-${TOPOLOGY}-xdbsearchworker:${SITECORE_VERSION}
+        SITECOREAI_INTEGRATION_ASSET_IMAGE : ${SITECOREAI_INTEGRATION_ASSET_IMAGE}:${SITECORE_AI_VERSION}
+        
