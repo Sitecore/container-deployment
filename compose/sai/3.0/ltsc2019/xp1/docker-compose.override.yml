@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+    cm:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-cm:${SITECORE_AI_VERSION}
+        environment:
+            TENANTID: ${TENANTID}
+            ML_CONFIG_BASEURL: ${ML_CONFIG_BASEURL}
+            ML_CONFIG_TOKEN: ${ML_CONFIG_TOKEN}
+    cd:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-cd:${SITECORE_AI_VERSION}
+        environment:
+            TENANTID: ${TENANTID}
+            ML_CONFIG_BASEURL: ${ML_CONFIG_BASEURL}
+            ML_CONFIG_TOKEN: ${ML_CONFIG_TOKEN}
+    cortexprocessingworker:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-cortexprocessingworker:${SITECORE_AI_VERSION}
+    xdbsearchworker:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-xdbsearchworker:${SITECORE_AI_VERSION}
+    xdbcollection:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-xdbcollection:${SITECORE_AI_VERSION}
+    xdbrefdata:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-xdbrefdata:${SITECORE_AI_VERSION}
+    cortexreporting:
+        image: sitecore-ai-standard-integration-${TOPOLOGY}-cortexreporting:${SITECORE_AI_VERSION}
