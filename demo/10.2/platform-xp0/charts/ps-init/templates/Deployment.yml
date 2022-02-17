@@ -48,6 +48,12 @@ spec:
             value: "Data Source=$(Database_Server);Initial Catalog=Sitecore.Web;User ID=$(Database_Admin_Username);Password=$(Database_Admin_Password);MultipleActiveResultSets=True"
           - name: SITECORE_Publishing__ConnectionStrings__Service
             value: "Data Source=$(Database_Server);Initial Catalog=Sitecore.Master;User ID=$(Database_Admin_Username);Password=$(Database_Admin_Password);MultipleActiveResultSets=True"
+          - name: SITECORE_Commands__ItemRevision__Services__Add__DefaultConnectionFactory__Options__Connections__Links__Options__ConnectionString
+            value: "Core"
+          - name: SITECORE_Commands__Schema__Services__Add__DefaultConnectionFactory__Options__Connections__Links__Options__ConnectionString
+            value: "Core"
+          - name: SITECORE_Commands__Web__Services__Add__DefaultConnectionFactory__Options__Connections__Links__Options__ConnectionString
+            value: "Core"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
     {{- with .Values.nodeSelector }}
