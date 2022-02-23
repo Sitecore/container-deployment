@@ -16,3 +16,8 @@
 # to be updated by sxc team. Setting CODEOWNER to
 # sxc team members.
 /sxc/ @sc-marklee @sc-marcusheath
+
+# The folders /compose/ and /k8s/ contains Container Support Package files
+# Each team publishing Container Support Packages will add code owner(s) for their repective folders
+/compose/sxp/        @sc-stenstorgaard
+/k8s/sxp/            @sc-stenstorgaard
