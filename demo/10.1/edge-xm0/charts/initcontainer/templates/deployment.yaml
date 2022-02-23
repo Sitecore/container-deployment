@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: initcontainer
+  labels:
+    {{- include "initcontainer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "initcontainer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "initcontainer.selectorLabels" . | nindent 8 }}
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "initcontainer.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          env:
+            - name: Database_Server
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseservername.txt
+            - name: Database_Username
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseusername.txt
+            - name: Database_Password
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: HOST_CM
+              value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: HOST_CD
+              value: "http://cd.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: HOST_PS
+              value: "http://ps.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: HOST_ID
+              value: "http://id.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: ADMIN_USER_NAME
+              value: "{{ .Values.admin.username }}"
+            - name: ADMIN_PASSWORD
+              value: "{{ .Values.admin.password }}"
+            - name: INIT_CONTEXT
+              value: Data Source=$(Database_Server);Initial Catalog=platform_init_ready;User ID=$(Database_Username);Password=$(Database_Password);          
+            - name: DAM_URL
+              value: "{{ .Values.dam.url }}"
+            - name: VERCEL_TOKEN
+              value: "{{ .Values.vercel.token }}"
+            - name: VERCEL_SCOPE
+              value: "{{ .Values.vercel.scope }}"
+            - name: CONTENT_HUB_API_KEY
+              value: "{{ .Values.contentHub.apiKey }}"
+            - name: CMP_PREVIEW_API_KEY
+              value: "{{ .Values.contentHub.apiKey }}"
+            - name: CMP_PREVIEW_ENDPOINT_URL
+              value: "{{ .Values.contentHub.endpointUrl }}"
+            - name: EXPERIENCE_EDGE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: experience-edge
+                  key: experience-edge-apikey.txt
+            - name: PUBLIC_HOST_CM
+              value: "https://{{ .Values.global.sitecore.cm.host }}"
+            - name: PUBLIC_HOST_ID
+              value: "https://{{ .Values.global.sitecore.id.host }}"
+            - name: RELEASE_NAMESPACE
+              value: "{{ .Release.Namespace }}"
+            - name: ID_SERVER_DEMO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-settings
+                  key: sitecore-settings-id-demo-client-secret.txt
+            - name: SITECORE_JSS_EDITING_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-settings
+                  key: sitecore-settings-jss-editing-secret.txt
+            - name: CDP_CLIENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-client-key.txt
+            - name: CDP_API_TARGET_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: edge-cdp
+                  key: edge-cdp-api-target-endpoint-ui.txt
+            - name: CDP_PROXY_URL
+              value: "https://{{ .Values.global.sitecore.cdp.host }}"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-cm
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://cm.{{ .Release.Namespace }}.svc.cluster.local/healthz/ready).StatusCode -eq 200} catch { $false }));"]
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

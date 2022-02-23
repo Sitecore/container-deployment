@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tenantservice
+  labels:
+    app: tenantservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tenantservice
+  template:
+    metadata:
+      labels:
+        app: tenantservice
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp0-tenantservice
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: Client_Id
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-tenantservice
+              key: sitecore-tenantservice-clientid.txt
+        - name: Client_Secret
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-tenantservice
+              key: sitecore-tenantservice-clientsecret.txt
+        - name: TenantService_ConnectionStrings_sitecore
+          value: "database=master;tenant id={12A1D10A-DC6E-4A30-9181-00758BFFB591};host=http://cm.{{ .Release.Namespace }}.svc.cluster.local;timeout=20;auth endpoint=http://id/;client secret=$(Client_Secret);client id=$(Client_Id)"
+        - name: TenantService_ConnectionStrings_xconnect.collection
+          value: "http://xconnect"
+        - name: TenantService_ConnectionStrings_Xdb.ReferenceData.Client
+          value: "http://xconnect"
+        - name: TenantService_ConnectionStrings_sfmc
+          value: "{{ .Values.sfmc }}"
+        - name: TenantService_SfmcJourney_ExecuteUrl
+          value: "https://{{ .Values.global.sitecore.tenantservice.host }}/api/tenantservice?id={458EA371-7E80-462B-B0A3-A2CFB2DD039F}"
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      imagePullSecrets:
+      - name: sitecore-docker-registry

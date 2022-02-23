@@ -1,0 +1,346 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cm
+  labels:
+    app: cm
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cm
+  template:
+    metadata:
+      labels:
+        app: cm
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp0-cm
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: Sitecore_InstanceName
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: Database_Server
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-databaseservername.txt
+        - name: Master_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-master-database-username.txt
+        - name: Master_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-master-database-password.txt
+        - name: Core_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-core-database-username.txt
+        - name: Core_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-core-database-password.txt
+        - name: Web_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-web-database-username.txt
+        - name: Web_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-web-database-password.txt
+        - name: Forms_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-forms-database-username.txt
+        - name: Forms_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-forms-database-password.txt
+        - name: Exm_Master_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-exm-master-database-username.txt
+        - name: Exm_Master_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-exm-master-database-password.txt
+        - name: Messaging_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-messaging-database-username.txt
+        - name: Messaging_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-messaging-database-password.txt
+        - name: Reporting_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-reporting-database-username.txt
+        - name: Reporting_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-reporting-database-password.txt
+        - name: Reference_Data_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-reference-data-database-username.txt
+        - name: Reference_Data_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-reference-data-database-password.txt
+        - name: Processing_Pools_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-processing-pools-database-username.txt
+        - name: Processing_Pools_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-processing-pools-database-password.txt
+        - name: Processing_Tasks_Database_Username
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-processing-tasks-database-username.txt
+        - name: Processing_Tasks_Database_Password
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-database
+              key: sitecore-processing-tasks-database-password.txt
+        - name: Sitecore_ConnectionStrings_Sitecoreidentity.secret
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-identity
+              key: sitecore-identitysecret.txt
+        - name: Sitecore_ConnectionStrings_Sitecore.Services.Token.SecurityKey
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-services-token-securitykey
+              key: sitecore-servicestokensecuritykey.txt
+        - name: Sitecore_License
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-license
+              key: sitecore-license.txt
+        - name: REACT_APP_BOXEVER_CLIENT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
+        - name: GIT_SYNC_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-private-key.txt
+        - name: GIT_SYNC_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-public-key.txt
+        - name: GIT_SYNC_REPO
+          valueFrom:
+            secretKeyRef:
+              name: git-sync
+              key: git-sync-repo.txt
+        - name: Sitecore_ConnectionStrings_Core
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
+            ID=$(Core_Database_Username);Password=$(Core_Database_Password);
+        - name: Sitecore_ConnectionStrings_Security
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User
+            ID=$(Core_Database_Username);Password=$(Core_Database_Password);
+        - name: Sitecore_ConnectionStrings_Master
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Master;User
+            ID=$(Master_Database_Username);Password=$(Master_Database_Password);
+        - name: Sitecore_ConnectionStrings_Web
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Web;User
+            ID=$(Web_Database_Username);Password=$(Web_Database_Password);
+        - name: Sitecore_ConnectionStrings_Messaging
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Messaging;User
+            ID=$(Messaging_Database_Username);Password=$(Messaging_Database_Password);
+        - name: Sitecore_ConnectionStrings_Xdb.Processing.Pools
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Processing.pools;User
+            ID=$(Processing_Pools_Database_Username);Password=$(Processing_Pools_Database_Password);
+        - name: Sitecore_ConnectionStrings_Xdb.Processing.Tasks
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Processing.tasks;User
+            ID=$(Processing_Tasks_Database_Username);Password=$(Processing_Tasks_Database_Password);
+        - name: Sitecore_ConnectionStrings_Xdb.Referencedata
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Referencedata;User
+            ID=$(Reference_Data_Database_Username);Password=$(Reference_Data_Database_Password);
+        - name: Sitecore_ConnectionStrings_ExperienceForms
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.ExperienceForms;User
+            ID=$(Forms_Database_Username);Password=$(Forms_Database_Password);
+        - name: Sitecore_ConnectionStrings_Exm.Master
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Exm.master;User
+            ID=$(Exm_Master_Database_Username);Password=$(Exm_Master_Database_Password);
+        - name: Sitecore_ConnectionStrings_Reporting
+          value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Reporting;User
+            ID=$(Reporting_Database_Username);Password=$(Reporting_Database_Password);
+        - name: Sitecore_ConnectionStrings_Solr.Search
+          value: http://solr:8983/solr;solrCloud=true
+        - name: Sitecore_Identity_Server_Authority
+          value: "https://{{ .Values.global.sitecore.id.host }}"
+        - name: Sitecore_Identity_Server_CallbackAuthority
+          value: "https://{{ .Values.global.sitecore.cm.host }}"
+        - name: Sitecore_Identity_Server_InternalAuthority
+          value: "http://id.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: Sitecore_Identity_Server_Require_Https
+          value: "false"
+        - name: EXM_RENDERER_URL
+          value: "http://localhost"
+        - name: RENDERING_HOST_ENDPOINT_URI
+          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
+        - name: RENDERING_HOST_PUBLIC_URI
+          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
+        - name: Sitecore_Horizon_ClientHost
+          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
+        - name: SITECORE_JSS_EDITING_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-settings
+              key: sitecore-settings-jss-editing-secret.txt
+        - name: JSS_EdgeWebsite_DEPLOYMENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-settings
+              key: sitecore-settings-jss-deployment-secret.txt
+        - name: SITECORE_DEVELOPMENT_PATCHES
+          value: "DevEnvOn,CustomErrorsOff,DebugOn,DiagnosticsOff,InitMessagesOff,RobotDetectionOff"
+        - name: Sitecore_Horizon_ClientHost
+          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+        - name: MEDIA_REQUEST_PROTECTION_SHARED_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-protect-media-requests
+              key: sitecore-media-request-protection-shared-secret.txt
+        - name: REACT_APP_FIREBASE_MESSAGING_PUSH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: firebase-messaging-push-key
+              key: firebase-messagingpushkey.txt
+        - name: REACT_APP_FIREBASE_SENDER_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-sender-id
+              key: firebase-senderid.txt
+        - name: REACT_APP_FIREBASE_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-project-id
+              key: firebase-projectid.txt
+        - name: REACT_APP_FIREBASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: firebase-api-key
+              key: firebase-apikey.txt
+        - name: REACT_APP_FIREBASE_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: firebase-app-id
+              key: firebase-appid.txt
+        - name: REACT_APP_GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: google-api-key
+              key: google-apikey.txt
+        - name: Sitecore_ConnectionStrings_ExperienceEdge.Authority
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-authority.txt
+        - name: Sitecore_ExperienceEdge_CDNUri
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-cdnuri.txt
+        - name: Sitecore_ExperienceEdge_CDNMediaPrefix
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-cdnmediaprefix.txt
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-deliveryendpoint.txt
+        - name: Sitecore_ExperienceEdge_SolrCoreName
+          value: "$(SOLR_CORE_PREFIX_NAME)_master_index"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerAttemptsBeforeBreak
+          value: "12"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_CircuitBreakerDurationOfBreak
+          value: "00:15:00"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureRetryCount
+          value: "3"
+        - name: Sitecore_ExperienceEdge_DeliveryEndpoint_TransientFailureSleepTime
+          value: "00:00:10"
+        - name: Sitecore_ExperienceEdge_EnableItemLanguageFallback
+          value: "false"
+        - name: Sitecore_ExperienceEdge_EnableFieldLanguageFallback
+          value: "false"
+        - name: Sitecore_ExperienceEdge_PublishingTargetId
+          value: "{8E080626-DDC3-4EF4-A1D1-F0BE4A200254}"
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: {{ tpl .value $ }}
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+        startupProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      initContainers:
+        - name: wait-id
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://id/healthz/live).StatusCode -eq 200} catch { $false }));"]
+      imagePullSecrets:
+      - name: sitecore-docker-registry

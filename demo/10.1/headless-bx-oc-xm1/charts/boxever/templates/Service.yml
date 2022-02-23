@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: boxever
+spec:
+  selector:
+    app: boxever
+  ports:
+  - protocol: TCP
+    port: 80

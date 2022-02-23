@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boxever
+  labels:
+    app: boxever
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boxever
+  template:
+    metadata:
+      labels:
+        app: boxever
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: sitecore-xp0-boxever
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://*:80"
+        - name: BOXEVER_APIURL
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apiurl.txt
+        - name: BOXEVER_CLIENTKEY
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-clientkey.txt
+        - name: BOXEVER_APITOKEN
+          valueFrom:
+            secretKeyRef:
+              name: boxever
+              key: boxever-apitoken.txt
+      imagePullSecrets:
+      - name: sitecore-docker-registry

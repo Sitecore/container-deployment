@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authoringhost
+  labels:
+    app: authoringhost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authoringhost
+  template:
+    metadata:
+      labels:
+        app: authoringhost
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-authoringhost
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: Sitecore_License
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-license
+              key: sitecore-license.txt
+
+        - name: Sitecore_FederatedUI__HostBaseUrl
+          value: "http://localhost"
+
+        - name: Sitecore_SitecorePlatform__ContentManagementUrl
+          value: "https://{{ .Values.global.sitecore.cm.host }}"
+
+        - name: Sitecore_SitecorePlatform__ContentManagementInternalUrl
+          value: "https://{{ .Values.global.sitecore.cm.host }}"
+
+        - name: Sitecore_Sitecore__Authentication__OpenIdConnectOptions__RequireHttpsMetadata
+          value: 'false'
+
+        - name: Sitecore_Sitecore__Authentication__OpenIdConnectOptions__Authority
+          value: "https://{{ .Values.global.sitecore.id.host }}"
+
+        - name: Sitecore_Sitecore__Authentication__OpenIdConnectOptions__CallbackAuthority
+          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
+
+        - name: Sitecore_Sitecore__Authentication__OpenIdConnectOptions__InternalAuthority
+          value: "http://id.{{ .Release.Namespace }}.svc.cluster.local"
+
+        - name: Sitecore_Sitecore__Authentication__BearerAuthenticationOptions__Authority
+          value: "https://{{ .Values.global.sitecore.id.host }}"
+
+        - name: Sitecore_Sitecore__Authentication__BearerAuthenticationOptions__InternalAuthority
+          value: "http://id.{{ .Release.Namespace }}.svc.cluster.local"
+
+        - name: Sitecore_Sitecore__Authentication__BearerAuthenticationOptions__RequireHttpsMetadata
+          value: 'false'
+
+        - name: Sitecore_Plugins__Filters__ContentHub
+          value: '+ContentHub'
+
+        - name: Sitecore_Plugins__Filters__ExperienceAccelerator
+          value: '+SXA'
+
+        - name: Sitecore_Sitecore__Logging__Serilog__MinimumLevel__Default
+          value: 'Debug'
+
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+      imagePullSecrets:
+      - name: sitecore-docker-registry

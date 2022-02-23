@@ -11,6 +11,6 @@ env: {}
 
 volumeClaim:
   storageClassName: "managed-premium"
-  storageSize: "1Gi"
+  storageSize: "3Gi"
   accessModes: 
     - ReadWriteOnce

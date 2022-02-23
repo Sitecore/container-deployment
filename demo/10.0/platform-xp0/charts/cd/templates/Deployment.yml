@@ -19,7 +19,7 @@ spec:
         "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       initContainers:
         - name: wait-for-xconnect
           image: mcr.microsoft.com/powershell:lts-nanoserver-1809
@@ -154,11 +154,11 @@ spec:
         - name: Sitecore_ConnectionStrings_Redis.Sessions
           value: redis:6379,ssl=False,abortConnect=False
         - name: EXM_RENDERER_URL
-          value: "http://cm.{{ .Release.Namespace }}.svc.cluster.local"
+          value: "http://localhost"
         - name: SOLR_CORE_PREFIX_NAME
           value: sitecore
         - name: COVEO_SERVER_URL
-          value: "http://cd.{{ .Release.Namespace }}.svc.cluster.local/"
+          value: "http://localhost/"
         {{- range .Values.env }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}
@@ -172,7 +172,7 @@ spec:
               value: Liveness
           timeoutSeconds: 300
           periodSeconds: 30
-          failureThreshold: 3
+          failureThreshold: 10
         startupProbe:
           httpGet:
             path: /healthz/ready

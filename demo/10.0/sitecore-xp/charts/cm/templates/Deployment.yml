@@ -15,7 +15,7 @@ spec:
         app: cm
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       initContainers:
       - name: wait-xdbcollection
         image: mcr.microsoft.com/powershell:lts-nanoserver-1809
@@ -246,7 +246,7 @@ spec:
         - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusSubscription
           value: "{{ .Values.cmp.servicebussubscription }}"
         - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathOut
-          value: "{{ .Values.cmp.servicebusentitypathout }}"            
+          value: "{{ .Values.cmp.servicebusentitypathout }}"
         - name: SITECORE_CONNECTIONSTRINGS_SFMC
           value: "{{ .Values.sfmc}}"
         # TODO: move to platform-xp

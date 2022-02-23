@@ -1,0 +1,15 @@
+image: scr.sitecore.com/sxp/sitecore-xp0-cm:10.0.0-ltsc2019
+
+resources:
+    limits:
+      memory: 3Gi
+    requests:
+      cpu: 1
+      memory: 3Gi
+
+env: {}
+
+global:
+  orderCloud:
+    buyerClientId: ""
+    baseApiUrl: ""

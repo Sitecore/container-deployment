@@ -15,7 +15,7 @@ spec:
         app: xdbcollection
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: sitecore-xp1-xdbcollection
         image: "{{ .Values.image }}"

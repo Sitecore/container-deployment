@@ -1,0 +1,42 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "kiosk.fullname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "kiosk.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+  - secretName: global-cd-tls
+    hosts:
+    - {{ .Values.global.sitecore.kioskcd.host | quote }}
+  - secretName: global-kiosk-tls
+    hosts:
+    - {{ .Values.global.sitecore.kiosk.host | quote }}
+  rules:
+  - host: {{ .Values.global.sitecore.kioskcd.host | quote }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cd
+            port: 
+              number: 80
+  - host: {{ .Values.global.sitecore.kiosk.host | quote }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: kiosk
+            port: 
+              number: 80
+{{- end }}

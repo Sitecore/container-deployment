@@ -1,0 +1,29 @@
+global:
+  sitecore:
+    appcd:
+      host: ""
+    kioskcd:
+      host: ""
+    app:
+      host: ""
+    kiosk:
+      host: ""
+    boxever:
+      host: ""
+    tenantservice:
+      host: ""
+  orderCloud:
+    buyerClientId: ""
+    baseApiUrl: ""
+
+platform-xp0:
+  sitecore-xp0:
+    mssql:
+      boot:
+        overrideScripts: "Demo-Boot-Platform-Linux.ps1;Demo-Boot-Headless-Linux.ps1"
+
+    xdbautomationworker:
+      env:
+        - name: REACT_APP_PUBLIC_HOST_NAME
+          value: |-
+            "//{{ .Values.global.sitecore.app.host }}"

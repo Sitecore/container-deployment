@@ -1,0 +1,21 @@
+image: scr.sitecore.com/sxp/sitecore-xp0-cm:10.0.0-ltsc2019
+
+resources:
+    limits:
+      memory: 5Gi
+    requests:
+      cpu: 1
+      memory: 5Gi
+
+env: {}
+
+volumeClaim:
+  storageClassName: "managed-premium"
+  storageSize: "3Gi"
+  accessModes: 
+    - ReadWriteOnce
+
+global:
+  orderCloud:
+    buyerClientId: ""
+    baseApiUrl: ""

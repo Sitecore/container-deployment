@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ps-init
+spec:
+  replicas: {{ .Values.replicaCount }}
+  backoffLimit: 10
+  template:
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          args: ["schema", "upgrade", "--force"]
+          env:
+          - name: Database_Server
+            valueFrom:
+              secretKeyRef:
+                name: sitecore-database
+                key: sitecore-databaseservername.txt
+          - name: Database_Admin_Username
+            valueFrom:
+              secretKeyRef:
+                name: sitecore-database
+                key: sitecore-databaseusername.txt
+          - name: Database_Admin_Password
+            valueFrom:
+              secretKeyRef:
+                name: sitecore-database
+                key: sitecore-databasepassword.txt
+          - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Core
+            value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User ID=$(Database_Admin_Username);Password=$(Database_Admin_Password);MultipleActiveResultSets=True;MultipleActiveResultSets=True
+          - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Master
+            value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Master;User ID=$(Database_Admin_Username);Password=$(Database_Admin_Password);MultipleActiveResultSets=True;MultipleActiveResultSets=True
+          - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Web
+            value: Data Source=$(Database_Server);Initial Catalog=Sitecore.Web;User ID=$(Database_Admin_Username);Password=$(Database_Admin_Password);MultipleActiveResultSets=True;MultipleActiveResultSets=True
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      initContainers:
+        - name: wait-for-id
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://id/healthz/live).StatusCode -eq 200} catch { $false }));"]
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

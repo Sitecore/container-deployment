@@ -1,0 +1,9 @@
+image: scr.sitecore.com/sxp/sitecore-authoringhost:10.0.1-ltsc2019
+ 
+resources:
+    limits:
+      memory: 768Mi
+    requests:
+      cpu: 200m
+      memory: 768Mi
+  

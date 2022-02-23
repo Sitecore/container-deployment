@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps
+  labels:
+    app: ps
+spec:
+  replicas: {{ .Values.replicaCount }}
+  
+  strategy:
+    type: Recreate
+  progressDeadlineSeconds: 1200
+  selector:
+    matchLabels:
+      {{- include "ps.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ps.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "ps.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}	
+          env:
+            - name: Database_Server
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseservername.txt
+            - name: Master_Database_Username
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-master-database-username.txt
+            - name: Master_Database_Password
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-master-database-password.txt
+            - name: Core_Database_Username
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-core-database-username.txt
+            - name: Core_Database_Password
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-core-database-password.txt
+            - name: Web_Database_Username
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-web-database-username.txt
+            - name: Web_Database_Password
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-web-database-password.txt
+            - name: Sitecore_License
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-license
+                  key: sitecore-license.txt
+            - name: SITECORE_LICENSE_LOCATION
+              value: "C:\\license\\license.xml"
+            - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Core
+              value: "Data Source=$(Database_Server);Initial Catalog=Sitecore.Core;User ID=$(Core_Database_Username);Password=$(Core_Database_Password);MultipleActiveResultSets=True"
+            - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Master
+              value: "Data Source=$(Database_Server);Initial Catalog=Sitecore.Master;User ID=$(Master_Database_Username);Password=$(Master_Database_Password);MultipleActiveResultSets=True"
+            - name: SITECORE_Sitecore__Publishing__ConnectionStrings__Web
+              value: "Data Source=$(Database_Server);Initial Catalog=Sitecore.Web;User ID=$(Web_Database_Username);Password=$(Web_Database_Password);MultipleActiveResultSets=True"
+            - name: ASPNETCORE_URLS
+              value: "http://*:80"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{  .Values.image }}"
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz/live
+              port: 80
+              httpHeaders:
+              - name: X-Kubernetes-Probe
+                value: Liveness
+            timeoutSeconds: 300
+            periodSeconds: 30
+            failureThreshold: 10
+          startupProbe:
+            httpGet:
+              path: /healthz/ready
+              port: 80
+              httpHeaders:
+              - name: X-Kubernetes-Probe
+                value: Startup
+            timeoutSeconds: 300
+            periodSeconds: 30
+            failureThreshold: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-sql
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 2 } until ($(try {(Test-Connection -TcpPort 1433 mssql) -eq $True } catch { $false }));"]
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

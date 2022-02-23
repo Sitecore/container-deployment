@@ -1,0 +1,75 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mssql-init
+spec:
+  replicas: {{ .Values.replicaCount }}
+  backoffLimit: 10
+  template:
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          env:
+            - name: SQL_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseservername.txt
+            - name: SQL_ADMIN_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databaseusername.txt
+            - name: SQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-database
+                  key: sitecore-databasepassword.txt
+            - name: SITECORE_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-admin-username.txt
+            - name: SITECORE_ADMIN_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-admin-password.txt
+            - name: SITECORE_USER_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: sitecore-data
+                  key: sitecore-data-user-password.txt
+            - name: POST_DEPLOYMENT_WAIT_PERIOD
+              value: "300"
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      initContainers:
+        - name: wait-for-sql
+          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 2 } until ($(try {(Test-Connection -TcpPort 1433 mssql) -eq $True } catch { $false }));"]
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

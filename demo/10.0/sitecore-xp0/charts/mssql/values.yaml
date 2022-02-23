@@ -29,10 +29,10 @@ sqlSaPassword:
 
 resources:
   limits:
-    memory: 2560Mi
+    memory: 4096Mi
   requests:
-    cpu: 700m
-    memory: 2560Mi
+    cpu: 1
+    memory: 4096Mi
 
 nodeSelector:
   kubernetes.io/os: linux

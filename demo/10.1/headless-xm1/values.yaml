@@ -1,0 +1,131 @@
+global:
+  sitecore:
+    appcd:
+      host: ""
+    kioskcd:
+      host: ""
+    app:
+      host: ""
+    kiosk:
+      host: ""
+    boxever:
+      host: ""
+  orderCloud:
+    buyerClientId: ""
+    baseApiUrl: ""
+
+sitecore-xm1:
+  cm:
+    cmp:
+      contenthub: ""
+      servicebusentitypathin: ""
+      servicebussubscription: ""
+      servicebusentitypathout: ""
+    dam:
+      url: ""
+      externalRedirectKey: "Sitecore"
+    sfmc: ""
+    sfdc: ""
+    d365: ""
+    opencalais_accesstoken: ""
+
+    env:
+      - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+        value: "Standalone"
+      - name: SITECORE_APPSETTINGS_ENV__DEFINE
+        value: "Production"
+      - name: SITECORE_APPSETTINGS_UNICORN__DEFINE
+        value: "Disabled"
+      - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
+        value: "Enabled"
+      - name: SITECORE_APPSETTINGS_CONTENTHUB__DEFINE
+        value: "Enabled"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ContentHub
+        value: |-
+          "{{ .Values.cmp.contenthub }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathIn
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathin }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusSubscription
+        value: |-
+          "{{ .Values.cmp.servicebussubscription }}"
+      - name: SITECORE_CONNECTIONSTRINGS_CMP.ServiceBusEntityPathOut
+        value: |-
+          "{{ .Values.cmp.servicebusentitypathout }}"
+      - name: PROXY_API_HOST
+        value: |-
+          "https://{{ .Values.global.sitecore.cm.host }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ContentHub
+        value: |-
+          "{{ .Values.dam.url }}"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.SearchPage
+        value: |-
+          "{{ .Values.dam.url }}/en-us/sitecore-dam-connect/approved-assets"
+      - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
+        value: |-
+          "{{ .Values.dam.externalRedirectKey }}"
+  mssql:
+    user:
+      password: ""
+
+    admin:
+      username: ""
+      password: ""
+      disable:
+        default: 'FALSE'
+    coveo:
+      admin:
+        username: ""
+    exm:
+      baseUrl: ""
+      kioskCdBaseUrl: ""
+      appBaseUrl: ""
+    env:
+      - name: USER_PASSWORD
+        value: |-
+          "{{ .Values.user.password }}"
+      - name: ADMIN_USER_NAME
+        value: |-
+          "{{ .Values.admin.username }}"
+      - name: DISABLE_DEFAULT_ADMIN
+        value: |-
+          "{{ .Values.admin.disable.default }}"
+      - name: EXM_BASE_URL
+        value: |-
+          "{{ .Values.exm.baseUrl }}"
+      - name: EXM_KIOSK_CD_BASE_URL
+        value: |-
+          "{{ .Values.exm.kioskCdBaseUrl }}"
+      - name: EXM_APP_BASE_URL
+        value: |-
+          "{{ .Values.exm.appBaseUrl }}"
+      - name: COVEO_ADMIN_USER_NAME
+        value: |-
+          "{{ .Values.coveo.admin.username }}"
+  xdbautomationworker:
+    env:
+      - name: DUMMY_VARIABLE
+        value: ""
+
+  cd:
+    env:
+      - name: SITECORE_APPSETTINGS_ROLE__DEFINE
+        value: "ContentDelivery"
+      - name: SITECORE_APPSETTINGS_ENV__DEFINE
+        value: "Production"
+      - name: SITECORE_APPSETTINGS_UNICORN__DEFINE
+        value: "Disabled"
+      - name: SITECORE_APPSETTINGS_PUBLISHINGSERVICE__DEFINE
+        value: "Disabled"
+  global:
+    sitecore:
+      cm:
+        host: ""
+      cd:
+        host: ""
+      id:
+        host: ""
+    ai:
+      sitecoreAITenantID: ""
+      sitecoreAIConfigServiceURL: ""
+      sitecoreAIConfigServiceJWT: ""

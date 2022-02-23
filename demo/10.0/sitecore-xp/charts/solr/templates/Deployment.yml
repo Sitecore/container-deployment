@@ -15,7 +15,7 @@ spec:
         app: solr
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       containers:
       - name: solr
         image: "{{ .Values.image }}"
@@ -25,6 +25,8 @@ spec:
         env:
         - name: SOLR_MODE
           value: solrcloud
+        - name: LOG4J_FORMAT_MSG_NO_LOOKUPS 
+          value: "true"
         volumeMounts:
           - name: data
             mountPath: "data"

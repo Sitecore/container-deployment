@@ -15,7 +15,7 @@ spec:
         app: prc
     spec:
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
       initContainers:
       - name: wait-xdbcollection
         image: mcr.microsoft.com/powershell:lts-nanoserver-1809
