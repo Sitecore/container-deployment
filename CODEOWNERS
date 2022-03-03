@@ -19,5 +19,5 @@
 
 # The folders /compose/ and /k8s/ contains Container Support Package files
 # Each team publishing Container Support Packages will add code owner(s) for their repective folders
-/compose/sxp/        @sc-stenstorgaard
-/k8s/sxp/            @sc-stenstorgaard
+/compose/sxp/        @Sitecore/sxp-team
+/k8s/sxp/            @Sitecore/sxp-team
