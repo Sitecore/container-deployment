@@ -84,6 +84,10 @@ spec:
               value: "Core"
             - name: SITECORE_Commands__Web__Services__Add__DefaultConnectionFactory__Options__Connections__Links__Options__ConnectionString
               value: "Core"
+            - name: SITECORE_Commands__Web__Services__Add__TreePublishHandler__Options__PublishRelatedItemDescendants__SxaCarouselTemplate
+              value: "ADD22F05-6B4C-4344-95AD-9A1A9BA6A216"
+            - name: SITECORE_Commands__Web__Services__Add__TreePublishHandler__Options__PublishRelatedItemDescendants__FormTemplate
+              value: "6ABEE1F2-4AB4-47F0-AD8B-BDB36F37F64C"
             - name: ASPNETCORE_URLS
               value: "http://*:80"
           securityContext:

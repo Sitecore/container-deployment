@@ -59,7 +59,7 @@ sitecore-xp0:
           "{{ .Values.dam.url }}"
       - name: SITECORE_CONNECTIONSTRINGS_DAM.SearchPage
         value: |-
-          "{{ .Values.dam.url }}/en-us/sitecore-dam-connect/approved-assets"
+          "{{ .Values.dam.url | replace "URI=" "" }}/en-us/sitecore-dam-connect/approved-assets"
       - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
         value: |-
           "{{ .Values.dam.externalRedirectKey }}"
