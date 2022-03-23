@@ -26,3 +26,6 @@
 /compose/expedge/        @Sitecore/content-foundation-kl
 /k8s/publishing/         @Sitecore/content-foundation-kl
 /compose/publishing/     @Sitecore/content-foundation-kl
+
+/compose/horizon/        @Sitecore/horizon
+/k8s/horizon/            @Sitecore/horizon
