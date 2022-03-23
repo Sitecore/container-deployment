@@ -21,3 +21,8 @@
 # Each team publishing Container Support Packages will add code owner(s) for their repective folders
 /compose/sxp/        @Sitecore/sxp-team
 /k8s/sxp/            @Sitecore/sxp-team
+
+/k8s/expedge/            @Sitecore/content-foundation-kl
+/compose/expedge/        @Sitecore/content-foundation-kl
+/k8s/publishing/         @Sitecore/content-foundation-kl
+/compose/publishing/     @Sitecore/content-foundation-kl
