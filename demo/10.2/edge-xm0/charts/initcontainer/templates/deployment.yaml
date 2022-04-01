@@ -166,6 +166,8 @@ spec:
                 secretKeyRef:
                   name: edge-ordercloud
                   key: edge-ordercloud-middleware-client-secret.txt
+            - name: ORDERCLOUD_MIDDLEWARE_ALLOWED_CLIENTIDS
+              value: "*"
             - name: ORDERCLOUD_WEBHOOK_HASH_KEY
               valueFrom:
                 secretKeyRef:
