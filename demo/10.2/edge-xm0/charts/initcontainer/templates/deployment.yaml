@@ -139,6 +139,40 @@ spec:
                   key: edge-cdp-api-target-endpoint-ui.txt
             - name: CDP_PROXY_URL
               value: "https://{{ .Values.global.sitecore.cdp.host }}"
+            - name: DISCOVER_CUSTOMER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-discover
+                  key: edge-discover-customer-key.txt
+            - name: DISCOVER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-discover
+                  key: edge-discover-api-key.txt
+            - name: ORDERCLOUD_BUYER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: edge-ordercloud
+                  key: edge-ordercloud-buyer-client-id.txt
+            - name: ORDERCLOUD_BASE_API_URL
+              value: "https://sandboxapi.ordercloud.io"
+            - name: ORDERCLOUD_MIDDLEWARE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: edge-ordercloud
+                  key: edge-ordercloud-middleware-client-id.txt
+            - name: ORDERCLOUD_MIDDLEWARE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: edge-ordercloud
+                  key: edge-ordercloud-middleware-client-secret.txt
+            - name: ORDERCLOUD_MIDDLEWARE_ALLOWED_CLIENTIDS
+              value: "*"
+            - name: ORDERCLOUD_WEBHOOK_HASH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: edge-ordercloud
+                  key: edge-ordercloud-webhook-hash-key.txt
             {{- range $key, $value := $.Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
