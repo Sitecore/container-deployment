@@ -238,8 +238,6 @@ spec:
               key: sitecore-settings-jss-deployment-secret.txt
         - name: SITECORE_DEVELOPMENT_PATCHES
           value: "DevEnvOn,CustomErrorsOff,DebugOn,DiagnosticsOff,InitMessagesOff,RobotDetectionOff"
-        - name: Sitecore_Horizon_ClientHost
-          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SOLR_CORE_PREFIX_NAME
           valueFrom:
             secretKeyRef:
