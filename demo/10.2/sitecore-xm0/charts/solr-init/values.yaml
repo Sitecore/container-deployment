@@ -13,10 +13,10 @@ podSecurityContext: {}
 
 resources:
   limits:
-    memory: 512Mi
+    memory: 1024Mi
   requests:
-    cpu: 300m
-    memory: 512Mi
+    cpu: 500m
+    memory: 1024Mi
 
 nodeSelector:
   kubernetes.io/os: windows
