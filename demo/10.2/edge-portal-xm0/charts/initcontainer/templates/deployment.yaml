@@ -64,21 +64,6 @@ spec:
               value: Data Source=$(Database_Server);Initial Catalog=platform_init_ready;User ID=$(Database_Username);Password=$(Database_Password);          
             - name: DAM_URL
               value: "{{ .Values.dam.url }}"
-            - name: VERCEL_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vercel
-                  key: vercel-token.txt
-            - name: VERCEL_SCOPE
-              valueFrom:
-                secretKeyRef:
-                  name: vercel
-                  key: vercel-scope.txt
-            - name: VERCEL_REGION
-              valueFrom:
-                secretKeyRef:
-                  name: vercel
-                  key: vercel-region.txt
             - name: CONTENT_HUB_API_KEY
               value: "{{ .Values.contentHub.apiKey }}"
             - name: CMP_PREVIEW_API_KEY
