@@ -18,8 +18,12 @@ COPY --from=assets C:\module\tools\scripts\StartCommerceInit.ps1 C:\module\tools
 
 
 # hadolint ignore=DL3025
-ENTRYPOINT .\StartCommerceInit.ps1 -ResourcesDirectory $env:RESOURCES_PATH -SqlServer $env:SQL_SERVER -SqlAdminUser $env:SQL_ADMIN_LOGIN -SqlAdminPassword $env:SQL_ADMIN_PASSWORD -SitecoreAdminPassword $env:sitecore_admin_password -SqlElasticPoolName $env:SQL_ELASTIC_POOL_NAME  -DatabasesToDeploy $env:DATABASES_TO_DEPLOY -PostDeploymentWaitPeriod $env:POST_DEPLOYMENT_WAIT_PERIOD -CoreDatabaseName $env:SITECORE_CORE_DB -SharedDatabaseName $env:XC_SHARED_DB -ArchiveDatabaseName $env:XC_SHARED_ARCHIVE_DB -MasterkeyPassword $env:XC_DB_Masterkey_Password  `
-    -DatabaseUsers @( `
+ENTRYPOINT ["powershell.exe", ".\\StartCommerceInit.ps1", "-ResourcesDirectory $env:RESOURCES_PATH", "-SqlServer $env:SQL_SERVER", "-SqlAdminUser $env:SQL_ADMIN_LOGIN", `
+    "-SqlAdminPassword $env:SQL_ADMIN_PASSWORD", "-SitecoreAdminPassword $env:sitecore_admin_password", `
+    "-SqlElasticPoolName $env:SQL_ELASTIC_POOL_NAME", "-DatabasesToDeploy $env:DATABASES_TO_DEPLOY", `
+    "-PostDeploymentWaitPeriod $env:POST_DEPLOYMENT_WAIT_PERIOD", `
+    "-CoreDatabaseName $env:SITECORE_CORE_DB", "-SharedDatabaseName $env:XC_SHARED_DB", "-ArchiveDatabaseName $env:XC_SHARED_ARCHIVE_DB", "-MasterkeyPassword $env:XC_DB_Masterkey_Password",  `
+    "-DatabaseUsers @( `
     @{'databaseName' = 'Sitecore.Master'; 'username' = $env:Master_Database_Username; 'password' = $env:Master_Database_Password}, `
     @{'databaseName' = 'Sitecore.Core'; 'username' = $env:Core_Database_Username; 'password' = $env:Core_Database_Password}, `
     @{'databaseName' = 'Sitecore.Web'; 'username' = $env:Web_Database_Username; 'password' = $env:Web_Database_Password}, `
@@ -36,4 +40,4 @@ ENTRYPOINT .\StartCommerceInit.ps1 -ResourcesDirectory $env:RESOURCES_PATH -SqlS
     @{'databaseName' = 'Sitecore.Xdb.Collection.ShardMapManager'; 'username' = $env:Collection_ShardMapManager_Database_Username; 'password' = $env:Collection_ShardMapManager_Database_Password }, `
     @{'databaseName' = 'Sitecore.Xdb.Collection.Shard0'; 'username' = $env:Collection_ShardMapManager_Database_Username; 'password' = $env:Collection_ShardMapManager_Database_Password }, `
     @{'databaseName' = 'Sitecore.Xdb.Collection.Shard1'; 'username' = $env:Collection_ShardMapManager_Database_Username; 'password' = $env:Collection_ShardMapManager_Database_Password } `
-    )
+    )"]
