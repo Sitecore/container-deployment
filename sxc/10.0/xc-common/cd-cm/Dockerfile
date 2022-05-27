@@ -29,10 +29,4 @@ RUN New-Item -Path C:\inetpub\wwwroot\App_Config -Name Security-Shared -ItemType
     Pop-Location; `
     Remove-Item -Path "./XConnectFiles/" -Recurse -Force;
 
-SHELL ["C:\\LogMonitor\\LogMonitor.exe", "powershell.exe"]
-
-# hadolint ignore=DL3025
-ENTRYPOINT $env:IIS_APPPOOL_IDENTITY = 'IIS AppPool\DefaultAppPool'; `
-        C:\tools\GrantWritePermission.ps1 -TargetFoldersFile 'C:\Permissions\AdditionalWriteAllowedFolders.txt' -User $env:IIS_APPPOOL_IDENTITY; `
-        if (-not (Test-Path C:\inetpub\wwwroot\App_Config\Security-Shared\Domains.config)) { Copy-Item -Path C:\inetpub\wwwroot\App_Config\Security\Domains.config -Destination C:\inetpub\wwwroot\App_Config\Security-Shared\Domains.config }; `
-        C:\ServiceMonitor.exe w3svc;
+ENTRYPOINT ["C:\\LogMonitor\\LogMonitor.exe", "powershell", "C:\\tools\\CopySecurityDomain.ps1; C:\\Run-W3SVCService.ps1"]
