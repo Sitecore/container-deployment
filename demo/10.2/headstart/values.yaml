@@ -1,0 +1,8 @@
+global:
+  sitecore:
+    buyer:
+      host: "buyer"
+    seller:
+      host: "seller"
+    middleware:
+      host: "middleware"
