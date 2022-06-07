@@ -37,19 +37,19 @@ spec:
           value: "{{ .Values.AvalaraSettings_LicenseKey}}"
         - name: AvalaraSettings_BaseApiUrl
           value: "{{ .Values.AvalaraSettings_BaseApiUrl}}"
-        - name: BlobSettings_ConnectionString
+        - name: StorageAccountSettings_ConnectionString
           value: "{{ .Values.BlobSettings_ConnectionString}}"
-        - name: BlobSettings_HostUrl
+        - name: StorageAccountSettings_HostUrl
           value: "{{ .Values.BlobSettings_HostUrl}}"
-        - name: BlobSettings_Key
+        - name: StorageAccountSettings_Key
           value: "{{ .Values.BlobSettings_Key}}"
-        - name: BlobSettings_ContainerNameQueue
+        - name: StorageAccountSettings_ContainerNameQueue
           value: "{{ .Values.BlobSettings_ContainerNameQueue}}"
-        - name: BlobSettings_ContainerNameCache
+        - name: StorageAccountSettings_ContainerNameCache
           value: "{{ .Values.BlobSettings_ContainerNameCache}}"
-        - name: BlobSettings_ContainerNameExchangeRates
+        - name: StorageAccountSettings_ContainerNameExchangeRates
           value: "{{ .Values.BlobSettings_ContainerNameExchangeRates}}"
-        - name: BlobSettings_ContainerNameTranslations
+        - name: StorageAccountSettings_ContainerNameTranslations
           value: "{{ .Values.BlobSettings_ContainerNameTranslations}}"
         - name: CMSSettings_BaseUrl
           value: "{{ .Values.CMSSettings_BaseUrl}}"
