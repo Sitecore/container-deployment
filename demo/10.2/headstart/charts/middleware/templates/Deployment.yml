@@ -107,6 +107,10 @@ spec:
           value: "{{ .Values.OrderCloudSettings_IncrementorPrefix}}"
         - name: OrderCloudSettings_WebhookHashKey
           value: "{{ .Values.OrderCloudSettings_WebhookHashKey}}"
+        - name: OrderCloudSettings_ClientIDsWithAPIAccess
+          value: "{{ .Values.OrderCloudSettings_ClientIDsWithAPIAccess}}"
+        - name: OrderCloudSettings_MarketplaceID
+          value: "{{ .Values.OrderCloudSettings_MarketplaceID}}"
         - name: SendGridSettings_ApiKey
           value: "{{ .Values.SendGridSettings_ApiKey}}"
         - name: SendgridSettings_FromEmail
