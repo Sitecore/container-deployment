@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seller
+  labels:
+    app: seller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seller
+  template:
+    metadata:
+      labels:
+        app: seller
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: sitecore-xp0-seller
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: SELLER_ID
+          value: "{{ .Values.sellerID}}"
+        - name: SELLER_CLIENT_ID
+          value: "{{ .Values.clientID}}"
+        - name: MIDDLEWARE_URL
+          value: "https://{{ .Release.Namespace }}-middleware.sitecoredemo.com"
+        - name: TRANSLATE_BLOB_URL
+          value: "{{ .Values.translateBlobUrl}}"
+        - name: BLOB_STORAGE_URL
+          value: "{{ .Values.blobStorageUrl}}"
+        - name: BUYER_CLIENT_ID
+          value: "{{ .Values.buyerClientID}}"
+      imagePullSecrets:
+      - name: sitecore-docker-registry

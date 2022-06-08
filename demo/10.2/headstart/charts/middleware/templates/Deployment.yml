@@ -1,0 +1,165 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: middleware
+  labels:
+    app: middleware
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: middleware
+  template:
+    metadata:
+      labels:
+        app: middleware
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: sitecore-xp0-middleware
+        image: "{{ .Values.image }}"
+        imagePullPolicy: Always
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+        - containerPort: 80
+        env:
+        - name: ApplicationInsightsSettings_InstrumentationKey
+          value: "{{ .Values.ApplicationInsightsSettings_InstrumentationKey}}"
+        - name: AvalaraSettings_AccountID
+          value: "{{ .Values.AvalaraSettings_AccountID}}"
+        - name: AvalaraSettings_CompanyCode
+          value: "{{ .Values.AvalaraSettings_CompanyCode}}"
+        - name: AvalaraSettings_CompanyID
+          value: "{{ .Values.AvalaraSettings_CompanyID}}"
+        - name: AvalaraSettings_LicenseKey
+          value: "{{ .Values.AvalaraSettings_LicenseKey}}"
+        - name: AvalaraSettings_BaseApiUrl
+          value: "{{ .Values.AvalaraSettings_BaseApiUrl}}"
+        - name: StorageAccountSettings_ConnectionString
+          value: "{{ .Values.BlobSettings_ConnectionString}}"
+        - name: StorageAccountSettings_HostUrl
+          value: "{{ .Values.BlobSettings_HostUrl}}"
+        - name: StorageAccountSettings_Key
+          value: "{{ .Values.BlobSettings_Key}}"
+        - name: StorageAccountSettings_ContainerNameQueue
+          value: "{{ .Values.BlobSettings_ContainerNameQueue}}"
+        - name: StorageAccountSettings_ContainerNameCache
+          value: "{{ .Values.BlobSettings_ContainerNameCache}}"
+        - name: StorageAccountSettings_ContainerNameExchangeRates
+          value: "{{ .Values.BlobSettings_ContainerNameExchangeRates}}"
+        - name: StorageAccountSettings_ContainerNameTranslations
+          value: "{{ .Values.BlobSettings_ContainerNameTranslations}}"
+        - name: CMSSettings_BaseUrl
+          value: "{{ .Values.CMSSettings_BaseUrl}}"
+        - name: CardConnectSettings_Authorization
+          value: "{{ .Values.CardConnectSettings_Authorization}}"
+        - name: CardConnectSettings_AuthorizationCad
+          value: "{{ .Values.CardConnectSettings_AuthorizationCad}}"
+        - name: CardConnectSettings_BaseUrl
+          value: "{{ .Values.CardConnectSettings_BaseUrl}}"
+        - name: CardConnectSettings_CadMerchantID
+          value: "{{ .Values.CardConnectSettings_CadMerchantID}}"
+        - name: CardConnectSettings_Site
+          value: "{{ .Values.CardConnectSettings_Site}}"
+        - name: CardConnectSettings_UsdMerchantID
+          value: "{{ .Values.CardConnectSettings_UsdMerchantID}}"
+        - name: CosmosSettings_DatabaseName
+          value: "{{ .Values.CosmosSettings_DatabaseName}}"
+        - name: CosmosSettings_EnableTcpConnectionEndpointRediscovery
+          value: "{{ .Values.CosmosSettings_EnableTcpConnectionEndpointRediscovery}}"
+        - name: CosmosSettings_EndpointUri
+          value: "{{ .Values.CosmosSettings_EndpointUri}}"
+        - name: CosmosSettings_PrimaryKey
+          value: "{{ .Values.CosmosSettings_PrimaryKey}}"
+        - name: CosmosSettings_RequestTimeoutInSeconds
+          value: "{{ .Values.CosmosSettings_RequestTimeoutInSeconds}}"
+        - name: EasyPostSettings_APIKey
+          value: "{{ .Values.EasyPostSettings_APIKey}}"
+        - name: EasyPostSettings_FreeShippingTransitDays
+          value: "{{ .Values.EasyPostSettings_FreeShippingTransitDays}}"
+        - name: EasyPostSettings_NoRatesFallbackCost
+          value: "{{ .Values.EasyPostSettings_NoRatesFallbackCost}}"
+        - name: EasyPostSettings_NoRatesFallbackTransitDays
+          value: "{{ .Values.EasyPostSettings_NoRatesFallbackTransitDays}}"
+        - name: EnvironmentSettings_AppTimeoutInSeconds
+          value: "{{ .Values.EnvironmentSettings_AppTimeoutInSeconds}}"
+        - name: EnvironmentSettings_MiddlewareBaseUrl
+          value: "https://{{ .Release.Namespace }}-middleware.sitecoredemo.com"
+        - name: EnvironmentSettings_BuildNumber
+          value: "{{ .Values.EnvironmentSettings_BuildNumber}}"
+        - name: EnvironmentSettings_Commit
+          value: "{{ .Values.EnvironmentSettings_Commit}}"
+        - name: EnvironmentSettings_Environment
+          value: "{{ .Values.EnvironmentSettings_Environment}}"
+        - name: EnvironmentSettings_TaxProvider
+          value: "{{ .Values.EnvironmentSettings_TaxProvider}}"
+        - name: FlurlSettings_TimeoutInSeconds
+          value: "{{ .Values.FlurlSettings_TimeoutInSeconds}}"
+        - name: OrderCloudSettings_ApiUrl
+          value: "{{ .Values.OrderCloudSettings_ApiUrl}}"
+        - name: OrderCloudSettings_MiddlewareClientID
+          value: "{{ .Values.OrderCloudSettings_MiddlewareClientID}}"
+        - name: OrderCloudSettings_MiddlewareClientSecret
+          value: "{{ .Values.OrderCloudSettings_MiddlewareClientSecret}}"
+        - name: OrderCloudSettings_IncrementorPrefix
+          value: "{{ .Values.OrderCloudSettings_IncrementorPrefix}}"
+        - name: OrderCloudSettings_WebhookHashKey
+          value: "{{ .Values.OrderCloudSettings_WebhookHashKey}}"
+        - name: OrderCloudSettings_ClientIDsWithAPIAccess
+          value: "{{ .Values.OrderCloudSettings_ClientIDsWithAPIAccess}}"
+        - name: OrderCloudSettings_MarketplaceID
+          value: "{{ .Values.OrderCloudSettings_MarketplaceID}}"
+        - name: SendGridSettings_ApiKey
+          value: "{{ .Values.SendGridSettings_ApiKey}}"
+        - name: SendgridSettings_FromEmail
+          value: "{{ .Values.SendgridSettings_FromEmail}}"
+        - name: SendgridSettings_CriticalSupportEmails
+          value: "{{ .Values.SendgridSettings_CriticalSupportEmails}}"
+        - name: SendgridSettings_SupportCaseEmail
+          value: "{{ .Values.SendgridSettings_SupportCaseEmail}}"
+        - name: SendgridSettings_BillingEmail
+          value: "{{ .Values.SendgridSettings_BillingEmail}}"
+        - name: SendgridSettings_OrderSubmitTemplateID
+          value: "{{ .Values.SendgridSettings_OrderSubmitTemplateID}}"
+        - name: SendgridSettings_OrderApprovalTemplateID
+          value: "{{ .Values.SendgridSettings_OrderApprovalTemplateID}}"
+        - name: SendgridSettings_LineItemStatusChangeTemplateID
+          value: "{{ .Values.SendgridSettings_LineItemStatusChangeTemplateID}}"
+        - name: SendgridSettings_QuoteOrderSubmitTemplateID
+          value: "{{ .Values.SendgridSettings_QuoteOrderSubmitTemplateID}}"
+        - name: SendgridSettings_NewUserTemplateID
+          value: "{{ .Values.SendgridSettings_NewUserTemplateID}}"
+        - name: SendgridSettings_ProductInformationRequestTemplateID
+          value: "{{ .Values.SendgridSettings_ProductInformationRequestTemplateID}}"
+        - name: SendgridSettings_PasswordResetTemplateID
+          value: "{{ .Values.SendgridSettings_PasswordResetTemplateID}}"
+        - name: SendgridSettings_CriticalSupportTemplateID
+          value: "{{ .Values.SendgridSettings_CriticalSupportTemplateID}}"
+        - name: SmartyStreetSettings_AuthID
+          value: "{{ .Values.SmartyStreetSettings_AuthID}}"
+        - name: SmartyStreetSettings_AuthToken
+          value: "{{ .Values.SmartyStreetSettings_AuthToken}}"
+        - name: SmartyStreetSettings_RefererHost
+          value: "{{ .Values.SmartyStreetSettings_RefererHost}}"
+        - name: SmartyStreetSettings_WebsiteKey
+          value: "{{ .Values.SmartyStreetSettings_WebsiteKey}}"
+        - name: UI_BaseAdminUrl
+          value: "{{ .Values.UI_BaseAdminUrl}}"
+        - name: ZohoSettings_AccessToken
+          value: "{{ .Values.ZohoSettings_AccessToken}}"
+        - name: ZohoSettings_ClientId
+          value: "{{ .Values.ZohoSettings_ClientId}}"
+        - name: ZohoSettings_ClientSecret
+          value: "{{ .Values.ZohoSettings_ClientSecret}}"
+        - name: ZohoSettings_OrgID
+          value: "{{ .Values.ZohoSettings_OrgID}}"
+        - name: ZohoSettings_PerformOrderSubmitTasks
+          value: "{{ .Values.ZohoSettings_PerformOrderSubmitTasks}}"
+        - name: JobSettings_ShouldCaptureCreditCardPayments
+          value: "{{ .Values.JobSettings_ShouldCaptureCreditCardPayments}}"
+        - name: JobSettings_ShouldRunZoho
+          value: "{{ .Values.JobSettings_ShouldRunZoho}}"
+      imagePullSecrets:
+      - name: sitecore-docker-registry
