@@ -111,6 +111,8 @@ spec:
           value: "{{ .Values.OrderCloudSettings_ClientIDsWithAPIAccess}}"
         - name: OrderCloudSettings_MarketplaceID
           value: "{{ .Values.OrderCloudSettings_MarketplaceID}}"
+        - name: SendgridSettings_Enabled
+          value: "{{ .Values.SendgridSettings_Enabled}}"
         - name: SendGridSettings_ApiKey
           value: "{{ .Values.SendGridSettings_ApiKey}}"
         - name: SendgridSettings_FromEmail
