@@ -65,6 +65,7 @@ OrderCloudSettings_WebhookHashKey: ""
 OrderCloudSettings_ClientIDsWithAPIAccess: ""
 OrderCloudSettings_MarketplaceID: ""
 
+SendgridSettings_Enabled: "false"
 SendGridSettings_ApiKey: ""
 SendgridSettings_FromEmail: ""
 SendgridSettings_CriticalSupportEmails: ""
