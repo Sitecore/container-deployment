@@ -219,9 +219,15 @@ spec:
         - name: EXM_RENDERER_URL
           value: "http://localhost"
         - name: RENDERING_HOST_ENDPOINT_URI
-          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
+          valueFrom:
+            secretKeyRef:
+              name: rendering-host
+              key: rendering-host-endpoint-uri.txt
         - name: RENDERING_HOST_PUBLIC_URI
-          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
+          valueFrom:
+            secretKeyRef:
+              name: rendering-host
+              key: rendering-host-public-uri.txt
         - name: Sitecore_Horizon_ClientHost
           value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SITECORE_APPSETTINGS_ROLE__DEFINE
