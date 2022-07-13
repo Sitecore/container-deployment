@@ -289,6 +289,11 @@ spec:
             secretKeyRef:
               name: experience-edge
               key: experience-edge-authority.txt
+        - name: Sitecore_ConnectionStrings_ExperienceEdge
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-connectionstring.txt
         - name: Sitecore_ExperienceEdge_CDNUri
           valueFrom:
             secretKeyRef:
