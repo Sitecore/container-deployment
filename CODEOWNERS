@@ -29,3 +29,6 @@
 
 /compose/horizon/        @Sitecore/horizon
 /k8s/horizon/            @Sitecore/horizon
+
+/compose/chub/           @sc-jennengng
+/k8s/chub/               @sc-jennengng
