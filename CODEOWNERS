@@ -29,3 +29,6 @@
 
 /compose/horizon/        @Sitecore/horizon
 /k8s/horizon/            @Sitecore/horizon
+
+/compose/chub/           @Sitecore/connectors
+/k8s/chub/               @Sitecore/connectors
