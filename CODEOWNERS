@@ -30,5 +30,5 @@
 /compose/horizon/        @Sitecore/horizon
 /k8s/horizon/            @Sitecore/horizon
 
-/compose/chub/           @sc-jennengng
-/k8s/chub/               @sc-jennengng
+/compose/chub/           @Sitecore/connectors
+/k8s/chub/               @Sitecore/connectors
