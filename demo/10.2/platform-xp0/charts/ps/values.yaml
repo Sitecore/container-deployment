@@ -1,4 +1,3 @@
-<<<<<<<< HEAD:demo/10.2/platform-xp0/charts/ps/values.yaml
 replicaCount: 1
 
 image:
@@ -59,66 +58,3 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
-========
-replicaCount: 1
-
-image:
-  tag:
-  pullPolicy: Always
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  
-  create: true
-  
-  annotations: {}
-  
-  name:
-
-podSecurityContext: {}
-
-
-securityContext: {}
-
-
-service:
-  type: ClusterIP
-  port: 80
-
-cmServiceNameOverride: ""
-sqlServiceNameOverride: ""
-
-ingress:
-  enabled: false
-  annotations: {}
-  hosts: []
-  tls: []
- 
-resources: 
-  limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 50m
-    memory: 256Mi
-
-livenessProbe:
-  initialDelaySeconds: 30
-  periodSeconds: 20
-  timeoutSeconds: 60
-
-readinessProbe:
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  timeoutSeconds: 60
-
-nodeSelector:
-  kubernetes.io/os: windows
-
-tolerations: []
-
-affinity: {}
->>>>>>>> github.com/master:demo/9.3/sitecore-demo-platform/charts/ps/values.yaml
