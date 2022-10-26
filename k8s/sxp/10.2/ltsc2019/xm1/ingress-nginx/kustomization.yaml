@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../configmaps
+
+resources:
+  - ingress.yaml
+  - configuration.yaml
+
+vars:
+- name: cd-hostname
+  objref:
+    kind: ConfigMap
+    name: sitecore-hostnames
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.cd-hostname

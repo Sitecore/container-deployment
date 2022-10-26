@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts
+spec:
+  selector:
+    matchLabels:
+      app: ts
+  template:
+    metadata:
+      labels:
+        app: ts
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-ts
+        env:
+        - name: TenantService_ConnectionStrings_Xdb.ReferenceData.Client
+          valueFrom:
+            secretKeyRef:
+              name: tenant-service-xdbreferencedata-client
+              key: tenant-service-xdbreferencedata-client.txt
+        - name: TenantService_ConnectionStrings_sitecore
+          valueFrom:
+            secretKeyRef:
+              name: tenant-service-sitecore-connection
+              key: tenant-service-sitecore-connection.txt
+        - name: TenantService_ConnectionStrings_sfmc
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-salesforce-bde
+              key: sitecore-salesforce-bde-connection-string.txt
+        - name: TenantService_SfmcJourney_ExecuteUrl
+          valueFrom:
+            secretKeyRef:
+              name: tenant-service-sfmcjourney-executeurl
+              key: tenant-service-sfmcjourney-executeurl.txt

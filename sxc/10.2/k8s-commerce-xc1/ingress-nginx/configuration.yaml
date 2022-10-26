@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    namespace: ingress-basic
+    name: nginx-ingress-ingress-nginx-controller
+data:
+    use-forwarded-headers: "true"
+    enable-underscores-in-headers: "true"

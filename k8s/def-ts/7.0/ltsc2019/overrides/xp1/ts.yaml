@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts
+spec:
+  selector:
+    app: ts
+  ports:
+  - protocol: TCP
+    port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts
+  labels:
+    app: ts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ts
+  template:
+    metadata:
+      labels:
+        app: ts
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-ts
+        image: sitecore-ts
+        ports:
+        - containerPort: 80
+        env:
+        - name: TenantService_ConnectionStrings_sitecore
+          valueFrom:
+            secretKeyRef:
+              name: tenant-service-sitecore-connection
+              key: tenant-service-sitecore-connection.txt
+        - name: TenantService_ConnectionStrings_xconnect.collection
+          valueFrom:
+            secretKeyRef:
+              name: tenant-service-xconnect-collection
+              key: tenant-service-xconnect-collection.txt
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 80
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Startup
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 10
+        volumeMounts:
+        - mountPath: C:\inetpub\wwwroot\App_Data\logs
+          name: logs
+          subPath: ts
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 150m
+          limits:
+            memory: 1Gi
+            cpu: 350m
+      volumes:
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs
+      imagePullSecrets:
+      - name: sitecore-docker-registry

@@ -5,7 +5,7 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
-*       @sc-jonasbangchristensen @michaelbaranov
+*       @sc-jonasbangchristensen
 
 # The files in the `/demo/` directory are only expected
 # to be updated by demo team. Setting CODEOWNER to
@@ -15,4 +15,20 @@
 # The files in the `/sxc/` directory are only expected
 # to be updated by sxc team. Setting CODEOWNER to
 # sxc team members.
-/sxc/ @sc-marklee @sc-marcusheath
+/sxc/ @sc-marklee @sc-marcusheath @ddoorn
+
+# The folders /compose/ and /k8s/ contains Container Support Package files
+# Each team publishing Container Support Packages will add code owner(s) for their repective folders
+/compose/sxp/        @Sitecore/sxp-team
+/k8s/sxp/            @Sitecore/sxp-team
+
+/k8s/expedge/            @Sitecore/content-foundation-kl
+/compose/expedge/        @Sitecore/content-foundation-kl
+/k8s/publishing/         @Sitecore/content-foundation-kl
+/compose/publishing/     @Sitecore/content-foundation-kl
+
+/compose/horizon/        @Sitecore/horizon
+/k8s/horizon/            @Sitecore/horizon
+
+/compose/chub/           @Sitecore/connectors
+/k8s/chub/               @Sitecore/connectors

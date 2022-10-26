@@ -1,0 +1,5 @@
+services:
+  hrz:
+    environment:
+      Sitecore_Plugins__Filters__ContentHub: +ContentHub
+

@@ -1,0 +1,12 @@
+{
+    "LogConfig": {
+        "sources": [
+            {
+                "type": "File",
+                "directory": "c:\\inetpub\\logs",
+                "filter": "*.log",
+                "includeSubdirectories": true
+            }
+        ]
+    }
+}

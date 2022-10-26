@@ -8,10 +8,8 @@ services:
       - "--providers.docker.endpoint=npipe:////./pipe/docker_engine"
       - "--providers.docker.exposedByDefault=false"
       - "--providers.file.directory=C:/etc/traefik/config/dynamic"
-      - "--entryPoints.web.address=:80"
       - "--entryPoints.websecure.address=:443"
     ports:
-      - "8080:80"
       - "443:443"
       - "8079:8080"
     volumes:
@@ -68,7 +66,7 @@ services:
         target: c:\data
   id:
     isolation: ${ISOLATION}
-    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id:${XC_PACKAGES_TAG}
+    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id6:${XC_PACKAGES_TAG}
     depends_on:
       mssql:
         condition: service_healthy
@@ -128,6 +126,7 @@ services:
       Sitecore_ConnectionStrings_Xdb.ReferenceData.Client: http://xdbrefdata
       Sitecore_ConnectionStrings_Redis.Sessions: redis:6379,ssl=False,abortConnect=False
       Sitecore_License: ${SITECORE_LICENSE}
+      SOLR_CORE_PREFIX_NAME: ${SOLR_CORE_PREFIX_NAME}
       Sitecore_Identity_Server_Authority: https://${ID_HOST}
       Sitecore_Identity_Server_InternalAuthority: http://id
       Sitecore_xc_Minions_Url: http://engine-minions:5000/commerceops/
@@ -201,6 +200,7 @@ services:
       Sitecore_Identity_Server_InternalAuthority: http://id
       Sitecore_Identity_Server_CallbackAuthority: https://${CM_HOST}
       Sitecore_Identity_Server_Require_Https: "false"
+      SOLR_CORE_PREFIX_NAME: ${SOLR_CORE_PREFIX_NAME}
       SitecoreMssqlServiceIp: mssql
       SqlSaPassword: ${SQL_SA_PASSWORD}
       SitecoreCoreDbName: ${SITECORE_CORE_DB}
@@ -290,7 +290,7 @@ services:
       Sitecore_ConnectionStrings_Xdb.Marketingautomation: Data Source=mssql;Initial Catalog=Sitecore.Marketingautomation;User ID=sa;Password=${SQL_SA_PASSWORD}
       Sitecore_ConnectionStrings_Xdb.Processing.Pools: Data Source=mssql;Initial Catalog=Sitecore.Processing.pools;User ID=sa;Password=${SQL_SA_PASSWORD}
       Sitecore_ConnectionStrings_Collection: Data Source=mssql;Initial Catalog=Sitecore.Xdb.Collection.ShardMapManager;User ID=sa;Password=${SQL_SA_PASSWORD}
-      Sitecore_ConnectionStrings_SolrCore: http://solr:8983/solr/sitecore_xdb
+      Sitecore_ConnectionStrings_SolrCore: http://solr:8983/solr/${SOLR_CORE_PREFIX_NAME}_xdb
       Sitecore_License: ${SITECORE_LICENSE}
       Sitecore_Sitecore:XConnect:CollectionSearch:Services:Solr.SolrReaderSettings:Options:RequireHttps: 'false'
       Sitecore_Sitecore:XConnect:CollectionSearch:Services:XConnectSolrHealthCheckServicesConfiguration:Options:RequireHttps: 'false'
@@ -377,7 +377,7 @@ services:
     restart: unless-stopped
     environment:
       Sitecore_ConnectionStrings_Collection: Data Source=mssql;Initial Catalog=Sitecore.Xdb.Collection.ShardMapManager;User ID=sa;Password=${SQL_SA_PASSWORD}
-      Sitecore_ConnectionStrings_SolrCore: http://solr:8983/solr/sitecore_xdb
+      Sitecore_ConnectionStrings_SolrCore: http://solr:8983/solr/${SOLR_CORE_PREFIX_NAME}_xdb
       Sitecore_License: ${SITECORE_LICENSE}
       Sitecore_Sitecore:XConnect:SearchIndexer:Services:Solr.SolrReaderSettings:Options:RequireHttps: 'false'
       Sitecore_Sitecore:XConnect:SearchIndexer:Services:Solr.SolrWriterSettings:Options:RequireHttps: 'false'
@@ -500,8 +500,8 @@ services:
       COMMERCEENGINE_SitecoreExternalHost: ${CM_HOST}
       COMMERCEENGINE_SolrUrl: http://solr:8983/solr
       COMMERCEENGINE_IsSolrCloud: "false"
-      COMMERCEENGINE_StorefrontIndexPrefix_web_index: sitecore_web_index
-      COMMERCEENGINE_StorefrontIndexPrefix_master_index: sitecore_master_index
+      COMMERCEENGINE_StorefrontIndexPrefix_web_index: ${SOLR_CORE_PREFIX_NAME}_web_index
+      COMMERCEENGINE_StorefrontIndexPrefix_master_index: ${SOLR_CORE_PREFIX_NAME}_master_index
       COMMERCEENGINE_SearchIndexPrefixOrdersScope: OrdersScope
       COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild: OrdersScope-Rebuild
       COMMERCEENGINE_SearchIndexPrefixCustomersScope: CustomersScope
@@ -578,8 +578,8 @@ services:
       COMMERCEENGINE_SitecoreExternalHost: ${CM_HOST}
       COMMERCEENGINE_SolrUrl: http://solr:8983/solr
       COMMERCEENGINE_IsSolrCloud: "false"
-      COMMERCEENGINE_StorefrontIndexPrefix_web_index: sitecore_web_index
-      COMMERCEENGINE_StorefrontIndexPrefix_master_index: sitecore_master_index
+      COMMERCEENGINE_StorefrontIndexPrefix_web_index: ${SOLR_CORE_PREFIX_NAME}_web_index
+      COMMERCEENGINE_StorefrontIndexPrefix_master_index: ${SOLR_CORE_PREFIX_NAME}_master_index
       COMMERCEENGINE_SearchIndexPrefixOrdersScope: OrdersScope
       COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild: OrdersScope-Rebuild
       COMMERCEENGINE_SearchIndexPrefixCustomersScope: CustomersScope
@@ -654,8 +654,8 @@ services:
       COMMERCEENGINE_SitecoreExternalHost: ${CM_HOST}
       COMMERCEENGINE_SolrUrl: http://solr:8983/solr
       COMMERCEENGINE_IsSolrCloud: "false"
-      COMMERCEENGINE_StorefrontIndexPrefix_web_index: sitecore_web_index
-      COMMERCEENGINE_StorefrontIndexPrefix_master_index: sitecore_master_index
+      COMMERCEENGINE_StorefrontIndexPrefix_web_index: ${SOLR_CORE_PREFIX_NAME}_web_index
+      COMMERCEENGINE_StorefrontIndexPrefix_master_index: ${SOLR_CORE_PREFIX_NAME}_master_index
       COMMERCEENGINE_SearchIndexPrefixOrdersScope: OrdersScope
       COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild: OrdersScope-Rebuild
       COMMERCEENGINE_SearchIndexPrefixCustomersScope: CustomersScope
@@ -730,8 +730,8 @@ services:
       COMMERCEENGINE_SitecoreExternalHost: ${CM_HOST}
       COMMERCEENGINE_SolrUrl: http://solr:8983/solr
       COMMERCEENGINE_IsSolrCloud: "false"
-      COMMERCEENGINE_StorefrontIndexPrefix_web_index: sitecore_web_index
-      COMMERCEENGINE_StorefrontIndexPrefix_master_index: sitecore_master_index
+      COMMERCEENGINE_StorefrontIndexPrefix_web_index: ${SOLR_CORE_PREFIX_NAME}_web_index
+      COMMERCEENGINE_StorefrontIndexPrefix_master_index: ${SOLR_CORE_PREFIX_NAME}_master_index
       COMMERCEENGINE_SearchIndexPrefixOrdersScope: OrdersScope
       COMMERCEENGINE_SearchIndexPrefixOrdersScope-Rebuild: OrdersScope-Rebuild
       COMMERCEENGINE_SearchIndexPrefixCustomersScope: CustomersScope
