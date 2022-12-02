@@ -1,0 +1,15 @@
+{
+    "sxptag":  "10.3-ltsc2022",
+    "customercommercetag":  "10.3-ltsc2022",
+    "spetag":  "6.4-ltsc2022",
+    "sxatag":  "10.3-ltsc2022",
+    "scrdockerregistry":  "scr.sitecore.com",
+    "sxpproject":  "sxp",
+    "sxcproject":  "sxc",
+    "baseproject":  "base",
+    "modulesproject":  "modules",
+    "nonproductionproject":  "nonproduction",
+    "nonproductiontag":  "10.3-ltsc2022",
+    "os_image_tag":  "ltsc2022",
+    "powershell_image_tag": "ltsc2022"
+}

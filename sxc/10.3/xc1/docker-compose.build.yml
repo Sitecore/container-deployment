@@ -1,0 +1,102 @@
+services:  
+  mssql-init:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/mssql/init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-mssql-init:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        TOPOLOGY: xc1
+    image: xc1-mssql-init
+  solr-init:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/solr-init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-solr-init:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        XC_TOPOLOGY: xc1
+        SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
+    image: xc1-solr-init
+  solr-init-searchstax:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/solr-init
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-solr-init-searchstax:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        XC_TOPOLOGY: xc1
+        SOLR_XDB_SCHEMA_FILE: "/Content/Website/App_Data/solrcommands/schema.json"
+    image: xc1-solr-init-searchstax
+  xdbcollection:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/prc-rep
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbcollection:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        ROLE: xdbcollection
+    image: sitecore-xc1-xdbcollection
+  prc:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/prc-rep
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-prc:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        ROLE: prcrep
+    image: sitecore-xc1-prc
+  cm:
+    build:
+      isolation: ${ISOLATION}
+      context: ./cm
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cm:${XP_SITECORE_TAG}        
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        XC_ROLE_CONFIGS: cm
+    image: xc1-cm
+  cd:
+    build:
+      isolation: ${ISOLATION}
+      context: ./cd
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-cd:${XP_SITECORE_TAG}      
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        XC_ROLE_CONFIGS: cd
+    image: xc1-cd
+  xdbsearch:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbsearch
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbsearch:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbsearch/content/inetpub/wwwroot/App_Data/jobs/continuous/IndexWorker
+    image: sitecore-xc1-xdbsearch
+  xdbsearchworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbsearchworker:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbsearchworker/content/inetpub/wwwroot/App_Data/jobs/continuous/IndexWorker
+    image: sitecore-xc1-xdbsearchworker
+  xdbautomation:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbautomation
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbautomation:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbautomation/content/inetpub/wwwroot/App_data/jobs/continuous/AutomationEngine
+    image: sitecore-xc1-xdbautomation
+  xdbautomationworker:
+    build:
+      isolation: ${ISOLATION}
+      context: ../xc-common/xdbworkers
+      args:
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-xp1-xdbautomationworker:${XP_SITECORE_TAG}
+        ASSETS_IMAGE: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc1-assets:${XC_PACKAGES_TAG}
+        CONTENT_PATH: xdbautomationworker/content/inetpub/wwwroot/App_Data/jobs/continuous/AutomationEngine
+    image: sitecore-xc1-xdbautomationworker

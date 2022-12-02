@@ -1,0 +1,13 @@
+Add TLS certificates for xc0cd.localhost, xc0cm.localhost, xc0id.localhost, bizfx.localhost, authoring.localhos, shops.localhost, and minions.localhost hosts to this folder:
+    xc0cm.localhost.crt
+    xc0cm.localhost.key
+    xc0id.localhost.crt
+    xc0id.localhost.key
+    bizfx.localhost.crt
+    bizfx.localhost.key
+    authoring.localhost.crt
+    authoring.localhost.key
+    shops.localhost.crt
+    shops.localhost.key
+    minions.localhost.crt
+    minions.localhost.key
