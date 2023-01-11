@@ -37,5 +37,8 @@
 /compose/def/            @Sitecore/connectors
 /k8s/def/                @Sitecore/connectors
 
+/compose/def-ts/         @Sitecore/connectors
+/k8s/def-ts/             @Sitecore/connectors
+
 /compose/dcrm/           @Sitecore/connectors
 /k8s/dcrm/               @Sitecore/connectors
