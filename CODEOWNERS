@@ -33,3 +33,9 @@
 
 /compose/chub/           @Sitecore/connectors
 /k8s/chub/               @Sitecore/connectors
+
+/compose/def/            @Sitecore/connectors
+/k8s/def/                @Sitecore/connectors
+
+/compose/dcrm/           @Sitecore/connectors
+/k8s/dcrm/               @Sitecore/connectors
