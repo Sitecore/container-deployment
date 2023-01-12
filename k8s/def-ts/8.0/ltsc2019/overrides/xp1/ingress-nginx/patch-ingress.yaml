@@ -1,0 +1,19 @@
+- op: add
+  path: "/spec/rules/0"
+  value:
+    host: ts.globalhost
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: ts
+            port: 
+              number: 80
+- op: add
+  path: "/spec/tls/0"
+  value:
+    secretName: global-ts-tls
+    hosts:
+    - ts.globalhost
