@@ -42,3 +42,15 @@
 
 /compose/dcrm/           @Sitecore/connectors
 /k8s/dcrm/               @Sitecore/connectors
+
+/compose/sfcrm           @Sitecore/connectors
+/k8s/sfcrm               @Sitecore/connectors
+
+/compose/sfmcbde         @Sitecore/connectors
+/k8s/sfmcbde             @Sitecore/connectors
+
+/compose/sfmcbde-ts      @Sitecore/connectors
+/k8s/sfmcbde-ts          @Sitecore/connectors
+
+/compose/sfmcce          @Sitecore/connectors
+/k8s/sfmcce              @Sitecore/connectors
