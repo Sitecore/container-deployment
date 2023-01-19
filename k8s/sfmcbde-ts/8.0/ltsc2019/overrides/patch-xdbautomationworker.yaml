@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xdbautomationworker
+spec:
+  selector:
+    matchLabels:
+      app: xdbautomationworker
+  template:
+    metadata:
+      labels:
+        app: xdbautomationworker
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp1-xdbautomationworker
+        env:
+        - name: Sitecore_ConnectionStrings_TenantService 
+          value: http://ts 
