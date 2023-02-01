@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+images:
+- name: sitecore-horizon
+  newName: '#registry#/sxp/modules/sitecore-horizon'
+  newTag: '#module_version#-ltsc2022'
+  
+resources:
+  - hrz.yaml
