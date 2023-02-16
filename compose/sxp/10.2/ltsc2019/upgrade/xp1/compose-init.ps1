@@ -209,11 +209,12 @@ function Invoke-ComposeInit {
     
     # Check for Sitecore Gallery
     Import-Module PowerShellGet
-    $SitecoreGallery = Get-PSRepository | Where-Object { $_.SourceLocation -eq $SitecoreGalleryRepositoryLocation }
-    if (-not $SitecoreGallery) { 
-        Write-Host "Adding Sitecore PowerShell Gallery..." -ForegroundColor Green 
-        Register-PSRepository -Name SitecoreGallery -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
-        $SitecoreGallery = Get-PSRepository -Name SitecoreGallery
+    $SitecoreGalleryName = 'SitecoreGallery'
+    $SitecoreGallery = Get-PSRepository | Where-Object { $_.Name -eq $SitecoreGalleryName }
+    if (-not $SitecoreGallery) {
+        Write-Host "Adding Sitecore PowerShell Gallery..." -ForegroundColor Green
+        Register-PSRepository -Name $SitecoreGalleryName -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
+        $SitecoreGallery = Get-PSRepository -Name $SitecoreGalleryName
     }
     
     # Install and Import SitecoreDockerTools
