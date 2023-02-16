@@ -47,6 +47,8 @@ images:
 - name: sitecore-xp1-xdbsearchworker
   newName: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker
   newTag: 10.3-ltsc2019
+- name: pwsh-initContainer
+  newName: mcr.microsoft.com/powershell:lts-nanoserver-1809
 
 resources:
   - cm.yaml
