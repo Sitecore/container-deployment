@@ -87,13 +87,7 @@ if (Test-Path("$jsonFile")) {
         $OS_IMAGE_TAG = "OS_IMAGE_TAG=$($containerConfigInfo.OS_IMAGE_TAG)" 
         $envContent = $envContent -replace "OS_IMAGE_TAG=.*", $OS_IMAGE_TAG
 
-        #Microsoft has not yet update the tags for IIS iamges so we need to continue to use 2009 rather than the 20H2 tag
-        if ($($containerConfigInfo.OS_IMAGE_TAG) -eq '20H2') {
-            $OS_IMAGE_TAG_IIS = "OS_IMAGE_TAG_IIS=2009"
-        } else {
-            $OS_IMAGE_TAG_IIS = "OS_IMAGE_TAG_IIS=$($containerConfigInfo.OS_IMAGE_TAG)" 
-        }
-        write-host "UpdateEnvTag OS_IMAGE_TAG_IIS: $OS_IMAGE_TAG_IIS"
+        $OS_IMAGE_TAG_IIS = "OS_IMAGE_TAG_IIS=$($containerConfigInfo.OS_IMAGE_TAG)" 
         $envContent = $envContent -replace "OS_IMAGE_TAG_IIS=.*", $OS_IMAGE_TAG_IIS
 
         Set-Content -Path $_ -Value $envContent -Force
