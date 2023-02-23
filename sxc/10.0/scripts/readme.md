@@ -38,7 +38,7 @@ This folder contains a set of scripts and json files, provided as examples, to f
 >    }
 > ```
 
-**config20H2.json**, **config2009.json**, and **configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows to customize the files for use in the build and run processes.
+**configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows to customize the files for use in the build and run processes.
 
 | Variable        | Value                       | Description                                                  |
 | --------------- | --------------------------- | -------------------------------------------------------------|
@@ -53,6 +53,6 @@ This folder contains a set of scripts and json files, provided as examples, to f
 | modulesproject | modules | Container project name for Sitecore Modules, like Sitecore Experience Accelerator. |
 | nonproductionproject | nonproduction | Container project name for container images that are not for production. Provided MSSQL and Solr container images are *not-production* images. It is expected that customers provide suitable MSSQL and Solr environments for production deployments. |
 | nonproductiontag | 10.0-ltsc2019 | Image tag for non-production container images. |
-| os_image_tag | ltsc2019 | Operating System name on which to build and run containers. Valid values are *ltsc2019* and *1909* |
+| os_image_tag | ltsc2019 | Operating System name on which to build and run containers. Valid values are *ltsc2019* |
 
 **FakeLicenseFile.txt** -> fake license file used as a place holder for the -licenseFilePath command-line parameter.

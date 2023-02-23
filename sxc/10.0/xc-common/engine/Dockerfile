@@ -10,7 +10,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 USER ContainerAdministrator
 
 ADD http://do-srvc-01-dk1.dk.sitecore.net/dtservice/api/assets/deamon/LogMonitor.exe .\LogMonitor\LogMonitor.exe
-ADD https://download.visualstudio.microsoft.com/download/pr/c8eabe25-bb2b-4089-992e-48198ff72ad8/a55a5313bfb65ac9bd2e5069dd4de5bc/dotnet-hosting-3.1.15-win.exe .\install\dotnet.exe
+ADD https://download.visualstudio.microsoft.com/download/pr/b84cc7e8-5bf7-4e35-bc2a-94903c823b5c/12f4767bded70bcfb4d56b3a6bfa005d/dotnet-hosting-3.1.31-win.exe .\install\dotnet.exe
 
 RUN Start-Process -FilePath '.\install\dotnet.exe' -ArgumentList '/Passive /NoRestart' -Wait;
 
