@@ -29,7 +29,7 @@ spec:
         kubernetes.io/os: windows
       initContainers:
         - name: wait-xdbcollection
-          image: mcr.microsoft.com/powershell:lts-nanoserver-1809
+          image: pwsh-initContainer
           command: ["pwsh", "-Command", "do { Start-Sleep -Seconds 3 } until ($(try {(iwr http://xdbcollection/healthz/ready).StatusCode -eq 200} catch { $false }));"]
       containers:
       - name: sitecore-xc1-prc

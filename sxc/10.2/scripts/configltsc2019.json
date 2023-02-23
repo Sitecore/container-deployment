@@ -10,5 +10,6 @@
     "modulesproject":  "modules",
     "nonproductionproject":  "nonproduction",
     "nonproductiontag":  "10.2-ltsc2019",
-    "os_image_tag":  "ltsc2019"
+    "os_image_tag":  "ltsc2019",
+    "powershell_image_tag": "1809"
 }

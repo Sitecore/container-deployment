@@ -20,13 +20,13 @@ This content will be use when calling <code>docker-compose build</code> to creat
 
 **UpdateEnvTag.ps1** -> sets the registry, namespace, project and tag of container images.
 
-**UpdateK8SYaml.ps1** -> sets Kubernetes secrets files with values from the configltsc2019 json file. Kubernetes only supports Windows LTSC 2019 images.
+**UpdateK8SYaml.ps1** -> sets Kubernetes secrets files with values from the configltsc2019 or configltsc2022 json file.
 
-**UpdateK8SUpgradeYaml.ps1** -> sets upgrade Kubernetes secrets files with values from the configltsc2019 json file. Kubernetes only supports Windows LTSC 2019 images.
+**UpdateK8SUpgradeYaml.ps1** -> sets upgrade Kubernetes secrets files with values from the configltsc2019 or configltsc2022 json file.
 
 ## JSON Files
 
-**configltsc20H2.json**, **config2009.json**, and **configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows the customized files to be used in the build and run processes.
+**configltsc2019.json** -> are used by the update scripts <code>UpdateEnvTag.ps1</code>, <code>UpdateEnvCompose.ps1</code> and <code>UpdateK8SYaml.ps1</code> to override or replace tokens defined in the .env and yaml files. This allows the customized files to be used in the build and run processes.
 
 | Variable        | Value                       | Description                                                  |
 | --------------- | --------------------------- | -------------------------------------------------------------|
@@ -41,4 +41,5 @@ This content will be use when calling <code>docker-compose build</code> to creat
 | modulesproject | modules | Container project name for Sitecore Modules, like Sitecore Experience Accelerator. |
 | nonproductionproject | nonproduction | Container project name for container images that are not for production. Provided MSSQL and Solr container images are *not-production* images. It is expected that customers provide suitable MSSQL and Solr environments for production deployments. |
 | nonproductiontag | 10.2-ltsc2019 | Image tag for non-production container images. |
-| os_image_tag | ltsc2019 | Operating System name on which to build and run containers. Valid values are *ltsc2022*, *ltsc2019* and *20H2* |
+| os_image_tag | ltsc2019 | Operating System name on which to build and run containers. Valid values are *ltsc2022* or *ltsc2019* |
+| powershell_image_tag | 1809 | Powershell Image to support k8s only. Valid values are *ltsc2022* and *1809* |

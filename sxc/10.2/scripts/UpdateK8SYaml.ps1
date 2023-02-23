@@ -192,6 +192,9 @@ if (Test-Path("$jsonFile")) {
         #Setup the project for the sxc nonproduction containers 
         $sxcnonprod = "$($containerConfigInfo.sxcproject)/$($containerConfigInfo.nonproductionproject)"
 
+        #Setup the powershell version
+        $powershellImage = "mcr.microsoft.com/powershell:lts-nanoserver-$($containerConfigInfo.powershell_image_tag)"
+
         Get-ChildItem -Path $_.FullName -Filter "kustomization.yaml" -Recurse  | ForEach-Object {
     
             Write-Host $_.FullName
@@ -202,6 +205,7 @@ if (Test-Path("$jsonFile")) {
             (Get-Content $_.FullName -Raw) -replace "{sxc-project}", $($containerConfigInfo.sxcproject) | Set-Content $_.FullName -NoNewline
             (Get-Content $_.FullName -Raw) -replace "{commerce-version}", $($containerConfigInfo.customercommercetag) | Set-Content $_.FullName -NoNewline           
             (Get-Content $_.FullName -Raw) -replace "{sxc-nonproduction-project}", $sxcnonprod | Set-Content $_.FullName -NoNewline
+            (Get-Content $_.FullName -Raw) -replace "{powershell-version}", $powershellImage | Set-Content $_.FullName -NoNewline
         }
     }
 } else {
