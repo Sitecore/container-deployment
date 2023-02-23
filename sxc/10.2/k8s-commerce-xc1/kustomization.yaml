@@ -53,6 +53,8 @@ images:
 - name: sitecore-xc1-xdbsearchworker
   newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-xdbsearchworker
   newTag: {commerce-version}
+- name: pwsh-initContainer
+  newName: {powershell-version}
 
 resources:
   - bizfx.yaml
