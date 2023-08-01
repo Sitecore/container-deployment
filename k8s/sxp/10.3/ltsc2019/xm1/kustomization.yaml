@@ -1,9 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 bases:
 - configmaps
-
 images:
 - name: sitecore-xm1-cd
   newName: scr.sitecore.com/sxp/sitecore-xm1-cd
@@ -14,8 +12,7 @@ images:
 - name: sitecore-xm1-id
   newName: scr.sitecore.com/sxp/sitecore-id7
   newTag: 10.3-ltsc2019
-
 resources:
-  - cm.yaml
-  - cd.yaml
-  - id.yaml
+- cm.yaml
+- cd.yaml
+- id.yaml
