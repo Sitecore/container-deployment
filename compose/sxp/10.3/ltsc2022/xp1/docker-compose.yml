@@ -148,9 +148,7 @@ services:
       - "traefik.http.routers.cd-secure.rule=Host(`${CD_HOST}`)"
       - "traefik.http.routers.cd-secure.tls=true"
     volumes:
-      - type: bind
-        source: .\device-detection-data
-        target: C:\inetpub\wwwroot\App_Data\DeviceDetection
+      - "./device-detection-data:C:/inetpub/wwwroot/App_Data/DeviceDetection"
   cm:
     isolation: ${ISOLATION}
     image: ${SITECORE_DOCKER_REGISTRY}sitecore-xp1-cm:${SITECORE_VERSION}
