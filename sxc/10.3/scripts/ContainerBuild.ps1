@@ -28,8 +28,8 @@ Get-ChildItem -Path "$envRootPath" -Include 'docker-compose.build.yml' -Recurse 
         Push-Location -Path $workingDir
         
         '[Building containers for] {0}' -f $PWD
-        Write-Host "docker-compose --no-ansi --file (Join-Path $workingDir 'docker-compose.build.yml') build --parallel"
-        & docker-compose --no-ansi -f (Join-Path $workingDir 'docker-compose.build.yml') build --parallel
+        Write-Host "docker-compose --ansi never --env-file build.env --file (Join-Path $workingDir 'docker-compose.build.yml') build"
+        & docker-compose --ansi never --env-file build.env -f (Join-Path $workingDir 'docker-compose.build.yml') build
 
         if ($LASTEXITCODE -gt 0) {
             Throw "Error in docker-compose build."
