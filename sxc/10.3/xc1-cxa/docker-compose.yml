@@ -179,9 +179,7 @@ services:
       - "traefik.http.routers.cd-secure.middlewares=force-STS-Header"
     volumes:
       - C:\containers\cd\domains-shared:C:\inetpub\wwwroot\App_Config\Security-Shared:RW
-      - type: bind
-        source: .\device-detection-data
-        target: C:\inetpub\wwwroot\App_Data\DeviceDetection
+      - "./device-detection-data:C:/inetpub/wwwroot/App_Data/DeviceDetection"
   cm:
     isolation: ${ISOLATION}
     image: ${XC_NONPRODUCTION_SITECORE_DOCKER_REGISTRY}sitecore-xc1-cm:${XC_PACKAGES_TAG}
