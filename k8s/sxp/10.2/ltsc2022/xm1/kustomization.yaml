@@ -12,7 +12,7 @@ images:
   newName: scr.sitecore.com/sxp/sitecore-xm1-cm
   newTag: 10.2-ltsc2022
 - name: sitecore-xm1-id
-  newName: scr.sitecore.com/sxp/sitecore-id6
+  newName: scr.sitecore.com/sxp/sitecore-id7
   newTag: 10.2-ltsc2022
 
 resources:
