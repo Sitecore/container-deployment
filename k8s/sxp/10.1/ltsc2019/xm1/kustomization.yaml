@@ -8,8 +8,8 @@ images:
   newName: scr.sitecore.com/sxp/sitecore-xm1-cm
   newTag: 10.1-ltsc2019
 - name: sitecore-xm1-id
-  newName: scr.sitecore.com/sxp/sitecore-id6
-  newTag: 10.1-ltsc2019
+  newName: scr.sitecore.com/sxp/sitecore-id7
+  newTag: 10.1.3-ltsc2019
 resources:
 - cm.yaml
 - cd.yaml
