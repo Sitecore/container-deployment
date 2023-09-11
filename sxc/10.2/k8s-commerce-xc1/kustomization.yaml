@@ -15,7 +15,7 @@ images:
   newName: {registry}/{sxc-nonproduction-project}/sitecore-xc1-cm
   newTag: {commerce-version}
 - name: sitecore-xc-id
-  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-id6
+  newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-id7
   newTag: {commerce-version}
 - name: sitecore-xp1-cortexprocessing
   newName: {registry}/{project}/sitecore-xp1-cortexprocessing
