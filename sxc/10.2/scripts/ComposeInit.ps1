@@ -336,11 +336,12 @@ if (-not (Test-Path $LicenseXmlPath -PathType Leaf)) {
 
 # Check for Sitecore Gallery
 Import-Module PowerShellGet
-$SitecoreGallery = Get-PSRepository | Where-Object { $_.SourceLocation -eq $SitecoreGalleryRepositoryLocation }
+$SitecoreGalleryName = 'SitecoreGallery'
+$SitecoreGallery = Get-PSRepository | Where-Object { $_.Name -eq $SitecoreGalleryName }
 if (-not $SitecoreGallery) { 
     Write-Host "Adding Sitecore PowerShell Gallery..." -ForegroundColor Green 
-    Register-PSRepository -Name SitecoreGallery -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
-    $SitecoreGallery = Get-PSRepository -Name SitecoreGallery
+    Register-PSRepository -Name $SitecoreGalleryName -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
+    $SitecoreGallery = Get-PSRepository -Name $SitecoreGalleryName
 }
 
 # Install and Import SitecoreDockerTools
