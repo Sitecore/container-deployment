@@ -5,8 +5,8 @@ services:
       isolation: ${ISOLATION}
       context: ./id
       args:
-        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-id6:${XP_SITECORE_TAG}
-    image: sitecore-xc-id6
+        BASE_IMAGE: ${XP_SITECORE_DOCKER_REGISTRY}sitecore-id7:${XP_SITECORE_TAG}
+    image: sitecore-xc-id7
   bizfx:
     build:
       isolation: ${ISOLATION}
