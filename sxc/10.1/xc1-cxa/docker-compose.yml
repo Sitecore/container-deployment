@@ -79,7 +79,7 @@ services:
         condition: service_healthy
   id:
     isolation: ${ISOLATION}
-    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id6:${XC_PACKAGES_TAG}
+    image: ${XC_SITECORE_DOCKER_REGISTRY}sitecore-xc-id7:${XC_PACKAGES_TAG}
     depends_on:
       mssql:
         condition: service_healthy
@@ -98,7 +98,7 @@ services:
       Sitecore_Sitecore__IdentityServer__Clients__CommerceEngineConnectClient__AllowedCorsOrigins__AllowedCorsOriginsGroup1: https://${CD_HOST}|https://${CM_HOST}
       Sitecore_Sitecore__IdentityServer__Clients__CommerceEngineConnectClient__ClientSecrets__ClientSecret1: ${XC_IDENTITY_COMMERCEENGINECONNECTCLIENT_CLIENTSECRET1}
     healthcheck:
-      test: ["CMD", "powershell", "-command", "C:/Healthchecks/Healthcheck.ps1"]
+      test: ["CMD", "pwsh", "-command", "C:/Healthchecks/Healthcheck.ps1"]
       timeout: 300s
     labels:
       - "traefik.enable=true"

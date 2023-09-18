@@ -26,7 +26,7 @@ $xcResourcesPath = Join-Path "$envRootPath" "xc-resources"
 Push-Location -Path $xcResourcesPath
 $xcResourceYml = Join-Path $xcResourcesPath 'docker-compose.build.yml'
 Write-Host "Building resource container image: $xcResourceYml"
-& docker-compose --no-ansi -f ($xcResourceYml) build --parallel
+& docker-compose --ansi never -f ($xcResourceYml) build
 Pop-Location
 
 Get-ChildItem -Path "$envRootPath" -Include 'docker-compose.build.yml' -Recurse |
@@ -49,8 +49,8 @@ Get-ChildItem -Path "$envRootPath" -Include 'docker-compose.build.yml' -Recurse 
             Copy-Item -Path '.\commerce.build.yml' -Destination '.\docker-compose.build.yml' -Force -Verbose
         }
         '[Building containers for] {0}' -f $PWD
-        Write-Host "docker-compose --no-ansi --file (Join-Path $workingDir 'docker-compose.build.yml') build --parallel"
-        & docker-compose --no-ansi -f (Join-Path $workingDir 'docker-compose.build.yml') build --parallel
+        Write-Host "docker-compose --ansi never --file (Join-Path $workingDir 'docker-compose.build.yml') build"
+        & docker-compose --ansi never -f (Join-Path $workingDir 'docker-compose.build.yml') build
 
         if ($LASTEXITCODE -gt 0) {
             Throw "Error in docker-compose build."
