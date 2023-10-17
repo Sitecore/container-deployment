@@ -4,7 +4,7 @@
 
 replicaCount: 1
 
-image: maildev/maildev
+image: sitecoredemocontainers.azurecr.io/dependencies/maildev:latest
   
 pullPolicy: IfNotPresent
 

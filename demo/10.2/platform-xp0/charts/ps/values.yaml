@@ -37,10 +37,10 @@ ingress:
  
 resources: 
   limits:
-    memory: 1024Mi
+    memory: 2048Mi
   requests:
-    cpu: 200m
-    memory: 1024Mi
+    cpu: 500m
+    memory: 2048Mi
 
 livenessProbe:
   initialDelaySeconds: 30

@@ -56,10 +56,10 @@ sitecore-xp0:
           "https://{{ .Values.global.sitecore.cm.host }}"
       - name: SITECORE_CONNECTIONSTRINGS_DAM.ContentHub
         value: |-
-          "{{ .Values.dam.url }}"
+          "{{ .Values.cmp.contenthub }}"
       - name: SITECORE_CONNECTIONSTRINGS_DAM.SearchPage
         value: |-
-          "{{ .Values.dam.url }}/en-us/sitecore-dam-connect/approved-assets"
+          "{{ .Values.dam.url | replace "URI=" "" }}/en-us/sitecore-dam-connect/approved-assets"
       - name: SITECORE_CONNECTIONSTRINGS_DAM.ExternalRedirectKey
         value: |-
           "{{ .Values.dam.externalRedirectKey }}"

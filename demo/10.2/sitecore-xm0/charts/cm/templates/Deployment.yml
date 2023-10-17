@@ -219,9 +219,15 @@ spec:
         - name: EXM_RENDERER_URL
           value: "http://localhost"
         - name: RENDERING_HOST_ENDPOINT_URI
-          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
+          valueFrom:
+            secretKeyRef:
+              name: rendering-host
+              key: rendering-host-endpoint-uri.txt
         - name: RENDERING_HOST_PUBLIC_URI
-          value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
+          valueFrom:
+            secretKeyRef:
+              name: rendering-host
+              key: rendering-host-public-uri.txt
         - name: Sitecore_Horizon_ClientHost
           value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SITECORE_APPSETTINGS_ROLE__DEFINE
@@ -238,8 +244,6 @@ spec:
               key: sitecore-settings-jss-deployment-secret.txt
         - name: SITECORE_DEVELOPMENT_PATCHES
           value: "DevEnvOn,CustomErrorsOff,DebugOn,DiagnosticsOff,InitMessagesOff,RobotDetectionOff"
-        - name: Sitecore_Horizon_ClientHost
-          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SOLR_CORE_PREFIX_NAME
           valueFrom:
             secretKeyRef:
@@ -285,6 +289,11 @@ spec:
             secretKeyRef:
               name: experience-edge
               key: experience-edge-authority.txt
+        - name: Sitecore_ConnectionStrings_ExperienceEdge
+          valueFrom:
+            secretKeyRef:
+              name: experience-edge
+              key: experience-edge-connectionstring.txt
         - name: Sitecore_ExperienceEdge_CDNUri
           valueFrom:
             secretKeyRef:

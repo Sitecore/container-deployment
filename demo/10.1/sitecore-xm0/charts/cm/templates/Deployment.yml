@@ -222,8 +222,6 @@ spec:
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com/api/editing/render"
         - name: RENDERING_HOST_PUBLIC_URI
           value: "https://{{ .Release.Namespace }}-website.sitecoredemo.com"
-        - name: Sitecore_Horizon_ClientHost
-          value: "https://{{ .Values.global.sitecore.authoringhost.host }}"
         - name: SITECORE_JSS_EDITING_SECRET
           valueFrom:
             secretKeyRef:

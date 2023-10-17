@@ -249,6 +249,8 @@ spec:
           value: "http://localhost/"
         - name: DEPENDENCY_INJECTION_IGNORED_ASSEMBLIES
           value: "Sitecore.Demo.Platform.Foundation.CoveoIndexing"
+        - name: Sitecore_Analytics_Forwarded_Request_Http_Header
+          value: "X-Forwarded-For"
         {{- range .Values.chartVariables }}
         - name: {{ .name }}
           value: {{ tpl .value $ }}

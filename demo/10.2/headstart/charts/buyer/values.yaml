@@ -1,0 +1,24 @@
+image: ""
+
+global:
+  sitecore:
+    buyer:
+      host: ""
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+
+sellerID: ""
+clientID: ""
+translateBlobUrl: ""
+
+resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
