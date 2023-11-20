@@ -1,17 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-bases:
+resources:
 - ..\..\..\init
-
 patchesStrategicMerge:
-  - solr-init.yaml
-
+- solr-init.yaml
 images:
 - name: sitecore-xm1-solr-init-searchstax
   newName: scr.sitecore.com/sxp/sitecore-xm1-solr-init-searchstax
   newTag: 10.3-ltsc2022
-
 generatorOptions:
   disableNameSuffixHash: true
 secretGenerator:

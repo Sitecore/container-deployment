@@ -235,9 +235,9 @@ spec:
               name: sitecore-graphql
               key: sitecore-graphql-uploadmedia_encryptionkey.txt
         - name: Sitecore_Identity_Server_Authority
-          value: https://$(id-hostname)
+          value: https://id-placeholder-hostname
         - name: Sitecore_Identity_Server_CallbackAuthority
-          value: https://$(cm-hostname)
+          value: https://cm-placeholder-hostname
         - name: Sitecore_Identity_Server_InternalAuthority
           value: http://id
         - name: Sitecore_Identity_Server_Require_Https
