@@ -216,9 +216,9 @@ spec:
         - name: Sitecore_Processing_Service_Require_Https
           value: 'false'
         - name: Sitecore_Identity_Server_Authority
-          value: https://$(id-hostname)
+          value: https://id-placeholder-hostname
         - name: Sitecore_Identity_Server_CallbackAuthority
-          value: https://$(cm-hostname)
+          value: https://cm-placeholder-hostname
         - name: Sitecore_Identity_Server_InternalAuthority
           value: http://id
         - name: Sitecore_Identity_Server_Require_Https
