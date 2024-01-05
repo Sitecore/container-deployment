@@ -107,14 +107,20 @@ spec:
             secretKeyRef:
               name: commerce-solr
               key: commerce-solr-prefix-name.txt
+        - name: sitecore_xc_bizfx_bizfx_url
+          value: https://bizfx-placeholder-hostname
+        - name: COMMERCEENGINE_CMUrl
+          value: https://cm-placeholder-hostname
+        - name: COMMERCEENGINE_CDUrl
+          value: https://cd-placeholder-hostname
         - name: COMMERCEENGINE_AppSettings__EnvironmentName
           value: HabitatMinions
         - name: COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl
-          value: https://$(id-hostname)
+          value: https://id-placeholder-hostname
         - name: COMMERCEENGINE_AppSettings__InternalSitecoreIdentityServerUrl
           value: http://id
         - name: COMMERCEENGINE_AppSettings__AllowedOrigins
-          value: https://$(bizfx-hostname)|https://$(cm-hostname)|https://$(cd-hostname)
+          value: $(sitecore_xc_bizfx_bizfx_url)|$(COMMERCEENGINE_CMUrl)|$(COMMERCEENGINE_CDUrl)
         - name: COMMERCEENGINE_AppSettings__AntiForgeryEnabled
           value: "false"
         - name: COMMERCEENGINE_AppSettings__UseHttpsInKestrel
@@ -155,7 +161,7 @@ spec:
         - name: COMMERCEENGINE_SitecoreExternalProtocol
           value: https
         - name: COMMERCEENGINE_SitecoreExternalHost
-          value: $(cm-hostname)
+          value: cm-placeholder-hostname
         - name: COMMERCEENGINE_IsSolrCloud
           value: "true"
         - name: COMMERCEENGINE_StorefrontIndexPrefix_web_index
@@ -183,11 +189,11 @@ spec:
         - name: COMMERCEENGINE_SearchIndexPrefixPriceCardsScope-Rebuild
           value: $(SOLR_COMMERCE_PREFIX_NAME)_PriceCardsScope-Rebuild
         - name: COMMERCEENGINE_EngineAuthoringUrl
-          value: https://$(engine-authoring-hostname)
+          value: https://engine-authoring-placeholder-hostname
         - name: COMMERCEENGINE_EngineShopsUrl
-          value: https://$(engine-shops-hostname)
+          value: https://engine-shops-placeholder-hostname
         - name: COMMERCEENGINE_EngineMinionsUrl
-          value: https://$(engine-minions-hostname)
+          value: https://engine-minions-placeholder-hostname
         livenessProbe:
           httpGet:
             path: /health

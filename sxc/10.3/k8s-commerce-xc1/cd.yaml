@@ -178,7 +178,7 @@ spec:
               name: sitecore-protect-media-requests
               key: sitecore-media-request-protection-shared-secret.txt
         - name: Sitecore_Identity_Server_Authority
-          value: https://$(id-hostname)
+          value: https://id-placeholder-hostname
         - name: Sitecore_Identity_Server_InternalAuthority
           value: http://id
         - name: Sitecore_xc_Minions_Url

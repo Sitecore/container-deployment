@@ -2,8 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sitecore-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  annotations:    
     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -12,8 +11,9 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-body-size: "512m"
 spec:
+  ingressClassName: "nginx"
   rules:
-  - host: $(cd-hostname)
+  - host: cd-placeholder-hostname
     http:
       paths:
       - path: /
@@ -23,7 +23,7 @@ spec:
             name: cd
             port:
               number: 80
-  - host: $(cm-hostname)
+  - host: cm-placeholder-hostname
     http:
       paths:
       - path: /
@@ -33,7 +33,7 @@ spec:
             name: cm
             port:
               number: 80
-  - host: $(id-hostname)
+  - host: id-placeholder-hostname
     http:
       paths:
       - path: /
@@ -43,7 +43,7 @@ spec:
             name: id
             port:
               number: 80
-  - host: $(bizfx-hostname)
+  - host: bizfx-placeholder-hostname
     http:
       paths:
       - path: /
@@ -53,7 +53,7 @@ spec:
             name: bizfx
             port:
               number: 80
-  - host: $(engine-authoring-hostname)
+  - host: engine-authoring-placeholder-hostname
     http:
       paths:
       - path: /
@@ -63,7 +63,7 @@ spec:
             name: engine-authoring
             port:
               number: 5000
-  - host: $(engine-minions-hostname)
+  - host: engine-minions-placeholder-hostname
     http:
       paths:
       - path: /
@@ -73,7 +73,7 @@ spec:
             name: engine-minions
             port:
               number: 5000
-  - host: $(engine-shops-hostname)
+  - host: engine-shops-placeholder-hostname
     http:
       paths:
       - path: /
@@ -86,22 +86,22 @@ spec:
   tls:
   - secretName: global-cd-tls
     hosts:
-    - $(cd-hostname)
+    - cd-placeholder-hostname
   - secretName: global-cm-tls
     hosts:
-    - $(cm-hostname)
+    - cm-placeholder-hostname
   - secretName: global-id-tls
     hosts:
-    - $(id-hostname)
+    - id-placeholder-hostname
   - secretName: global-bizfx-tls
     hosts:
-    - $(bizfx-hostname)
+    - bizfx-placeholder-hostname
   - secretName: global-authoring-tls
     hosts:
-    - $(engine-authoring-hostname)
+    - engine-authoring-placeholder-hostname
   - secretName: global-minions-tls
     hosts:
-    - $(engine-minions-hostname)
+    - engine-minions-placeholder-hostname
   - secretName: global-shops-tls
     hosts:
-    - $(engine-shops-hostname)
+    - engine-shops-placeholder-hostname
