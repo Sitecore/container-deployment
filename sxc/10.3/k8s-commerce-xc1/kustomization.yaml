@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-bases:
-- configmaps
-
 images:
 - name: sitecore-xc-bizfx
   newName: {registry}/{sxc-nonproduction-project}/sitecore-xc-bizfx
@@ -57,6 +54,7 @@ images:
   newName: {powershell-version}
 
 resources:
+  - configmaps
   - bizfx.yaml
   - cm.yaml
   - cd.yaml
@@ -75,3 +73,334 @@ resources:
   - xdbrefdata.yaml
   - xdbsearch.yaml
   - xdbsearchworker.yaml
+
+replacements:
+- source:
+    fieldPath: data.bizfx-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: bizfx
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-bizfx].env.[name=sitecore_xc_bizfx_bizfx_url].value
+    options:
+      delimiter: '//'
+      index: 1 
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=sitecore_xc_bizfx_bizfx_url].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=sitecore_xc_bizfx_bizfx_url].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=sitecore_xc_bizfx_bizfx_url].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=sitecore_xc_bizfx_bizfx_url].value
+    options:
+      delimiter: '//'
+      index: 1
+- source:
+    fieldPath: data.cm-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: cm
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc1-cm].env.[name=Sitecore_Identity_Server_CallbackAuthority].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=Sitecore_Sitecore__IdentityServer__AccountOptions__PasswordRecoveryUrl].value
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=Sitecore_Sitecore__IdentityServer__Clients__DefaultClient__AllowedCorsOrigins__AllowedCorsOriginsGroup1].value
+    options:
+      delimiter: '//'
+      index: 1  
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CMUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CMUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CMUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=COMMERCEENGINE_CMUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_SitecoreExternalHost].value    
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_SitecoreExternalHost].value    
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_SitecoreExternalHost].value    
+- source:
+    fieldPath: data.cd-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:  
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CDUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CDUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_CDUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=COMMERCEENGINE_CDUrl].value
+    options:
+      delimiter: '//'
+      index: 1    
+- source:
+    fieldPath: data.id-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: cm
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc1-cm].env.[name=Sitecore_Identity_Server_Authority].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=Sitecore_Sitecore__IdentityServer__PublicOrigin].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: cd
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc1-cd].env.[name=Sitecore_Identity_Server_Authority].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_AppSettings__SitecoreIdentityServerUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: bizfx
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-bizfx].env.[name=sitecore_xc_bizfx_identity_server_url].value
+    options:
+      delimiter: '//'
+      index: 1  
+- source:
+    fieldPath: data.engine-authoring-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: bizfx
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-bizfx].env.[name=sitecore_xc_bizfx_authoring_url].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineAuthoringUrl].value
+    options:
+      delimiter: '//'
+      index: 1  
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineAuthoringUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineAuthoringUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: id
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-id].env.[name=COMMERCEENGINE_EngineAuthoringUrl].value
+    options:
+      delimiter: '//'
+      index: 1    
+- source:
+    fieldPath: data.engine-minions-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineMinionsUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineMinionsUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineMinionsUrl].value
+    options:
+      delimiter: '//'
+      index: 1 
+- source:
+    fieldPath: data.engine-shops-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      kind: Deployment
+      name: engine-authoring
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineShopsUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-minions
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineShopsUrl].value
+    options:
+      delimiter: '//'
+      index: 1
+  - select:
+      kind: Deployment
+      name: engine-shops
+    fieldPaths:
+    - spec.template.spec.containers.[name=sitecore-xc-engine].env.[name=COMMERCEENGINE_EngineShopsUrl].value
+    options:
+      delimiter: '//'
+      index: 1 

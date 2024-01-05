@@ -49,11 +49,11 @@ spec:
               name: commerce-bizfx
               key: commerce-bizfx-shopname.txt
         - name: sitecore_xc_bizfx_bizfx_url
-          value: https://$(bizfx-hostname)
+          value: https://bizfx-placeholder-hostname
         - name: sitecore_xc_bizfx_authoring_url
-          value: https://$(engine-authoring-hostname)
+          value: https://engine-authoring-placeholder-hostname
         - name: sitecore_xc_bizfx_identity_server_url
-          value: https://$(id-hostname)
+          value: https://id-placeholder-hostname       
         livenessProbe:
           httpGet:
             path: /
