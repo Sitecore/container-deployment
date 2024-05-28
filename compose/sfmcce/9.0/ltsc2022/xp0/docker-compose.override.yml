@@ -1,0 +1,5 @@
+services:
+  cm:
+    image: sitecore-sfmcce-xp0-cm:${SITECORE_VERSION}
+    environment:
+        Sitecore_ConnectionStrings_sfmc: ${SFMC_CONNECTIONSTRING} 

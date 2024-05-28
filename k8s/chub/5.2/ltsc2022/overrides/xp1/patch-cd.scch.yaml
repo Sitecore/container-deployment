@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cd
+spec:
+  selector:
+    matchLabels:
+      app: cd
+  template:
+    metadata:
+      labels:
+        app: cd
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+      - name: sitecore-xp1-cd
+        env:
+        - name: Sitecore_ConnectionStrings_DAM.ContentHub
+          valueFrom:
+            secretKeyRef:
+              name: scch-dam-connection-strings
+              key: sitecore-dam-content-hub.txt
+        - name: Sitecore_ConnectionStrings_DAM.SearchPage
+          valueFrom:
+            secretKeyRef:
+              name: scch-dam-connection-strings
+              key: sitecore-dam-search-page.txt
+        - name: Sitecore_ConnectionStrings_DAM.ExternalRedirectKey
+          valueFrom:
+            secretKeyRef:
+              name: scch-dam-connection-strings
+              key: sitecore-dam-external-redirect-key.txt
