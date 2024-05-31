@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../xp1
+
+images:
+- name: scr.sitecore.com/sxp/sitecore-xp1-cm
+  newName: {registry}/sitecore-gp-standard-integration-xp1-cm
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-cd
+  newName: {registry}/sitecore-gp-standard-integration-xp1-cd
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbcollection
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbcollection
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearch
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbsearch
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessing
+  newName: {registry}/sitecore-gp-standard-integration-xp1-cortexprocessing
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-cortexreporting
+  newName: {registry}/sitecore-gp-standard-integration-xp1-cortexreporting
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbautomation
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbautomation
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbautomationrpt
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbautomationrpt
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbrefdata
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbrefdata
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbautomationworker
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbautomationworker
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-xdbsearchworker
+  newName: {registry}/sitecore-gp-standard-integration-xp1-xdbsearchworker
+  newTag: {newtag}
+- name: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessingworker
+  newName: {registry}/sitecore-gp-standard-integration-xp1-cortexprocessingworker
+  newTag: {newtag}

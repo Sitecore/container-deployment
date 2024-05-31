@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  cm:
+    image: sitecore-gp-standard-integration-xp1-cm:${GP_VERSION}-${SITECORE_VERSION}
+  cd:
+    image: sitecore-gp-standard-integration-xp1-cd:${GP_VERSION}-${SITECORE_VERSION}
+  xdbcollection:
+    image: sitecore-gp-standard-integration-xp1-xdbcollection:${GP_VERSION}-${SITECORE_VERSION}
+  xdbsearch:
+    image: sitecore-gp-standard-integration-xp1-xdbsearch:${GP_VERSION}-${SITECORE_VERSION}
+  cortexprocessing:
+    image: sitecore-gp-standard-integration-xp1-cortexprocessing:${GP_VERSION}-${SITECORE_VERSION}
+  cortexreporting:
+    image: sitecore-gp-standard-integration-xp1-cortexreporting:${GP_VERSION}-${SITECORE_VERSION}
+  xdbautomation:
+    image: sitecore-gp-standard-integration-xp1-xdbautomation:${GP_VERSION}-${SITECORE_VERSION}
+  xdbautomationrpt:
+    image: sitecore-gp-standard-integration-xp1-xdbautomationrpt:${GP_VERSION}-${SITECORE_VERSION}
+  xdbrefdata:
+    image: sitecore-gp-standard-integration-xp1-xdbrefdata:${GP_VERSION}-${SITECORE_VERSION}
+  xdbautomationworker:
+    image: sitecore-gp-standard-integration-xp1-xdbautomationworker:${GP_VERSION}-${SITECORE_VERSION}
+  xdbsearchworker:
+    image: sitecore-gp-standard-integration-xp1-xdbsearchworker:${GP_VERSION}-${SITECORE_VERSION}
+  cortexprocessingworker:
+    image: sitecore-gp-standard-integration-xp1-cortexprocessingworker:${GP_VERSION}-${SITECORE_VERSION}

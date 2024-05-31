@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  cm:
+    image: sitecore-gp-standard-integration-xp0-cm:${GP_VERSION}-${SITECORE_VERSION}
+  xconnect:
+    image: sitecore-gp-standard-integration-xp0-xconnect:${GP_VERSION}-${SITECORE_VERSION}
+  xdbautomationworker:
+    image: sitecore-gp-standard-integration-xp0-xdbautomationworker:${GP_VERSION}-${SITECORE_VERSION}
+  xdbsearchworker:
+    image: sitecore-gp-standard-integration-xp0-xdbsearchworker:${GP_VERSION}-${SITECORE_VERSION}
+  cortexprocessingworker:
+    image: sitecore-gp-standard-integration-xp0-cortexprocessingworker:${GP_VERSION}-${SITECORE_VERSION}
