@@ -1,3 +1,0 @@
-services:
-  cm:
-    image: sitecore-def-${TOPOLOGY}-cm:${SITECORE_VERSION}
