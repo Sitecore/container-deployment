@@ -44,7 +44,7 @@ Param (
     $IdHost = "$($Topology)id.localhost",
     
     [string]
-    $SitecoreGalleryRepositoryLocation = "https://sitecore.myget.org/F/sc-powershell/api/v2",
+    $SitecoreGalleryRepositoryLocation = "https://nuget.sitecore.com/resources/v2/",
     
     [string]
     $CertDataFolder = ".\traefik\certs",
@@ -185,17 +185,36 @@ function Update-CertsConfigFile{
 	Write-Information -MessageData "certs_config.yaml file was successfully updated." -InformationAction Continue
 }
 
-function InstallModule{
-    param(
-        [string]$ModuleName,
-        [string]$ModuleVersion,
-        [string]$RepositoryName
+function InstallModule {
+    Param(
+        [String]$ModuleName,
+        [String]$ModuleVersion
     )
+    try {
+        $repository = Get-PSRepository | Where-Object { $_.SourceLocation -eq $SitecoreGalleryRepositoryLocation }
+        if (!$repository) {
+            $tempRepositoryName = "Temp" + (New-Guid)
+            Register-PSRepository -Name $tempRepositoryName -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
+            $repository = Get-PSRepository | Where-Object { $_.SourceLocation -eq $SitecoreGalleryRepositoryLocation }
+        }
+        if (!$ModuleVersion) {
+            $ModuleVersion = (Find-Module -Name $ModuleName -Repository $repository.Name -AllowPrerelease).Version
+            Write-Host "The Docker tool version was not specified. The latest available '$ModuleVersion' version will be used."  -ForegroundColor Green  
+        }
 
-    $moduleInstalled = Get-InstalledModule -Name $ModuleName -RequiredVersion $ModuleVersion -AllowPrerelease -ErrorAction SilentlyContinue
-    if (-not $moduleInstalled) {
-        Write-Host "Installing '$ModuleName'" -ForegroundColor Green
-        Install-Module -Name $ModuleName -RequiredVersion $ModuleVersion -AllowPrerelease -Repository $RepositoryName -Scope CurrentUser
+        $moduleInstalled = Get-InstalledModule -Name $ModuleName -RequiredVersion $ModuleVersion -AllowPrerelease -ErrorAction SilentlyContinue
+        if (!$moduleInstalled) {
+            Write-Host "Installing '$ModuleName' $ModuleVersion" -ForegroundColor Green
+            Install-Module -Name $ModuleName -RequiredVersion $ModuleVersion -Repository $repository.Name -AllowClobber -AllowPrerelease -Scope CurrentUser -Force -ErrorAction "Stop"
+        }
+        $localModulePath = ((Get-Module $ModuleName -ListAvailable) | Where-Object Version -eq $ModuleVersion.Split("-")[0]).Path
+        Write-Host "Importing '$moduleName'  '$ModuleVersion' from '$localModulePath' ..." 
+        Import-Module -Name $localModulePath
+    }
+    finally {
+        if ($tempRepositoryName -and ($repository.Name -eq $tempRepositoryName)) {
+            Unregister-PSRepository -Name $tempRepositoryName
+        }
     }
 }
 
@@ -207,42 +226,9 @@ function Invoke-ComposeInit {
         throw "$LicenseXmlPath is not a file"
     }
     
-    # Check for Sitecore Gallery
-    Import-Module PowerShellGet
-    $SitecoreGalleryName = 'SitecoreGallery'
-    $SitecoreGallery = Get-PSRepository | Where-Object { $_.Name -eq $SitecoreGalleryName }
-    if (-not $SitecoreGallery) {
-        Write-Host "Adding Sitecore PowerShell Gallery..." -ForegroundColor Green
-        Register-PSRepository -Name $SitecoreGalleryName -SourceLocation $SitecoreGalleryRepositoryLocation -InstallationPolicy Trusted
-        $SitecoreGallery = Get-PSRepository -Name $SitecoreGalleryName
-    }
-    
     # Install and Import SitecoreDockerTools
-    $moduleName = "SitecoreDockerTools"
-    $repositoryName = $SitecoreGallery.Name
-
-    $module = Find-Module -Name $moduleName -Repository $repositoryName
-    $latestVersion = $module.Version
-    $importModuleCommand = "Import-Module $moduleName -RequiredVersion $latestVersion"
-
-    if(![string]::IsNullOrEmpty($SpecificVersion)){
-        $module = Find-Module -Name $moduleName -Repository $repositoryName -RequiredVersion $SpecificVersion -AllowPrerelease
-        $latestVersion = $module.Version
-
-        if([string]::IsNullOrEmpty($latestVersion)){
-            Write-Warning -Message "'$moduleName' module with '$SpecificVersion' version doesn't exist."
-            return
-        }
-        InstallModule -ModuleName $moduleName -ModuleVersion $latestVersion -RepositoryName $repositoryName
-
-        $modulePath = ((Get-Module $moduleName -ListAvailable) | where Version -eq $latestVersion.Split("-")[0]).Path
-        $importModuleCommand = "Import-Module -Name $modulePath"
-    }else{
-        InstallModule -ModuleName $moduleName -ModuleVersion $latestVersion -RepositoryName $repositoryName
-    }
-    
-    Write-Host "Importing '$moduleName'..." -ForegroundColor Green
-    Invoke-Expression $importModuleCommand
+    $ModuleName = "SitecoreDockerTools"
+    InstallModule -ModuleName $ModuleName -ModuleVersion $SpecificVersion
     
     $idCertPassword = Get-SitecoreRandomString 12 -DisallowSpecial
     $envVariablesTable = @{ 
