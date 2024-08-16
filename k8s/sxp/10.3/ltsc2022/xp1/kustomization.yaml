@@ -1,5 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 images:
 - name: sitecore-xp1-cd
   newName: scr.sitecore.com/sxp/sitecore-xp1-cd
@@ -45,22 +46,24 @@ images:
   newTag: 10.3-ltsc2022
 - name: pwsh-initContainer
   newName: mcr.microsoft.com/powershell:lts-nanoserver-ltsc2022
+
 resources:
-- configmaps
-- cm.yaml
-- cd.yaml
-- id.yaml
-- cortexprocessing.yaml
-- cortexprocessingworker.yaml
-- cortexreporting.yaml
-- prc.yaml
-- xdbautomation.yaml
-- xdbautomationrpt.yaml
-- xdbautomationworker.yaml
-- xdbcollection.yaml
-- xdbrefdata.yaml
-- xdbsearch.yaml
-- xdbsearchworker.yaml
+  - configmaps
+  - cm.yaml
+  - cd.yaml
+  - id.yaml
+  - cortexprocessing.yaml
+  - cortexprocessingworker.yaml
+  - cortexreporting.yaml
+  - prc.yaml
+  - xdbautomation.yaml
+  - xdbautomationrpt.yaml
+  - xdbautomationworker.yaml
+  - xdbcollection.yaml
+  - xdbrefdata.yaml
+  - xdbsearch.yaml
+  - xdbsearchworker.yaml
+
 replacements:
 - source:
     fieldPath: data.cm-hostname
@@ -74,7 +77,7 @@ replacements:
     fieldPaths:
     - spec.template.spec.containers.[name=sitecore-xp1-cm].env.[name=Sitecore_Identity_Server_CallbackAuthority].value
     options:
-      delimiter: //
+      delimiter: '//'
       index: 1
   - select:
       kind: Deployment
@@ -82,7 +85,7 @@ replacements:
     fieldPaths:
     - spec.template.spec.containers.[name=sitecore-xp1-id].env.[name=Sitecore_Sitecore__IdentityServer__AccountOptions__PasswordRecoveryUrl].value
     options:
-      delimiter: /
+      delimiter: '/'
       index: 2
   - select:
       kind: Deployment
@@ -90,7 +93,7 @@ replacements:
     fieldPaths:
     - spec.template.spec.containers.[name=sitecore-xp1-id].env.[name=Sitecore_Sitecore__IdentityServer__Clients__DefaultClient__AllowedCorsOrigins__AllowedCorsOriginsGroup1].value
     options:
-      delimiter: //
+      delimiter: '//'
       index: 1
 - source:
     fieldPath: data.id-hostname
@@ -104,7 +107,7 @@ replacements:
     fieldPaths:
     - spec.template.spec.containers.[name=sitecore-xp1-cm].env.[name=Sitecore_Identity_Server_Authority].value
     options:
-      delimiter: //
+      delimiter: '//'
       index: 1
   - select:
       kind: Deployment
@@ -112,5 +115,5 @@ replacements:
     fieldPaths:
     - spec.template.spec.containers.[name=sitecore-xp1-id].env.[name=Sitecore_Sitecore__IdentityServer__PublicOrigin].value
     options:
-      delimiter: //
+      delimiter: '//'
       index: 1
