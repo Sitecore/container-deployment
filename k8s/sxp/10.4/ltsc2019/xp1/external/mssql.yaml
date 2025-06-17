@@ -48,6 +48,13 @@ spec:
         volumeMounts:
           - mountPath: /var/opt/mssql
             name: sql
+          - mountPath: /etc/ssl/certs
+            readOnly: true
+            name: mssql-tls
+          - mountPath: /var/opt/mssql/mssql.conf
+            subPath: mssql.conf
+            readOnly: true
+            name: mssql-config
         resources:
           requests:
             memory: 2Gi
@@ -58,3 +65,10 @@ spec:
       volumes:
         - name: sql
           emptyDir: {}
+        - name: mssql-tls
+          secret:
+            secretName: mssql-tls
+            optional: true
+        - name: mssql-config
+          secret:
+            secretName: mssql-config

@@ -74,7 +74,7 @@ spec:
               name: sitecore-database
               key: sitecore-databaseprefix.txt
         - name: Sitecore_Sitecore__IdentityServer__SitecoreMemberShipOptions__ConnectionString
-          value: Data Source=$(Database_Server);Initial Catalog=$(Sql_Database_Prefix).Core;User ID=$(Core_Database_Username);Password=$(Core_Database_Password);
+          value: Data Source=$(Database_Server);Initial Catalog=$(Sql_Database_Prefix).Core;User ID=$(Core_Database_Username);Password=$(Core_Database_Password);Encrypt=true;TrustServerCertificate=false;
         - name: Sitecore_Sitecore__IdentityServer__AccountOptions__PasswordRecoveryUrl
           value: https://cm-placeholder-hostname/sitecore/login?rc=1
         - name: Sitecore_Sitecore__IdentityServer__Clients__DefaultClient__AllowedCorsOrigins__AllowedCorsOriginsGroup1
@@ -105,6 +105,9 @@ spec:
         - mountPath: C:\Identity\logs
           name: logs
           subPath: id
+        - mountPath: C:\certs\RootCA.crt
+          name: global-authority
+          subPath: root.crt
         resources:
           requests:
             memory: 400Mi
@@ -116,5 +119,8 @@ spec:
       - name: logs
         persistentVolumeClaim:
           claimName: logs
+      - name: global-authority
+        secret:
+          secretName: global-authority
       imagePullSecrets:
       - name: sitecore-docker-registry

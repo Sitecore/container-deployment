@@ -124,7 +124,10 @@ Param (
     $SitecoreGalleryRepositoryLocation = "https://nuget.sitecore.com/resources/v2/",
     
     [string]
-    $SpecificVersion
+    $SpecificVersion,
+
+    [string]
+    $SqlServerCertificatePassword = "Password12345"
 )
 
 $ErrorActionPreference = "Stop";
@@ -242,7 +245,9 @@ function Create-Certificates{
     param(
         [string]$CertDataFolder,
         [hashtable]$CertDataFolderList,
-        [string]$Topology
+        [string]$Topology,
+        [string]$MsSql,
+        [string]$MsSqlCertPswd
     )
     
     if (![string]::IsNullOrEmpty($CertDataFolder)) {
@@ -259,6 +264,17 @@ function Create-Certificates{
             $rootCertificate = Create-SelfSignedCertificate -Key $rootKey -CommonName "Sitecore Kubernetes Development Self-Signed Authority"
             Create-CertificateFile -Certificate $rootCertificate -OutCertPath "$CertDataFolder\global-authority\root.crt"
             
+            $securePswd = (ConvertTo-SecureString -String $MsSqlCertPswd -Force -AsPlainText)
+            $signerCertificate = Import-CertificateForSigning -SignerCertificate $rootCertificate -SignerCertificatePassword $securePswd
+
+            # Create Sql Server Certificate and Key file
+            $mssqlCertFolder = "$CertDataFolder\mssql"
+            $mssqlCertificate = Create-SqlServerCertificate -CommonName $MsSql -DnsName $MsSql -SignerCertificate $signerCertificate
+
+            $selfSignedKey = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($mssqlCertificate)
+            Create-KeyFile -Key $selfSignedKey -OutKeyPath "$mssqlCertFolder\tls.key"
+            Create-CertificateFile -Certificate $mssqlCertificate -OutCertPath "$mssqlCertFolder\tls.crt"
+
             # Create Certificate and Key files for each Sitecore role
             $CertDataFolderList.Keys | ForEach-Object {
                 $certDataFolderName = $_
@@ -353,7 +369,7 @@ function Invoke-K8sInit {
     if (![string]::IsNullOrEmpty($CertDataFolder) -and (Test-Path $CertDataFolder)) {
         
         # Configure TLS/HTTPS certificates
-        $RootCertificateCreated = Create-Certificates -CertDataFolder $CertDataFolder -CertDataFolderList $certDataFolderList -Topology $Topology
+        $RootCertificateCreated = Create-Certificates -CertDataFolder $CertDataFolder -CertDataFolderList $certDataFolderList -Topology $Topology -MsSql $SqlServer -MsSqlCertPswd $SqlServerCertificatePassword
         
         if ($RootCertificateCreated){
             # The update for the \configmaps\*-hostname files is if Certificates were created for the custom hostnames.

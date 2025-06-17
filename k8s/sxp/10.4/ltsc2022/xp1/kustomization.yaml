@@ -8,8 +8,8 @@ images:
   newName: scr.sitecore.com/sxp/sitecore-xp1-cm
   newTag: 10.4-ltsc2022
 - name: sitecore-xp1-id
-  newName: scr.sitecore.com/sxp/sitecore-id7
-  newTag: 10.4-ltsc2022
+  newName: scr.sitecore.com/sxp/sitecore-identity
+  newTag: 8.0-ltsc2022
 - name: sitecore-xp1-cortexprocessing
   newName: scr.sitecore.com/sxp/sitecore-xp1-cortexprocessing
   newTag: 10.4-ltsc2022
