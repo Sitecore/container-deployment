@@ -48,7 +48,16 @@ Param (
     
     [string]
     $CertDataFolder = ".\traefik\certs",
-    
+
+    [string]
+    $IdFolder = ".\id",
+
+    [string]
+    $SqlServerFolder = ".\mssql",
+
+    [string]
+    $SqlServerCertificatePassword = "Password12345",
+
     [string]
     $SpecificVersion
 )
@@ -114,7 +123,11 @@ function Create-Certificates{
         [string]$Topology,
         [string]$CdHost,
         [string]$CmHost,
-        [string]$IdHost
+        [string]$IdHost,
+        [string]$IdFolder,
+        [string]$MsSql,
+        [string]$MsSqlFolder,
+        [string]$MsSqlCertPswd
     )
     
     Write-Information -MessageData "Starting create certificates for '$Topology' topology..." -InformationAction Continue
@@ -134,7 +147,18 @@ function Create-Certificates{
 		$rootKey = Create-RSAKey -KeyLength 4096
 		$rootCertificate = Create-SelfSignedCertificate -Key $rootKey
 		Create-CertificateFile -Certificate $rootCertificate -OutCertPath "$CertDataFolder\RootCA.crt"
-		
+
+        # Copy RootCA.crt into id\cert
+        Copy-Item "$CertDataFolder\RootCA.crt" -Destination "$IdFolder\certs"
+
+        $securePswd = (ConvertTo-SecureString -String $MsSqlCertPswd -Force -AsPlainText)
+        $signerCertificate = Import-CertificateForSigning -SignerCertificate $rootCertificate -SignerCertificatePassword $securePswd
+
+        # Create Sql Server Certificate and Key as PFX file
+        $msSqlCertPath = [System.IO.Path]::Combine((Get-Location), "$MsSqlFolder\certs\$MsSql.pfx")
+        $mssqlCertificate = Create-SqlServerCertificate -CommonName $MsSql -DnsName $MsSql -SignerCertificate $signerCertificate
+        Create-PfxFile -Certificate $mssqlCertificate -OutCertPath $msSqlCertPath -Password $securePswd
+
 		# Create Certificate and Key files for each Sitecore role
 		$dnsNames | ForEach-Object {
             $selfSignedKey = Create-RSAKey
@@ -208,7 +232,7 @@ function InstallModule {
             Install-Module -Name $ModuleName -RequiredVersion $ModuleVersion -Repository $repository.Name -AllowClobber -AllowPrerelease -Scope CurrentUser -Force -ErrorAction "Stop"
         }
         $localModulePath = ((Get-Module $ModuleName -ListAvailable) | Where-Object Version -eq $ModuleVersion.Split("-")[0]).Path
-        Write-Host "Importing '$moduleName'  '$ModuleVersion' from '$localModulePath' ..." 
+        Write-Host "Importing '$ModuleName'  '$ModuleVersion' from '$localModulePath' ..."
         Import-Module -Name $localModulePath
     }
     finally {
@@ -244,6 +268,7 @@ function Invoke-ComposeInit {
         "SQL_SERVER" = $SqlServer
         "SQL_USERNAME" = $SqlUserName
         "SQL_PASSWORD" = $SqlSaPassword
+        "SQL_TLS_CERTIFICATE_PASSWORD" = $SqlServerCertificatePassword
         "IS_ALWAYS_ENCRYPTED" = $IsAlwaysEncrypted
         "PROCESSING_ENGINE_TASKS_DATABASE_USERNAME" = $ProcessingEngineTasksDatabaseUserName
         "CD_HOST" = $CdHost
@@ -267,7 +292,7 @@ function Invoke-ComposeInit {
         Populate-EnvironmentFile -EnvFilePath $EnvFilePath -EnvVariablesTable $envVariablesTable
         
         # Configure TLS/HTTPS certificates
-        $RootCertificateCreated = Create-Certificates -CertDataFolder $CertDataFolder -Topology $Topology -CdHost $CdHost -CmHost $CmHost -IdHost $IdHost
+        $RootCertificateCreated = Create-Certificates -CertDataFolder $CertDataFolder -Topology $Topology -CdHost $CdHost -CmHost $CmHost -IdHost $IdHost -IdFolder $IdFolder -MsSql $SqlServer -MsSqlFolder $SqlServerFolder -MsSqlCertPswd $SqlServerCertificatePassword
         
         # The update for the certs_config.yaml file is if Certificates were created for the custom hostnames.
         if ($RootCertificateCreated){
