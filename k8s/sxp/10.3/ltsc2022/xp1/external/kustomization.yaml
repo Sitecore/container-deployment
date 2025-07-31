@@ -10,7 +10,7 @@ images:
   newTag: 4.0.14-alpine
 - name: solr
   newName: solr
-  newTag: 8.11.2
+  newTag: 9.8.1
 
 resources:
   - mssql.yaml

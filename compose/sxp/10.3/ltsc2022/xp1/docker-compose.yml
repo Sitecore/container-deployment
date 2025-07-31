@@ -34,7 +34,9 @@ services:
     isolation: ${ISOLATION}
     image: ${SITECORE_DOCKER_REGISTRY}nonproduction/mssql-developer:2019-${EXTERNAL_IMAGE_TAG_SUFFIX}
     environment:
+      NAME: ${SQL_SERVER}
       SA_PASSWORD: ${SQL_SA_PASSWORD}
+      TLS_CERTIFICATE_PASSWORD: ${SQL_TLS_CERTIFICATE_PASSWORD}
       ACCEPT_EULA: "Y"
     ports:
       - "14330:1433"
@@ -42,6 +44,9 @@ services:
       - type: bind
         source: .\mssql-data
         target: c:\data
+      - type: bind
+        source: .\mssql\certs
+        target: c:\certs
   mssql-init:
     isolation: ${ISOLATION}
     image: ${SITECORE_DOCKER_REGISTRY}sitecore-xp1-mssql-init:${SITECORE_VERSION}
@@ -62,7 +67,7 @@ services:
         condition: service_healthy
   solr:
     isolation: ${ISOLATION}
-    image: ${SITECORE_DOCKER_REGISTRY}nonproduction/solr:8.11.2-${EXTERNAL_IMAGE_TAG_SUFFIX}
+    image: ${SITECORE_DOCKER_REGISTRY}nonproduction/solr:9.8.1-${EXTERNAL_IMAGE_TAG_SUFFIX}
     ports:
       - "8984:8983"
     volumes:
@@ -84,9 +89,9 @@ services:
         condition: service_healthy
   id:
     isolation: ${ISOLATION}
-    image: ${SITECORE_DOCKER_REGISTRY}sitecore-id7:${SITECORE_VERSION}
+    image: ${SITECORE_DOCKER_REGISTRY}sitecore-identity:${SITECORE_ID_VERSION}
     environment:
-      Sitecore_Sitecore__IdentityServer__SitecoreMemberShipOptions__ConnectionString: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Core;User ID=${SQL_SA_LOGIN};Password=${SQL_SA_PASSWORD}
+      Sitecore_Sitecore__IdentityServer__SitecoreMemberShipOptions__ConnectionString: Data Source=${SQL_SERVER};Initial Catalog=${SQL_DATABASE_PREFIX}.Core;User ID=${SQL_SA_LOGIN};Password=${SQL_SA_PASSWORD};Encrypt=true;TrustServerCertificate=false;
       Sitecore_Sitecore__IdentityServer__AccountOptions__PasswordRecoveryUrl: https://${CM_HOST}/sitecore/login?rc=1
       Sitecore_Sitecore__IdentityServer__Clients__PasswordClient__ClientSecrets__ClientSecret1: ${SITECORE_IDSECRET}
       Sitecore_Sitecore__IdentityServer__Clients__DefaultClient__AllowedCorsOrigins__AllowedCorsOriginsGroup1: https://${CM_HOST}
@@ -105,6 +110,10 @@ services:
       - "traefik.http.routers.id-secure.entrypoints=websecure"
       - "traefik.http.routers.id-secure.rule=Host(`${ID_HOST}`)"
       - "traefik.http.routers.id-secure.tls=true"
+    volumes:
+      - type: bind
+        source: .\id\certs
+        target: c:\certs
   cd:
     isolation: ${ISOLATION}
     image: ${SITECORE_DOCKER_REGISTRY}sitecore-xp1-cd:${SITECORE_VERSION}
