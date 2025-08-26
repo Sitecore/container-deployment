@@ -4,7 +4,7 @@ services:
     environment: 
        Sitecore_Horizon_ClientHost: https://${HRZ_HOST}
   hrz:
-    image: 'scr.sitecore.com/sxp/modules/sitecore-horizon:3.0-2009'
+    image: 'scr.sitecore.com/sxp/modules/sitecore-horizon:3.1-2009'
     isolation: ${ISOLATION}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/healthz/live"]
