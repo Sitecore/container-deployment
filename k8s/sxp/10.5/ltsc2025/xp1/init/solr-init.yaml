@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      imagePullSecrets:
+        - name: sitecore-docker-registry
+      containers:
+      - name: solr-init
+        image: sitecore-xp1-solr-init
+        env:
+        - name: SOLR_ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-admin-username.txt
+        - name: SOLR_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-admin-password.txt
+        - name: SOLR_CONNECTION_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-username.txt
+        - name: SOLR_CONNECTION_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-connection-password.txt
+        - name: SOLR_PROTOCOL
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-protocol.txt
+        - name: SOLR_INSTANCE
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-instance.txt
+        - name: SOLR_PORT
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-port.txt
+        - name: SITECORE_SOLR_CONNECTION_STRING
+          value: $(SOLR_PROTOCOL)://$(SOLR_ADMIN_USERNAME):$(SOLR_ADMIN_PASSWORD)@$(SOLR_INSTANCE):$(SOLR_PORT)/solr;solrCloud=true
+        - name: SOLR_CORE_PREFIX_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr
+              key: sitecore-solr-core-prefix-name.txt
+      restartPolicy: Never
+  backoffLimit: 5

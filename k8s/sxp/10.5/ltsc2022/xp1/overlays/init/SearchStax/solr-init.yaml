@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: solr-init
+        image: sitecore-xp1-solr-init-searchstax
+        env:
+        - name: SEARCH_STAX_APIKEY
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-apikey.txt
+        - name: SEARCH_STAX_ACCOUNT_NAME
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-account-name.txt
+        - name: SEARCH_STAX_DEPLOYMENT_UID
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-solr-searchstax
+              key: sitecore-searchstax-deployment-uid.txt
