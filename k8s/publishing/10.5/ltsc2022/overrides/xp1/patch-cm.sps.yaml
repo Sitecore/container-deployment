@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cm
+spec:
+  template:
+    spec:
+      containers:
+      - name: sitecore-xp1-cm
+        env:
+        - name: Sitecore_Publishing_Service_Url
+          value: http://sps/
