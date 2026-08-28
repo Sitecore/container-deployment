@@ -22,11 +22,11 @@
 /compose/sxp/        @Sitecore/sxp-team
 /k8s/sxp/            @Sitecore/sxp-team
 
-/k8s/expedge/            @Sitecore/content-foundation-kl
-/compose/expedge/        @Sitecore/content-foundation-kl
+/k8s/expedge/            @Sitecore/content-foundation-kl @Sitecore/xm
+/compose/expedge/        @Sitecore/content-foundation-kl @Sitecore/xm
 
-/k8s/publishing/         @Sitecore/content-foundation-kl @Sitecore/xm-onprem
-/compose/publishing/     @Sitecore/content-foundation-kl @Sitecore/xm-onprem
+/k8s/publishing/         @Sitecore/content-foundation-kl @Sitecore/xm-onprem @Sitecore/xm
+/compose/publishing/     @Sitecore/content-foundation-kl @Sitecore/xm-onprem @Sitecore/xm
 
 /compose/horizon/        @Sitecore/horizon
 /k8s/horizon/            @Sitecore/horizon
