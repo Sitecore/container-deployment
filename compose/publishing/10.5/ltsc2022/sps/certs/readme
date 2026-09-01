@@ -1,0 +1,2 @@
+Add a CA certificate to the trusted root store:
+    RootCA.crt
