@@ -134,7 +134,10 @@ spec:
         - name: Sitecore_ConnectionStrings_Xdb.ReferenceData.Client
           value: http://xdbrefdata
         - name: Sitecore_ConnectionStrings_Redis.Sessions
-          value: redis:6379,ssl=False,abortConnect=False
+          valueFrom:
+            secretKeyRef:
+              name: sitecore-redis
+              key: sitecore-redis-connection-string.txt
         - name: SOLR_CORE_PREFIX_NAME
           valueFrom:
             secretKeyRef:
