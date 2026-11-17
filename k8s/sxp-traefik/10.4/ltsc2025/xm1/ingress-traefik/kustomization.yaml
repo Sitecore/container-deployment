@@ -1,0 +1,69 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../configmaps
+- ingress.yaml
+- configuration.yaml
+
+replacements:
+- source:
+    fieldPath: data.cd-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.rules.[host=cd-placeholder-hostname].host
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.tls.[secretName=global-cd-tls].hosts.0
+- source:
+    fieldPath: data.cm-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.rules.[host=cm-placeholder-hostname].host
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.tls.[secretName=global-cm-tls].hosts.0
+- source:
+    fieldPath: data.id-hostname
+    kind: ConfigMap
+    name: sitecore-hostnames
+    version: v1
+  targets:
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.rules.[host=id-placeholder-hostname].host
+  - select:
+      group: networking.k8s.io
+      kind: Ingress
+      name: sitecore-ingress
+      version: v1
+    fieldPaths:
+    - spec.tls.[secretName=global-id-tls].hosts.0
