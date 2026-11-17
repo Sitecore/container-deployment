@@ -1,0 +1,2 @@
+Add TLS certificates for the mssql service to this folder:
+    mssql.pfx
